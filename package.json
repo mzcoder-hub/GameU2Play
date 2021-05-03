@@ -1,0 +1,45 @@
+{
+  "name": "gameu2play",
+  "version": "1.0.0",
+  "description": "GameU2Play Backend - The Best Gaming Platform for Better Experience",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node backend/server",
+    "server": "nodemon backend/server",
+    "admin": "npm run dev --prefix frontend/admin -- -p 3005",
+    "client": "npm run dev --prefix frontend/client",
+    "dev": "concurrently \"npm run server\" \"npm run client\" \"npm run admin\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mzcoder-hub/GameU2Play.git"
+  },
+  "keywords": [
+    "Gaming Platform",
+    "Gaming News",
+    "Gaming Updates",
+    "Gaming Forum",
+    "Gaming Competition"
+  ],
+  "author": "MzCoder",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mzcoder-hub/GameU2Play/issues"
+  },
+  "homepage": "https://github.com/mzcoder-hub/GameU2Play#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "colors": "^1.4.0",
+    "config": "^3.3.6",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.10.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.2.5"
+  },
+  "devDependencies": {
+    "concurrently": "^6.0.2",
+    "nodemon": "^2.0.7"
+  }
+}
