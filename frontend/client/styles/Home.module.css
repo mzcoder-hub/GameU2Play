@@ -35,3 +35,189 @@
   top: auto;
   bottom: 0;
 }
+
+.circles {
+  background: #000;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5px;
+  width: 165px;
+  border-radius: 100px;
+  border: 5px dotted red;
+}
+.circles > img {
+  margin-left: auto;
+  margin-right: auto;
+  width: 10em;
+}
+.compate {
+  position: absolute;
+  padding-top: 60px;
+  padding-left: 115px;
+  z-index: -1;
+}
+.sectionOne {
+  padding: 100px;
+  color: #fff;
+}
+.sectionTwo {
+  color: #fff;
+  background: #77686854;
+}
+.sectionThree {
+  color: #fff;
+  background: #000;
+}
+
+.sectionFour {
+  background: #414141;
+}
+
+.sectionFive {
+  background: #414141;
+}
+
+.sectionSix {
+  background: #414141;
+}
+
+.hotPostsList {
+  background: #616161;
+  margin: 30px !important;
+}
+
+.hotPostsList > .gameHotPostHeader > h2 {
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
+  font-size: 30px;
+  font-weight: bold;
+  color: #fff;
+  position: absolute;
+  bottom: 0;
+}
+.hotPostsList > .titleHotPostsList {
+  border-bottom: 2px solid #707070;
+}
+
+.hotPostsList > .titleHotPostsList > h3 {
+  margin: 20px 0;
+  font-weight: bold;
+  color: #ffff;
+  font-size: 1rem;
+}
+
+.hotPostsList > .titleHotPostsList > p {
+  margin: -20px -10px 10px 0px;
+  font-weight: 400;
+  color: #9c9c9c;
+}
+
+.sectionSeven {
+  background: #414141;
+}
+
+.gameReviews {
+  background: #616161;
+  margin: 30px !important;
+}
+
+.gameReviews > .categoryGameReview {
+  position: absolute;
+  background: #143f81;
+  font-size: 20px;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px;
+  top: 50px;
+}
+
+.gameReviews > .categoryTitleDescription {
+  margin: 20;
+  margin-top: 50;
+  color: '#fff';
+}
+
+.gameReviews > .categoryReadMore {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.titleGameReviews {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.decoratedLine {
+  overflow: hidden;
+}
+
+.decoratedLine > h1 {
+  position: relative;
+  display: inline-block;
+  color: #fff;
+}
+
+.decoratedLine > h1:before,
+.decoratedLine > h1:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border-bottom: 3px solid #fff;
+  width: 591px;
+  /* half of limiter*/
+  margin: 0 20px;
+}
+
+.decoratedLine > h1:before {
+  right: 100%;
+}
+
+.decoratedLine > h1:after {
+  left: 100%;
+}
+
+.matches {
+  background: #293139;
+  width: 100%;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.team_name {
+  align-items: center;
+  display: flex;
+  text-align: center;
+  justify-content: space-around;
+}
+
+@media only screen and (max-width: 480px) {
+  .sectionOne {
+    margin: 25px;
+    padding: 0px;
+  }
+  .matches {
+    text-align: center;
+  }
+  .team_name {
+    text-align: center;
+    margin: 10px;
+    display: block;
+  }
+  .compate > img {
+    width: 200px;
+    height: 150px;
+  }
+
+  .titleGameReviews {
+    font-size: 25px;
+    font-weight: 500;
+    text-align: justify;
+  }
+
+  .gameReviews > .categoryReadMore {
+    margin-left: 60px;
+  }
+}

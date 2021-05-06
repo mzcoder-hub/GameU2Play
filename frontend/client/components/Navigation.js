@@ -1,8 +1,7 @@
-import Link from 'next/link'
 import { Nav } from 'react-bootstrap'
 import Tombol from './Tombol'
 import NavLink from './NavLink'
-import RoutesNav from '../pages/RoutesNav'
+import RoutesNav from '../pages/Routes/RoutesNav'
 
 const Navigation = () => {
   return (

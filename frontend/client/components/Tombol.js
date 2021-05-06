@@ -9,6 +9,9 @@ const Tombol = ({
   disabled,
   block,
   borderRadius,
+  height,
+  width,
+  fontSize,
 }) => {
   return (
     <Button
@@ -18,6 +21,9 @@ const Tombol = ({
         fontWeight: fontWeight,
         color: color,
         borderRadius: borderRadius,
+        height: height,
+        width: width,
+        fontSize: fontSize,
       }}
       disabled={disabled}
       block={block}
@@ -28,13 +34,16 @@ const Tombol = ({
 }
 
 Tombol.defaultProps = {
-  variant: 'info',
+  variant: 'secondary',
   color: '#000',
   fontWeight: '',
   size: '',
+  height: 'auto',
+  width: 'auto',
   disabled: false,
   block: false,
   borderRadius: '.25rem',
+  fontSize: '',
 }
 
 export default Tombol
