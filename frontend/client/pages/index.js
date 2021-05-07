@@ -294,6 +294,7 @@ const index = () => {
                           size='sm'
                           fontSizeButton='10px'
                           fontSizeTeamName='15px'
+                          gameType={val.gameType}
                         />
                       ))}
                   </Col>

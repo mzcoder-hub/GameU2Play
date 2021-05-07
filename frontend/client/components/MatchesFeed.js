@@ -16,6 +16,8 @@ const MatchesFeed = ({
   buttonSize,
   fontSizeButton,
   fontSizeTeamName,
+  gameType,
+  gameTypeName,
 }) => {
   return (
     <div className={`${homeStyles.matches}`}>
@@ -30,6 +32,65 @@ const MatchesFeed = ({
         <Col md={2} className='text-center'>
           <Row>
             <Col sm={12}>
+              {gameType === 'dota' ? (
+                <img
+                  src='/images/gameLogo/dota.png'
+                  alt='Dota'
+                  width='30'
+                  height='30'
+                />
+              ) : gameType === 'csgo' ? (
+                <img
+                  src='/images/gameLogo/csgo.png'
+                  alt='CSGO'
+                  width='30'
+                  height='30'
+                />
+              ) : gameType === 'ageofempire' ? (
+                <img
+                  src='/images/gameLogo/aoe.png'
+                  alt='Age of Empire'
+                  width='30'
+                  height='30'
+                />
+              ) : gameType === 'fornite' ? (
+                <img
+                  src='/images/gameLogo/fornite.jpg'
+                  alt='Fornite'
+                  width='30'
+                  height='30'
+                />
+              ) : gameType === 'lol' ? (
+                <img
+                  src='/images/gameLogo/lol.png'
+                  alt='League Of Legend'
+                  width='30'
+                  height='30'
+                />
+              ) : gameType === 'overwatch' ? (
+                <img
+                  src='/images/gameLogo/overwatch.png'
+                  alt='Overwatch'
+                  width='30'
+                  height='30'
+                />
+              ) : gameType === 'pubg' ? (
+                <img
+                  src='/images/gameLogo/pubg.svg'
+                  alt="PlayerUnknown's Battlegrounds"
+                  width='30'
+                  height='30'
+                />
+              ) : gameType === 'valorant' ? (
+                <img
+                  src='/images/gameLogo/valorant.png'
+                  alt='Valorant'
+                  width='30'
+                  height='30'
+                />
+              ) : (
+                <></>
+              )}
               <h3>VS</h3>
             </Col>
             <Col sm={12} style={{ fontSize: fontSizeDate }}>
@@ -81,6 +142,8 @@ MatchesFeed.defaultProps = {
   fontSizeDate: '2rem',
   buttonSize: '',
   fontSizeTeamName: '',
+  gameType: '',
+  gameTypeName: '',
 }
 
 export default MatchesFeed
