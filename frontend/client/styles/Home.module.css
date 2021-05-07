@@ -149,6 +149,11 @@
   line-height: 1.2;
 }
 
+.sectionEight {
+  background: #292a25 !important;
+  color: #fff;
+}
+
 .decoratedLine {
   overflow: hidden;
 }

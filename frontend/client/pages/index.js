@@ -495,64 +495,6 @@ const index = () => {
                 </Col>
               </Row>
             </Col>
-          </Col>
-          <Col md={12}>
-            <div className={`${homeStyles.decoratedLine} text-center`}>
-              <h1>
-                <span style={{ color: 'red' }}>Game</span> Reviews
-              </h1>
-            </div>
-            <Col md={12}>
-              <Row>
-                <Col md={12}>
-                  <Row className={homeStyles.gameReviews}>
-                    <Col
-                      md={4}
-                      style={{
-                        backgroundImage: `url('/images/valorant.png')`,
-                        height: 300,
-                        filter: `blur(2px)`,
-                        backgroundPosition: 'center',
-                        backgroundRepeat: 'no-repeat',
-                        backgroundSize: 'cover',
-                      }}
-                    ></Col>
-                    <div className={homeStyles.categoryGameReview}>Indie</div>
-                    <Col md={6}>
-                      <Row style={{ margin: 20, marginTop: 50, color: '#fff' }}>
-                        <Col md={12}>
-                          <h2 className={homeStyles.titleGameReviews}>
-                            DIA MENJADIKAN SATU KAPTAIN PENUMPANGNYA
-                          </h2>
-                        </Col>
-                        <Col md={12}>
-                          <p style={{ textAlign: 'justify' }}>
-                            {' '}
-                            Saat itu kepalanya membentur atap aula: sebenarnya
-                            dia sekarang lebih dari sembilan kaki tingginya, dan
-                            dia segera mengambil kunci emas kecil dan bergegas
-                            ke pintu taman ..
-                          </p>
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col md={2} className={homeStyles.categoryReadMore}>
-                      <div style={{ margin: -40 }}>
-                        <Tombol
-                          variant='light'
-                          fontWeight='bold'
-                          size='lg'
-                          borderRadius='0.95rem'
-                          height='50px'
-                        >
-                          Selengkapnya
-                        </Tombol>
-                      </div>
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
-            </Col>
             <Col md={12}>
               <Row>
                 <Col md={12}>
@@ -656,6 +598,140 @@ const index = () => {
               </Row>
             </Col>
           </Col>
+        </Row>
+
+        <Row className={homeStyles.sectionEight}>
+          <Col md={12} className='text-center' style={{ marginTop: 50 }}>
+            <h1 style={{ fontSize: 50 }}>OUR COMMUNITIES</h1>
+            <Row style={{ margin: 40 }}>
+              <Col md={6} className='text-right'>
+                <div
+                  style={{
+                    width: '100%',
+                    height: '300px',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: 'cover',
+                    backgroundImage: `url('/images/member.jpg')`,
+                    borderRadius: '2.5rem',
+                  }}
+                ></div>
+              </Col>
+              <Col
+                md={6}
+                className='text-left'
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  display: 'flex',
+                }}
+              >
+                <Row>
+                  <Col md={12}>
+                    <h2 style={{ color: 'yellow', fontSize: 50 }}>
+                      600+ MEMBERS
+                    </h2>
+                  </Col>
+                  <Col md={12}>
+                    <span style={{ fontSize: 35 }}>Dari banyak kota besar</span>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+            <Row style={{ margin: 40 }}>
+              <Col
+                md={6}
+                className='text-right'
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  display: 'flex',
+                }}
+              >
+                <Row>
+                  <Col md={12}>
+                    <h2 style={{ color: 'yellow', fontSize: 40 }}>
+                      12+ INTERNET CAFE
+                    </h2>
+                  </Col>
+                  <Col md={12}>
+                    <span style={{ fontSize: 35 }}>Sudah Bergabung</span>
+                  </Col>
+                </Row>
+              </Col>
+              <Col md={6} className='text-right'>
+                <div
+                  style={{
+                    width: '100%',
+                    height: '300px',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: 'cover',
+                    backgroundImage: `url('/images/icafe.jpg')`,
+                    borderRadius: '2.5rem',
+                  }}
+                ></div>
+              </Col>
+            </Row>
+            <Row style={{ margin: 40 }}>
+              <Col md={12} className='text-center'>
+                <Row>
+                  <Col md={12}>
+                    <Tombol
+                      variant='warning'
+                      fontWeight='bold'
+                      size='lg'
+                      color='#000'
+                      borderRadius='0.95rem'
+                      height='50px'
+                    >
+                      JOIN US NOW
+                    </Tombol>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+            <Row style={{ margin: 40 }}>
+              <Col md={12} className='text-center'>
+                <h1>PARTNER</h1>
+              </Col>
+              <Col md={12} className='text-center'>
+                <Row style={{ margin: 10 }}>
+                  <Col md={3}>
+                    <img
+                      src='/images/benq.png'
+                      alt='sponsor kami'
+                      width='100%'
+                    />
+                  </Col>
+                  <Col md={3}>
+                    <img
+                      src='/images/samsung.png'
+                      alt='sponsor kami'
+                      width='100%'
+                    />
+                  </Col>
+                  <Col md={3}>
+                    <img
+                      src='/images/shopee.png'
+                      alt='sponsor kami'
+                      width='100%'
+                    />
+                  </Col>
+                  <Col md={3}>
+                    <img
+                      src='/images/toped.png'
+                      alt='sponsor kami'
+                      width='100%'
+                    />
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+        <Row>
+          <Col style={{ height: 200, background: '#393a33' }}></Col>
         </Row>
       </Col>
     </Row>
