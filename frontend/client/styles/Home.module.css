@@ -53,7 +53,7 @@
 .compate {
   position: absolute;
   padding-top: 60px;
-  padding-left: 115px;
+  padding-left: 55px;
   z-index: -1;
 }
 .sectionOne {
@@ -152,36 +152,6 @@
 .sectionEight {
   background: #292a25 !important;
   color: #fff;
-}
-
-.decoratedLine {
-  overflow: hidden;
-}
-
-.decoratedLine > h1 {
-  position: relative;
-  display: inline-block;
-  color: #fff;
-}
-
-.decoratedLine > h1:before,
-.decoratedLine > h1:after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  border-bottom: 3px solid #fff;
-  width: 591px;
-  /* half of limiter*/
-  margin: 0 20px;
-}
-
-.decoratedLine > h1:before {
-  right: 100%;
-}
-
-.decoratedLine > h1:after {
-  left: 100%;
 }
 
 .matches {

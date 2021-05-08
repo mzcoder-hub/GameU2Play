@@ -4,6 +4,7 @@ import homeStyles from '../styles/Home.module.css'
 import Meta from '../components/Meta'
 import MatchesFeed from '../components/MatchesFeed'
 import matchSeed from '../components/data/matchSeed'
+import Headline from '../components/Headline'
 
 const index = () => {
   return (
@@ -228,11 +229,16 @@ const index = () => {
           <Col md={12}>
             <Row>
               <Col md={{ span: 10, offset: 1 }}>
-                <div className={`${homeStyles.decoratedLine} text-center`}>
-                  <h1>
-                    LAST <span style={{ color: 'red' }}>MATCHES</span>
-                  </h1>
-                </div>
+                <Headline
+                  headlineText={['Last', 'Matches']}
+                  colorPlace='2'
+                  colorText='red'
+                  lineType='whiteLine'
+                  fontSize='33px'
+                  sizeColLine1='4'
+                  sizeColText1='4'
+                  sizeColLine2='4'
+                />
                 {matchSeed &&
                   matchSeed.map((val) => (
                     <MatchesFeed
@@ -265,19 +271,29 @@ const index = () => {
           <Col md={12}>
             <Row>
               <Col md={12} style={{ marginTop: 50 }}>
-                <div className={`${homeStyles.decoratedLine} text-center`}>
-                  <h1>
-                    <span style={{ color: 'red' }}>U2PLAY</span> NEWS
-                  </h1>
-                </div>
+                <Headline
+                  headlineText={['U2PLAY', 'NEWS']}
+                  colorPlace='1'
+                  colorText='red'
+                  lineType='whiteLine'
+                  fontSize='37px'
+                  sizeColLine1='2'
+                  sizeColText1='3'
+                  sizeColLine2='7'
+                />
                 <Row style={{ margin: 10 }}>
                   <Col md={7}></Col>
                   <Col md={5} style={{ background: '#717171' }}>
-                    <div className={`${homeStyles.decoratedLine} text-center`}>
-                      <h1 style={{ fontSize: 20 }}>
-                        <span style={{ color: 'red' }}>Upcoming</span> Matches
-                      </h1>
-                    </div>
+                    <Headline
+                      headlineText={['Upcoming', 'Matches']}
+                      colorPlace='1'
+                      colorText='red'
+                      lineType='blackLine'
+                      fontSize='20px'
+                      sizeColLine1='3'
+                      sizeColText1='6'
+                      sizeColLine2='3'
+                    />
                     {matchSeed &&
                       matchSeed.map((val) => (
                         <MatchesFeed
@@ -317,11 +333,16 @@ const index = () => {
         </Row>
         <Row className={homeStyles.sectionSix}>
           <Col md={12} style={{ marginTop: 50 }}>
-            <div className={`${homeStyles.decoratedLine} text-center`}>
-              <h1>
-                Hot <span style={{ color: 'red' }}>Posts</span>
-              </h1>
-            </div>
+            <Headline
+              headlineText={['Hot', 'Posts']}
+              colorPlace='2'
+              colorText='red'
+              lineType='whiteLine'
+              fontSize='35px'
+              sizeColLine1='2'
+              sizeColText1='2'
+              sizeColLine2='8'
+            />
           </Col>
           <Col md={12} style={{ marginTop: 50 }}>
             <Row>
@@ -440,11 +461,16 @@ const index = () => {
         </Row>
         <Row className={homeStyles.sectionSeven}>
           <Col md={12}>
-            <div className={`${homeStyles.decoratedLine} text-center`}>
-              <h1>
-                <span style={{ color: 'red' }}>Game</span> Reviews
-              </h1>
-            </div>
+            <Headline
+              headlineText={['Game', 'Reviews']}
+              colorPlace='1'
+              colorText='red'
+              lineType='whiteLine'
+              fontSize='35px'
+              sizeColLine1='2'
+              sizeColText1='3'
+              sizeColLine2='7'
+            />
             <Col md={12}>
               <Row>
                 <Col md={12}>
