@@ -53,9 +53,9 @@ Headline.defaultProps = {
   colorText: 'red',
   lineType: 'redLine',
   fontSize: '35',
-  sizeColLine1: '',
-  sizeColText1: '',
-  sizeColLine2: '',
+  sizeColLine1: '4',
+  sizeColText1: '4',
+  sizeColLine2: '4',
   textAlign: 'text-center',
 }
 
