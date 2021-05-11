@@ -11,6 +11,7 @@ const Headline = ({
   sizeColText1,
   sizeColLine2,
   textAlign,
+  lineHeight,
 }) => {
   return (
     <Row style={{ alignItems: 'center' }}>
@@ -18,7 +19,7 @@ const Headline = ({
         <img
           src={`/images/${lineType}.png`}
           alt=''
-          style={{ width: '100%', height: '2px' }}
+          style={{ width: '100%', height: lineHeight }}
         />
       </Col>
       <Col md={sizeColText1} className={textAlign}>
@@ -40,7 +41,7 @@ const Headline = ({
         <img
           src={`/images/${lineType}.png`}
           alt=''
-          style={{ width: '100%', height: '2px' }}
+          style={{ width: '100%', height: lineHeight }}
         />
       </Col>
     </Row>
@@ -54,6 +55,7 @@ Headline.defaultProps = {
   lineType: 'redLine',
   fontSize: '35',
   sizeColLine1: '4',
+  lineHeight: '2px',
   sizeColText1: '4',
   sizeColLine2: '4',
   textAlign: 'text-center',

@@ -8,6 +8,8 @@ const Tombol = ({
   size,
   disabled,
   block,
+  backgroundColor,
+  borderColor,
   borderRadius,
   height,
   width,
@@ -24,6 +26,8 @@ const Tombol = ({
         height: height,
         width: width,
         fontSize: fontSize,
+        backgroundColor: backgroundColor,
+        borderColor: borderColor,
       }}
       disabled={disabled}
       block={block}
@@ -44,6 +48,8 @@ Tombol.defaultProps = {
   block: false,
   borderRadius: '.25rem',
   fontSize: '',
+  backgroundColor: '',
+  borderColor: '',
 }
 
 export default Tombol
