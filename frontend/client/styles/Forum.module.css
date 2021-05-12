@@ -2,8 +2,16 @@
   background: #606060;
 }
 
-.rowLeft > h1 {
+.rowLeft > div > .HeaderRow > h1 {
   color: #fff;
+  font-size: 2em;
+}
+.rowLeft > div > .HeadRowSecond {
+  margin-top: 40px;
+}
+.rowLeft > div > .HeadRowSecond > h1 {
+  color: #fff;
+  font-size: 1.5em;
 }
 .rowRight {
   padding: 50px;
@@ -43,6 +51,9 @@
   font-size: 15px;
 }
 @media only screen and (max-width: 480px) {
+  .rowRight > .heading > div > h1 {
+    font-size: 2.5em;
+  }
   .rowLeft {
     display: none;
   }

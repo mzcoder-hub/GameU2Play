@@ -10,7 +10,28 @@ const forum = () => {
       <Meta />
       <Row>
         <Col xs md={3} className={forumStyle.rowLeft}>
-          <h1>Welcome to Forum Pages</h1>
+          <Row>
+            <Col md={12} className={`${forumStyle.HeaderRow} text-center`}>
+              <img
+                src='/images/gameLogo/dota.png'
+                alt='Game Logo'
+                width='150'
+              />
+              <h1>Game Name</h1>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={12} className={forumStyle.HeadRowSecond}>
+              <h1>Game Name</h1>
+              <hr style={{ borderTop: '5px solid #ffffff' }} />
+            </Col>
+            <Col md={12} className={forumStyle.HeadRowSecond}>
+              Content
+            </Col>
+            <Col md={12} className={forumStyle.HeadRowSecond}>
+              <hr style={{ borderTop: '5px solid #ffffff' }} />
+            </Col>
+          </Row>
         </Col>
         <Col xs md={9} className={forumStyle.rowRight}>
           <Meta />
@@ -22,7 +43,7 @@ const forum = () => {
               <SearchForm size='90% !important' sizeBut='10% !important' />
             </Col>
           </Row>
-          <hr style={{ borderTop: '5px solid #707070' }} />
+          <hr style={{ borderTop: '5px solid #ffffff' }} />
           <Row>
             <Col xs md={12} className={forumStyle.Postingan}>
               <h2>[Notice] Update 7.29b</h2>
@@ -41,7 +62,11 @@ const forum = () => {
                     width='50'
                   />
                 </Col>
-                <Col xs md={11} className={forumStyle.profileUsername}>
+                <Col
+                  xs
+                  md={11}
+                  className={`${forumStyle.profileUsername} text-left`}
+                >
                   USERNAME - Date Posted
                 </Col>
               </Row>
