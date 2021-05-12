@@ -1,0 +1,49 @@
+.rowLeft {
+  background: #606060;
+}
+
+.rowLeft > h1 {
+  color: #fff;
+}
+.rowRight {
+  padding: 50px;
+  background: #37373791;
+}
+
+.rowRight > .heading > div > h1 {
+  color: #fff;
+  font-size: 3em;
+}
+
+.Postingan {
+  background: #606060;
+  padding: 10px;
+  margin-top: 15px;
+}
+
+.Postingan > h2 {
+  color: #fff;
+  margin: 20px;
+  font-size: 25px;
+}
+
+.Postingan > .excerpt {
+  color: rgb(255 255 255 / 62%);
+  margin: 20px;
+  font-size: 17px;
+}
+
+.profileDetail {
+  margin: 10px;
+  align-items: center;
+}
+
+.profileDetail > .profileUsername {
+  color: #fff;
+  font-size: 15px;
+}
+@media only screen and (max-width: 480px) {
+  .rowLeft {
+    display: none;
+  }
+}

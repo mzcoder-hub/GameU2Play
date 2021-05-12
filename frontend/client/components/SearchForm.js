@@ -2,15 +2,19 @@ import React from 'react'
 import { InputGroup } from 'react-bootstrap'
 import discoverStyles from '../styles/Discovers.module.css'
 
-const SearchForm = () => {
+const SearchForm = ({ size, sizeBut }) => {
   return (
     <InputGroup className={`${discoverStyles.inputGroup} mb-3`}>
       <input
         type='text'
         className={discoverStyles.formControl}
+        style={{ width: size }}
         placeholder='Search...'
       />
-      <button className={`${discoverStyles.buttonSearch} text-right`}>
+      <button
+        className={`${discoverStyles.buttonSearch} text-right`}
+        style={{ width: sizeBut }}
+      >
         <svg
           viewBox='0 0 16 16'
           fillRule='currentColor'
