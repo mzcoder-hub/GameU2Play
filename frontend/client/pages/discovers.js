@@ -5,6 +5,8 @@ import homeStyles from '../styles/Home.module.css'
 import Headline from '../components/Headline'
 import Meta from '../components/Meta'
 import discoverStyles from '../styles/Discovers.module.css'
+import GameSlider from '../components/GameSlider'
+import sliderData from '../components/data/sliderData'
 
 const discovers = () => {
   return (
@@ -31,8 +33,8 @@ const discovers = () => {
             </Col>
           </Row>
           <Row>
-            <Col xs md={12}>
-              Carousel
+            <Col xs md={12} style={{ padding: 60 }}>
+              <GameSlider sliderData={sliderData} />
             </Col>
           </Row>
           <Row className={discoverStyles.sectionTwoP2}>
