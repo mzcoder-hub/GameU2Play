@@ -3,18 +3,19 @@ import { multipleColumnSet } from '../utils/common.utils.js'
 import { Role } from '../utils/userRoles.utils.js'
 
 const tableName = 'user'
-const db = new DBConnection()
+const db = await new DBConnection().query
+
 const find = async (params = {}) => {
   let sql = `SELECT * FROM ${tableName}`
 
   if (!Object.keys(params).length) {
-    return await new db.query(sql)
+    return await db(sql)
   }
 
   const { columnSet, values } = multipleColumnSet(params)
   sql += ` WHERE ${columnSet}`
 
-  return await new db.query(sql, [...values])
+  return await db(sql, [...values])
 }
 
 const findOne = async (params) => {
@@ -23,14 +24,14 @@ const findOne = async (params) => {
   const sql = `SELECT * FROM ${tableName}
         WHERE ${columnSet}`
 
-  const result = await new db.query(sql, [...values])
+  const result = await db(sql, [...values])
 
   // return back the first row (user)
   return result[0]
 }
 
 const create = async ({
-  username,
+  nickname,
   password,
   first_name,
   last_name,
@@ -39,39 +40,38 @@ const create = async ({
   birthDate = '',
 }) => {
   const sql = `INSERT INTO ${tableName}
-        (username, password, first_name, last_name, email, role, birthDate) VALUES (?,?,?,?,?,?,?)`
+        (nickname, email, password, first_name, last_name, role, birthDate) VALUES (?,?,?,?,?,?,?)`
 
-  const result = await new db.query(sql, [
-    username,
+  const result = await db(sql, [
+    nickname,
+    email,
     password,
     first_name,
     last_name,
-    email,
     role,
     birthDate,
   ])
   const affectedRows = result ? result.affectedRows : 0
-
   return affectedRows
 }
 
 const update = async (params, id) => {
   const { columnSet, values } = multipleColumnSet(params)
 
-  const sql = `UPDATE user SET ${columnSet} WHERE id = ?`
+  const sql = `UPDATE user SET ${columnSet} WHERE idUser = ?`
 
-  const result = await new db.query(sql, [...values, id])
+  const result = await db(sql, [...values, id])
 
   return result
 }
 
 const deleteUserData = async (id) => {
   const sql = `DELETE FROM ${tableName}
-        WHERE id = ?`
-  const result = await new db.query(sql, [id])
+        WHERE idUser = ?`
+  const result = await db(sql, [id])
   const affectedRows = result ? result.affectedRows : 0
 
   return affectedRows
 }
 
-export { find, findOne, create, deleteUserData }
+export { find, findOne, update, create, deleteUserData }

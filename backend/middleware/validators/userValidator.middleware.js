@@ -2,11 +2,6 @@ import { body } from 'express-validator'
 import { Role } from '../../utils/userRoles.utils.js'
 
 const createUserSchema = [
-  body('username')
-    .exists()
-    .withMessage('username is required')
-    .isLength({ min: 3 })
-    .withMessage('Must be at least 3 chars long'),
   body('first_name')
     .exists()
     .withMessage('Your first name is required')

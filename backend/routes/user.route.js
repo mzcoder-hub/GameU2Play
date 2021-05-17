@@ -3,7 +3,7 @@ const router = express.Router()
 import {
   getAllUsers,
   getUserById,
-  getUserByuserName,
+  getUserByNickName,
   getCurrentUser,
   createUser,
   updateUser,
@@ -20,23 +20,22 @@ import {
   validateLogin,
 } from '../middleware/validators/userValidator.middleware.js'
 
-router.get('/', auth(), awaitHandlerFactory(getAllUsers)) // localhost:3000/api/v1/users
-router.get('/id/:id', auth(), awaitHandlerFactory(getUserById)) // localhost:3000/api/v1/users/id/1
-router.get(
-  '/username/:username',
-  auth(),
-  awaitHandlerFactory(getUserByuserName)
-) // localhost:3000/api/v1/users/usersname/julia
-router.get('/whoami', auth(), awaitHandlerFactory(getCurrentUser)) // localhost:3000/api/v1/users/whoami
-router.post('/', createUserSchema, awaitHandlerFactory(createUser)) // localhost:3000/api/v1/users
+router.post('/', createUserSchema, awaitHandlerFactory(createUser)) // localhost:3000/api/v1/users . CREATE USER
+router.post('/login', validateLogin, awaitHandlerFactory(userLogin)) // localhost:3000/api/v1/users/login, LOGIN USER
 router.patch(
   '/id/:id',
   auth(Role.Admin),
   updateUserSchema,
   awaitHandlerFactory(updateUser)
-) // localhost:3000/api/v1/users/id/1 , using patch for partial update
-router.delete('/id/:id', auth(Role.Admin), awaitHandlerFactory(deleteUser)) // localhost:3000/api/v1/users/id/1
-
-router.post('/login', validateLogin, awaitHandlerFactory(userLogin)) // localhost:3000/api/v1/users/login
+) // localhost:3000/api/v1/users/id/1 , using patch for partial UPDATE USER
+router.delete('/id/:id', auth(Role.Admin), awaitHandlerFactory(deleteUser)) // localhost:3000/api/v1/users/id/1 DELETE USER (ADMIN ONLY)
+router.get('/', auth(Role.Admin), awaitHandlerFactory(getAllUsers)) // localhost:3000/api/v1/users GET ALL USER (ADMIN ONLY)
+router.get('/id/:id', auth(), awaitHandlerFactory(getUserById)) // localhost:3000/api/v1/users/id/1 GET USER BY ID
+router.get(
+  '/nickname/:nickname',
+  auth(),
+  awaitHandlerFactory(getUserByNickName)
+) // localhost:3000/api/v1/users/usersname/julia
+router.get('/whoami', auth(), awaitHandlerFactory(getCurrentUser)) // localhost:3000/api/v1/users/whoami
 
 export default router

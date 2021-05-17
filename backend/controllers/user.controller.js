@@ -24,50 +24,8 @@ const hashPassword = async (req) => {
   }
 }
 
-const getAllUsers = async (req, res, next) => {
-  let userList = await find()
-  if (!userList.length) {
-    throw new HttpException(404, 'Users not found')
-  }
-
-  userList = userList.map((user) => {
-    const { password, ...userWithoutPassword } = user
-    return userWithoutPassword
-  })
-
-  res.send(userList)
-}
-
-const getUserById = async (req, res, next) => {
-  const user = await findOne({ id: req.params.id })
-  if (!user) {
-    throw new HttpException(404, 'User not found')
-  }
-
-  const { password, ...userWithoutPassword } = user
-
-  res.send(userWithoutPassword)
-}
-
-const getUserByuserName = async (req, res, next) => {
-  const user = await findOne({ username: req.params.username })
-  if (!user) {
-    throw new HttpException(404, 'User not found')
-  }
-
-  const { password, ...userWithoutPassword } = user
-
-  res.send(userWithoutPassword)
-}
-
-const getCurrentUser = async (req, res, next) => {
-  const { password, ...userWithoutPassword } = req.currentUser
-
-  res.send(userWithoutPassword)
-}
-
 const createUser = async (req, res, next) => {
-  checkValidation(req)
+  checkValidation(req.body)
 
   await hashPassword(req)
 
@@ -114,6 +72,48 @@ const deleteUser = async (req, res, next) => {
   res.send('User has been deleted')
 }
 
+const getAllUsers = async (req, res, next) => {
+  let userList = await find()
+  if (!userList.length) {
+    throw new HttpException(404, 'Users not found')
+  }
+
+  userList = userList.map((user) => {
+    const { password, ...userWithoutPassword } = user
+    return userWithoutPassword
+  })
+
+  res.send(userList)
+}
+
+const getUserById = async (req, res, next) => {
+  const user = await findOne({ idUser: req.params.id })
+  if (!user) {
+    throw new HttpException(404, 'User not found')
+  }
+
+  const { password, ...userWithoutPassword } = user
+
+  res.send(userWithoutPassword)
+}
+
+const getUserByNickName = async (req, res, next) => {
+  const user = await findOne({ nickname: req.params.nickname })
+  if (!user) {
+    throw new HttpException(404, 'User not found')
+  }
+
+  const { password, ...userWithoutPassword } = user
+
+  res.send(userWithoutPassword)
+}
+
+const getCurrentUser = async (req, res, next) => {
+  const { password, ...userWithoutPassword } = req.currentUser
+
+  res.send(userWithoutPassword)
+}
+
 const userLogin = async (req, res, next) => {
   checkValidation(req)
 
@@ -122,7 +122,7 @@ const userLogin = async (req, res, next) => {
   const user = await findOne({ email })
 
   if (!user) {
-    throw new HttpException(401, 'Unable to login!')
+    throw new HttpException(401, "User Doesn't Exists")
   }
 
   const isMatch = await bcrypt.compare(pass, user.password)
@@ -133,7 +133,7 @@ const userLogin = async (req, res, next) => {
 
   // user matched!
   const secretKey = process.env.SECRET_JWT || ''
-  const token = jwt.sign({ user_id: user.id.toString() }, secretKey, {
+  const token = jwt.sign({ user_id: user.idUser.toString() }, secretKey, {
     expiresIn: '24h',
   })
 
@@ -148,7 +148,7 @@ const userLogin = async (req, res, next) => {
 export {
   getAllUsers,
   getUserById,
-  getUserByuserName,
+  getUserByNickName,
   getCurrentUser,
   createUser,
   updateUser,
