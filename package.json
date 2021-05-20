@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node backend/server",
     "server": "nodemon backend/server",
-    "admin": "npm start --prefix frontend/admin -- -p 3005",
+    "admin": "npm start --prefix frontend/admin",
     "client": "npm run dev --prefix frontend/client",
     "dev": "concurrently \"npm run server\" \"npm run client\" \"npm run admin\""
   },
