@@ -6,6 +6,7 @@ import { HttpException } from './utils/HttpException.utils.js'
 import { errorMiddleware } from './middleware/error.middleware.js'
 import userRouter from './routes/user.route.js'
 import postRouter from './routes/posts.route.js'
+import categoryRouter from './routes/category.route.js'
 
 // Init express
 const app = express()
@@ -22,7 +23,7 @@ app.options('*', cors())
 
 app.use(`/api/v1/users`, userRouter)
 app.use(`/api/v1/posts`, postRouter)
-// app.use(`/api/v1/category`, categoryRouter)
+app.use(`/api/v1/category`, categoryRouter)
 
 // 404 error
 app.all('*', (req, res, next) => {
