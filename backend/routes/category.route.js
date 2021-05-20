@@ -13,7 +13,7 @@ import {
 import {
   createCategoryValidation,
   updateCatValidation,
-} from '../middleware/validators/postValidator.middleware.js'
+} from '../middleware/validators/categoryValidator.middleware.js'
 
 import { Role } from '../utils/userRoles.utils.js'
 

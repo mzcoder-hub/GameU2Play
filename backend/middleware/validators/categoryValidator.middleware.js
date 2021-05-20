@@ -16,7 +16,7 @@ const createCategoryValidation = [
     .withMessage('slug Must Be Filled'),
 ]
 
-const updateCategoryValidation = [
+const updateCatValidation = [
   body('nameCategory')
     .exists()
     .withMessage('nameCategory Required')
@@ -43,4 +43,4 @@ const updateCategoryValidation = [
     .withMessage('Invalid updates!'),
 ]
 
-export { createCategoryValidation, updateCategoryValidation }
+export { createCategoryValidation, updateCatValidation }
