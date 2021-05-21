@@ -13,6 +13,32 @@ const _nav = [
     },
   },
   {
+    _tag: "CSidebarNavDropdown",
+    name: "Post",
+    route: "/post",
+    icon: "cil-puzzle",
+    _children: [
+      {
+        _tag: "CSidebarNavItem",
+        name: "Post List",
+        to: "/post/list",
+      },
+    ],
+  },
+  {
+    _tag: "CSidebarNavDropdown",
+    name: "Category",
+    route: "/category",
+    icon: "cil-puzzle",
+    _children: [
+      {
+        _tag: "CSidebarNavItem",
+        name: "Category List",
+        to: "/category/list",
+      },
+    ],
+  },
+  {
     _tag: "CSidebarNavTitle",
     _children: ["Components"],
   },

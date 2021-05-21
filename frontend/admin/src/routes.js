@@ -52,18 +52,31 @@ const Tooltips = React.lazy(() => import("./views/base/tooltips/Tooltips"));
 //   import("./views/theme/typography/Typography")
 // );
 // const Widgets = React.lazy(() => import("./views/widgets/Widgets"));
-// const Users = React.lazy(() => import("./views/users/Users"));
-// const User = React.lazy(() => import("./views/users/User"));
+const Users = React.lazy(() => import("./views/users/Users"));
+const User = React.lazy(() => import("./views/users/User"));
 // const Toaster = React.lazy(() =>
 //   import("./views/notifications/toaster/Toaster")
 // );
 
 // Page
 const Dashboard = React.lazy(() => import("./views/dashboard/Dashboard"));
+const PostList = React.lazy(() => import("./views/posts/PostList"));
+const PostId = React.lazy(() => import("./views/posts/PostId"));
+const CatList = React.lazy(() => import("./views/category/CategoryList"));
+const CatId = React.lazy(() => import("./views/category/CatId"));
 
 const routes = [
   { path: "/", exact: true, name: "Home" },
   { path: "/dashboard", name: "Dashboard", component: Dashboard },
+  { path: "/post/list", name: "Post List", component: PostList },
+  { path: "/post/:id", exact: true, name: "Post Detail", component: PostId },
+  { path: "/category/list", name: "Category List", component: CatList },
+  {
+    path: "/category/:id",
+    exact: true,
+    name: "Category Detail",
+    component: CatId,
+  },
   // { path: '/theme', name: 'Theme', component: Colors, exact: true },
   // { path: '/theme/colors', name: 'Colors', component: Colors },
   // { path: '/theme/typography', name: 'Typography', component: Typography },
@@ -100,8 +113,8 @@ const routes = [
   // { path: '/notifications/modals', name: 'Modals', component: Modals },
   // { path: '/notifications/toaster', name: 'Toaster', component: Toaster },
   // { path: '/widgets', name: 'Widgets', component: Widgets },
-  // { path: '/users', exact: true,  name: 'Users', component: Users },
-  // { path: '/users/:id', exact: true, name: 'User Details', component: User }
+  { path: "/users", exact: true, name: "Users", component: Users },
+  { path: "/users/:id", exact: true, name: "User Details", component: User },
 ];
 
 export default routes;
