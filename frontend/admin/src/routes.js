@@ -22,12 +22,15 @@ const Paginations = React.lazy(() =>
   import("./views/base/paginations/Pagnations")
 );
 const Popovers = React.lazy(() => import("./views/base/popovers/Popovers"));
+
 const ProgressBar = React.lazy(() =>
   import("./views/base/progress-bar/ProgressBar")
 );
+
 const Switches = React.lazy(() => import("./views/base/switches/Switches"));
 const Tabs = React.lazy(() => import("./views/base/tabs/Tabs"));
 const Tooltips = React.lazy(() => import("./views/base/tooltips/Tooltips"));
+
 // const BrandButtons = React.lazy(() =>
 //   import("./views/buttons/brand-buttons/BrandButtons")
 // );
@@ -52,13 +55,16 @@ const Tooltips = React.lazy(() => import("./views/base/tooltips/Tooltips"));
 //   import("./views/theme/typography/Typography")
 // );
 // const Widgets = React.lazy(() => import("./views/widgets/Widgets"));
+
 const Users = React.lazy(() => import("./views/users/Users"));
 const User = React.lazy(() => import("./views/users/User"));
+
 // const Toaster = React.lazy(() =>
 //   import("./views/notifications/toaster/Toaster")
 // );
 
 // Page
+
 const Dashboard = React.lazy(() => import("./views/dashboard/Dashboard"));
 const PostList = React.lazy(() => import("./views/posts/PostList"));
 const PostId = React.lazy(() => import("./views/posts/PostId"));
@@ -77,9 +83,10 @@ const routes = [
     name: "Category Detail",
     component: CatId,
   },
-  // { path: '/theme', name: 'Theme', component: Colors, exact: true },
-  // { path: '/theme/colors', name: 'Colors', component: Colors },
-  // { path: '/theme/typography', name: 'Typography', component: Typography },
+
+  { path: "/users", exact: true, name: "Users", component: Users },
+  { path: "/users/:id", exact: true, name: "User Details", component: User },
+
   { path: "/base", name: "Base", component: Cards, exact: true },
   { path: "/base/breadcrumbs", name: "Breadcrumbs", component: Breadcrumbs },
   { path: "/base/cards", name: "Cards", component: Cards },
@@ -97,6 +104,7 @@ const routes = [
   { path: "/base/tables", name: "Tables", component: Tables },
   { path: "/base/tabs", name: "Tabs", component: Tabs },
   { path: "/base/tooltips", name: "Tooltips", component: Tooltips },
+
   // { path: '/buttons', name: 'Buttons', component: Buttons, exact: true },
   // { path: '/buttons/buttons', name: 'Buttons', component: Buttons },
   // { path: '/buttons/button-dropdowns', name: 'Dropdowns', component: ButtonDropdowns },
@@ -113,8 +121,9 @@ const routes = [
   // { path: '/notifications/modals', name: 'Modals', component: Modals },
   // { path: '/notifications/toaster', name: 'Toaster', component: Toaster },
   // { path: '/widgets', name: 'Widgets', component: Widgets },
-  { path: "/users", exact: true, name: "Users", component: Users },
-  { path: "/users/:id", exact: true, name: "User Details", component: User },
+  // { path: '/theme', name: 'Theme', component: Colors, exact: true },
+  // { path: '/theme/colors', name: 'Colors', component: Colors },
+  // { path: '/theme/typography', name: 'Typography', component: Typography },
 ];
 
 export default routes;
