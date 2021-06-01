@@ -5,8 +5,6 @@ import AOS from 'aos'
 import 'aos/dist/aos.css'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import { useAuthState } from 'react-firebase-hooks/auth'
-import { auth, db } from '../firebase'
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {

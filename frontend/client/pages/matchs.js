@@ -1,4 +1,3 @@
-import React from 'react'
 import { Col, Row } from 'react-bootstrap'
 import Headline from '../components/Headline'
 import Layout from '../components/Layout'
