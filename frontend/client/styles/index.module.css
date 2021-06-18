@@ -1,0 +1,54 @@
+.topPage {
+  background-image: url('/images/bghead.jpg');
+  background-position: 'center';
+  background-repeat: 'no-repeat';
+  background-size: cover;
+  height: auto;
+}
+
+.topPageText {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 45px;
+  line-height: 87px;
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.015em;
+  color: #fcfcfc;
+  margin-left: 90px;
+  margin-top: 146px;
+}
+
+.topPageTextTwo {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: -0.015em;
+
+  /* Warning / Default */
+
+  color: #f4b740;
+  margin-left: 23px;
+}
+
+.topPageButton {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: -0.015em;
+
+  /* Grayscale / Title-Active */
+  color: #14142b;
+  margin-left: 90px;
+}

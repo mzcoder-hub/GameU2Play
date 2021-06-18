@@ -7,7 +7,7 @@ const NavLink = ({ path, name }) => {
   return (
     <Nav.Link
       onClick={() => router.push(path)}
-      style={{ color: '#fff' }}
+      style={{ color: '#F4B740 !important' }}
       key={name}
     >
       {name}

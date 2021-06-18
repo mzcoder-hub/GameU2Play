@@ -5,15 +5,10 @@ import RoutesNav from '../pages/Routes/RoutesNav'
 
 const Navigation = () => {
   return (
-    <Nav style={{ alignItems: 'center', backgroundColor: '#000000!important' }}>
+    <Nav style={{ alignItems: 'center' }}>
       {RoutesNav.map((val) => (
         <NavLink path={val.path} name={val.title} key={val.title} />
       ))}
-      <Nav.Link>
-        <Tombol variant='warning' fontWeight='bold' borderRadius='1.25rem'>
-          Login / Register
-        </Tombol>
-      </Nav.Link>
     </Nav>
   )
 }

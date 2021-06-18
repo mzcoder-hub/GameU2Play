@@ -9,6 +9,7 @@ import {
   CDataTable,
   CRow,
   CPagination,
+  CButton,
 } from "@coreui/react";
 
 import usersData from "../users/UsersData";
@@ -44,7 +45,7 @@ const PostList = () => {
 
   return (
     <CRow>
-      <CCol xl={6}>
+      <CCol xl={12}>
         <CCard>
           <CCardHeader>
             PostList
@@ -54,10 +55,11 @@ const PostList = () => {
             <CDataTable
               items={usersData}
               fields={[
-                { key: "name", _classes: "font-weight-bold" },
+                { key: "username", _classes: "font-weight-bold" },
                 "registered",
                 "role",
                 "status",
+                "action",
               ]}
               hover
               striped
@@ -69,6 +71,27 @@ const PostList = () => {
                 status: (item) => (
                   <td>
                     <CBadge color={getBadge(item.status)}>{item.status}</CBadge>
+                  </td>
+                ),
+                action: () => (
+                  <td>
+                    <CButton
+                      key="jahaha"
+                      color="primary"
+                      size="sm"
+                      className="m-2"
+                    >
+                      Edit
+                    </CButton>
+                    |
+                    <CButton
+                      key="jahaha"
+                      color="danger"
+                      size="sm"
+                      className="m-2"
+                    >
+                      Delete
+                    </CButton>
                   </td>
                 ),
               }}

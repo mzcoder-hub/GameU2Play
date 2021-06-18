@@ -11,6 +11,14 @@ const RoutesNav = [
     path: '/forum',
     title: 'Forum',
   },
+  {
+    path: '/game',
+    title: 'Game',
+  },
+  {
+    path: '/leaderboard',
+    title: 'Leaderboard',
+  },
 ]
 
 export default RoutesNav
