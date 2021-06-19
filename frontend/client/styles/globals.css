@@ -11,6 +11,61 @@ body {
   max-width: 1680px; /* or 950px */
 }
 
+.slick-slide div div {
+  width: 350px !important;
+  height: 457px !important;
+}
+.slick-slide div div img {
+  width: 285px !important;
+  height: 414px !important;
+  filter: brightness(50%);
+}
+
+.slick-slide div div img:hover {
+  filter: brightness(100%);
+}
+.slick-slide div div span {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 33px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.015em;
+
+  color: #ffffff;
+}
+
+.slick-prev,
+.slick-next {
+  display: none !important;
+}
+.custom-prevArrow {
+  position: relative;
+  top: 275px;
+  z-index: 99999;
+  width: 60px;
+}
+.custom-nextArrow {
+  position: relative;
+  top: -245px;
+  float: right;
+}
+/* .custom-prevArrow {
+  left: -10px;
+}
+.custom-nextArrow {
+  right: -10px;
+} */
+.custom-prevArrow:hover,
+.custom-nextArrow:hover {
+  fill: red;
+  cursor: pointer;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -18,4 +73,11 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .slick-slide div div img {
+    width: 100% !important;
+    display: flex;
+  }
 }

@@ -1,6 +1,6 @@
 .topPage {
   background-image: url('/images/bghead.jpg');
-  background-position: 'center';
+  background-position: center;
   background-repeat: 'no-repeat';
   background-size: cover;
   height: auto;
@@ -19,8 +19,12 @@
   margin-left: 90px;
   margin-top: 146px;
 }
+.topPageBottomBody {
+  margin-left: 90px;
+}
 
 .topPageTextTwo {
+  text-align: center;
   font-family: Montserrat;
   font-style: normal;
   font-weight: 500;
@@ -28,13 +32,11 @@
   line-height: 22px;
   display: flex;
   align-items: center;
-  text-align: center;
   letter-spacing: -0.015em;
 
   /* Warning / Default */
 
   color: #f4b740;
-  margin-left: 23px;
 }
 
 .topPageButton {
@@ -50,5 +52,333 @@
 
   /* Grayscale / Title-Active */
   color: #14142b;
+}
+
+.secondPage {
+  background: #1a1a1a;
+  background-image: url('/images/Patterns.svg');
+  background-position: 'center';
+  background-attachment: fixed;
+  background-repeat: 'no-repeat';
+  background-size: cover;
+}
+
+.secondPageBody {
+  margin-top: 66px;
+  margin-bottom: 98px;
   margin-left: 90px;
+}
+
+.secondPageTextHeader {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 49px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.015em;
+
+  /* Warning / Default */
+
+  color: #f4b740;
+}
+
+.secondPageStream {
+  height: 500px;
+  background: url('/images/Stream.svg');
+  background-position: center;
+  background-repeat: 'no-repeat';
+  background-size: cover;
+}
+.secondPageStreamLeftHead {
+  display: flex;
+  align-items: center;
+  height: 105px;
+  background: #f4b740;
+}
+.secondPageStreamLeftHeadTextLeft {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 33px;
+  text-align: left;
+  letter-spacing: -0.015em;
+  color: #0b0d17;
+}
+
+.secondPageStreamLeftHeadTextRight {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  letter-spacing: -0.015em;
+  text-decoration-line: underline;
+  text-align: right;
+  color: #0b0d17;
+}
+.secondPageLeftTeamBody {
+  margin-top: 7px;
+  display: flex;
+  align-items: center;
+  height: 73px;
+  background: #2b2b2b;
+}
+.secondPageLeftTeamLogo {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 33px;
+  /* identical to box height */
+  letter-spacing: -0.015em;
+
+  color: #ffffff;
+}
+.secondPageLeftTeamLogoImages {
+  width: 96.55px;
+  height: 40px;
+  margin-left: 30px;
+}
+.secondPageLeftTeamName {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 33px;
+  /* identical to box height */
+
+  letter-spacing: -0.015em;
+
+  color: #ffffff;
+}
+
+.thirdPageSection {
+  background: #1a1a1a url('/images/Accent.svg') bottom left no-repeat;
+}
+
+.thirdPageSectionLine {
+  background: #f4b74033;
+  height: 181px;
+}
+
+.thirdPageSectionContent {
+  margin-top: -100px;
+}
+
+.thirdPageSectionContentTitle {
+  margin-left: 25px;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 49px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.015em;
+
+  /* Warning / Default */
+
+  color: #f4b740;
+}
+
+.fourthPageSection {
+  background: #1a1a1a url('/images/Accent1.svg') top left no-repeat;
+}
+
+.fourthPageSectionHeadText {
+  margin-top: 66px;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 49px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.015em;
+
+  /* Warning / Default */
+
+  color: #f4b740;
+}
+
+.fourthPageSectionPost {
+  margin-top: 65px;
+}
+
+.fourthPageSectionPostDesc {
+  position: absolute;
+  bottom: 8px;
+  margin: 15px;
+  font-size: 18px;
+}
+
+.fourthPageSectionPostDesc h2 {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 33px;
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.015em;
+  color: #ffffff;
+}
+
+.fourthPageSectionPostDesc p {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+  letter-spacing: -0.015em;
+
+  color: #ffffff;
+}
+
+.fourthPageSectionPostDesc span {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.015em;
+  text-decoration-line: underline;
+
+  /* Warning / Default */
+
+  color: #f4b740;
+}
+
+.fifthPageSection {
+  background: #1a1a1a url('/images/comunity.svg') no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.fifthPageSectionContent {
+  padding: 30px;
+  text-align: center;
+  color: #fff;
+}
+
+.fifthPageSectionContentHead {
+  margin-top: 30px;
+}
+.fifthPageSectionContentHead h4 {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 48px;
+  line-height: 64px;
+  /* identical to box height, or 133% */
+
+  text-align: center;
+  font-feature-settings: 'salt' on, 'liga' off;
+
+  /* Warning / Default */
+
+  color: #f4b740;
+}
+
+.fifthPageSectionContentHead span {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 32px;
+  /* identical to box height, or 178% */
+
+  text-align: center;
+  font-feature-settings: 'salt' on, 'liga' off;
+
+  /* Default / White */
+
+  color: #ffffff;
+}
+
+.fifthPageSectionContentHead span a {
+  color: #f4b740;
+}
+
+.fifthPageSectionContentCount {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.fifthPageSectionContentCount span {
+  /* Lead / Lead 1 */
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 32px;
+  /* identical to box height, or 178% */
+  text-align: center;
+  font-feature-settings: 'salt' on, 'liga' off;
+  /* Default / White */
+  color: #ffffff;
+}
+.fifthPageSectionContentCount h2 {
+  /* Heading / H2 */
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 48px;
+  line-height: 64px;
+  /* identical to box height, or 133% */
+  text-align: center;
+  font-feature-settings: 'salt' on, 'liga' off;
+  /* Warning / Default */
+  color: #f4b740;
+}
+
+.fifthPageSectionContentCountTour {
+  border-right: 1px solid #fff;
+}
+
+.fifthPageSectionContentCountPros {
+  border-right: 1px solid #fff;
+}
+
+@media (max-width: 640px) {
+  .topPageText {
+    margin-left: 0px !important;
+    margin-top: 10px !important;
+    font-size: 30px;
+  }
+  .topPageBottomBody {
+    margin-left: 0px !important;
+  }
+
+  .topPageTextTwo {
+    margin-top: 20px !important;
+    display: block !important;
+    text-align: center !important;
+  }
+  .topPageButton {
+    display: block !important;
+    text-align: center !important;
+  }
+  .fifthPageSectionContentCountTour {
+    border-right: 0px solid #fff;
+    border-bottom: 1px solid #fff;
+  }
+
+  .fifthPageSectionContentCountPros {
+    border-right: 0px solid #fff;
+    border-bottom: 1px solid #fff;
+  }
 }
