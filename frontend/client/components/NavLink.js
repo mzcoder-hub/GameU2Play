@@ -1,15 +1,11 @@
 import { Nav } from 'react-bootstrap'
 import { useRouter } from 'next/router'
 
-const NavLink = ({ path, name }) => {
+const NavLink = ({ path, name, color }) => {
   const router = useRouter()
 
   return (
-    <Nav.Link
-      onClick={() => router.push(path)}
-      style={{ color: '#F4B740 !important' }}
-      key={name}
-    >
+    <Nav.Link onClick={() => router.push(path)} style={{ color }} key={name}>
       {name}
     </Nav.Link>
   )
@@ -18,6 +14,7 @@ const NavLink = ({ path, name }) => {
 NavLink.defaultProps = {
   path: '',
   name: '',
+  color: '#F4B740 !important',
 }
 
 export default NavLink

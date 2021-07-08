@@ -15,6 +15,15 @@ body {
   width: 350px !important;
   height: 457px !important;
 }
+.slick-slide div .TeamSlider {
+  padding: 10px;
+}
+
+.slick-slide div .TeamSlider img {
+  width: 195px !important;
+  height: 185px !important;
+}
+
 .slick-slide div div img {
   width: 285px !important;
   height: 414px !important;
@@ -49,9 +58,21 @@ body {
   z-index: 99999;
   width: 60px;
 }
+
 .custom-nextArrow {
   position: relative;
   top: -245px;
+  float: right;
+}
+.custom-prevArrowTourney {
+  position: relative;
+  top: 135px;
+  z-index: 99999;
+  width: 60px;
+}
+.custom-nextArrowTourney {
+  position: relative;
+  top: -125px;
   float: right;
 }
 /* .custom-prevArrow {
@@ -64,6 +85,89 @@ body {
 .custom-nextArrow:hover {
   fill: red;
   cursor: pointer;
+}
+
+.carousel-inner {
+  position: relative;
+  width: 100%;
+  height: 555px;
+  overflow: hidden;
+}
+
+.carousel-indicators {
+  bottom: -50px !important;
+}
+.carousel-control-next {
+  right: -65px !important;
+}
+.carousel-control-prev {
+  left: -65px !important;
+}
+.carousel-control-next-icon {
+  width: 60px !important;
+  height: 60px !important;
+  background: url('/images/slides/next.svg') no-repeat !important;
+}
+.carousel-control-prev-icon {
+  width: 60px !important;
+  height: 60px !important;
+  background: url('/images/slides/prev.svg') no-repeat !important;
+}
+
+.nav-tabs {
+  border-bottom: none !important;
+}
+
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link {
+  color: #fff !important;
+  background: #1f1f1f !important;
+}
+
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+  color: #f4b740 !important;
+  background: #1a1a1a !important;
+  border-bottom: 5px solid #f4b740 !important;
+  border-right: none !important;
+  border-left: none !important;
+  border-top: none !important;
+}
+
+.nav-tabs .nav-link {
+  margin-bottom: -1px;
+  border: 1px solid transparent;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.015em;
+  width: 150px;
+  display: flex;
+  justify-content: center;
+}
+
+.tab-content {
+  background: #1a1a1a;
+  padding: 30px;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+  letter-spacing: -0.015em;
+  color: #ffffff;
+}
+
+.rootSliderTourney > .slick-list {
+  height: 200px !important;
 }
 
 a {

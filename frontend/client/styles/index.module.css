@@ -64,9 +64,7 @@
 }
 
 .secondPageBody {
-  margin-top: 66px;
-  margin-bottom: 98px;
-  margin-left: 90px;
+  padding: 110px;
 }
 
 .secondPageTextHeader {
@@ -153,6 +151,77 @@
   /* identical to box height */
 
   letter-spacing: -0.015em;
+
+  color: #ffffff;
+}
+
+.StepsSection {
+  background: #1a1a1a;
+  background-image: url('/images/stepsBg.svg');
+  background-position: 'center';
+  background-attachment: fixed;
+  background-repeat: 'no-repeat';
+  background-size: cover;
+}
+
+.StepsInstruction {
+  padding: 30px;
+}
+.StepsInstruction div h4 {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 48px;
+  line-height: 64px;
+  /* identical to box height, or 133% */
+
+  text-align: center;
+  font-feature-settings: 'salt' on, 'liga' off;
+
+  color: #f4b740;
+}
+
+.StepsNumber {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 64px;
+  line-height: 87px;
+  text-align: center;
+
+  color: #f4b740;
+}
+
+.StepsText {
+  margin-top: 20px;
+}
+
+.StepsTextHeader {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 32px;
+  /* identical to box height, or 133% */
+
+  text-align: center;
+  font-feature-settings: 'salt' on, 'liga' off;
+
+  color: #ffffff;
+}
+
+.StepsTextBottom {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 26px;
+  /* identical to box height, or 162% */
+
+  text-align: center;
+  font-feature-settings: 'salt' on, 'liga' off;
+
+  /* Default / White */
 
   color: #ffffff;
 }
@@ -353,6 +422,20 @@
   border-right: 1px solid #fff;
 }
 
+.Footer {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 24px;
+  /* identical to box height, or 171% */
+
+  font-feature-settings: 'salt' on, 'liga' off;
+
+  /* Text / Gray 300 */
+  margin-top: 20px;
+  color: #d9dbe1;
+}
 @media (max-width: 640px) {
   .topPageText {
     margin-left: 0px !important;

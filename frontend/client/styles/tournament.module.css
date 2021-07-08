@@ -1,0 +1,99 @@
+.firstSectiontourney {
+  background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 80%,
+      rgba(0, 0, 0, 0.3) 100%
+    ),
+    url(/images/bgtourney.svg) no-repeat;
+  background-size: cover;
+  height: 660px;
+  background-position: center;
+}
+.secondSectiontourney {
+  background: #0c0c0c;
+}
+
+.contentTourney {
+  padding: 10px;
+}
+.contentTourney h2 {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 33px;
+  color: #f4b740;
+  letter-spacing: -0.015em;
+}
+.contentTourney a {
+  text-decoration: none;
+  color: #f4b740;
+}
+.contentTourney a:hover {
+  text-decoration: underline;
+  color: #64460b;
+}
+.contentTourney .titleDetail h1 {
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 49px;
+}
+.contentTourney .descDetail {
+  margin-top: 30px;
+}
+
+.contentTourney .descDetail p {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+  letter-spacing: -0.015em;
+  text-align: justify;
+}
+
+.detailTourney {
+  padding: 15px;
+  margin-top: 80px;
+}
+.detailTourney h2 {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 33px;
+  color: #f4b740;
+  letter-spacing: -0.015em;
+}
+
+.detailTourney a {
+  text-decoration: none;
+  color: #f4b740;
+}
+.detailTourney a:hover {
+  text-decoration: underline;
+  color: #64460b;
+}
+
+.detailTourney .Prices p {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 33px;
+  /* identical to box height */
+
+  letter-spacing: -0.015em;
+}
+.detailTourney .Streams ul {
+  margin-left: -25px;
+}
+.countSlot {
+  display: flex;
+  justify-content: flex-end;
+  align-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.teamRegistered {
+  margin-top: 25px;
+}
+
+.sliderTeam {
+  width: 300px !important;
+  height: 457px !important;
+}

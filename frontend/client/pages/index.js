@@ -2,6 +2,7 @@ import { Col, Row } from 'react-bootstrap'
 import Layout from '../components/Layout'
 import Meta from '../components/Meta'
 import Tombol from '../components/Tombol'
+import HomePageCarousel from '../components/HomePageCarousel'
 import GameSlider from '../components/GameSlider'
 
 import IndexCss from '../styles/index.module.css'
@@ -50,110 +51,80 @@ const index = () => {
           <Col md={12}>
             <h2 className={IndexCss.secondPageTextHeader}>Highlight</h2>
           </Col>
-          <Col md={12}>
-            <Row style={{ marginLeft: 90 }}>
-              <Col md={7} className={IndexCss.secondPageStream}></Col>
+          <HomePageCarousel sliderData={sliderData} />
+        </Row>
+      </Col>
+      {/* Steps Section */}
+      <Col xs={12} className={IndexCss.StepsSection}>
+        <Row className={IndexCss.StepsInstruction}>
+          <Col md={12} className='text-center'>
+            <h4>Get Yourself Ready!</h4>
+          </Col>
+          <Col md={12} className='text-center'>
+            <Row>
               <Col md={4}>
-                <Row>
-                  <Col sm={12}>
-                    <Row className={IndexCss.secondPageStreamLeftHead}>
-                      <Col
-                        md={6}
-                        className={IndexCss.secondPageStreamLeftHeadTextLeft}
-                      >
-                        Standings
-                      </Col>
-                      <Col
-                        md={6}
-                        className={IndexCss.secondPageStreamLeftHeadTextRight}
-                      >
-                        View Details
-                      </Col>
-                    </Row>
-                  </Col>
-                  <Col sm={12}>
-                    <Row className={IndexCss.secondPageLeftTeamBody}>
-                      <Col md={6} className={IndexCss.secondPageLeftTeamLogo}>
-                        1.{' '}
-                        <img
-                          src='/images/team.svg'
-                          alt='Team Logo'
-                          className={IndexCss.secondPageLeftTeamLogoImages}
-                        />
-                      </Col>
-                      <Col md={6} className={IndexCss.secondPageLeftTeamName}>
-                        T1 Esports
-                      </Col>
-                    </Row>
-                  </Col>
-                  <Col sm={12}>
-                    <Row className={IndexCss.secondPageLeftTeamBody}>
-                      <Col md={6} className={IndexCss.secondPageLeftTeamLogo}>
-                        2.{' '}
-                        <img
-                          src='/images/team.svg'
-                          alt='Team Logo'
-                          className={IndexCss.secondPageLeftTeamLogoImages}
-                        />
-                      </Col>
-                      <Col md={6} className={IndexCss.secondPageLeftTeamName}>
-                        TNC Predator
-                      </Col>
-                    </Row>
-                  </Col>
-                  <Col sm={12}>
-                    <Row className={IndexCss.secondPageLeftTeamBody}>
-                      <Col md={6} className={IndexCss.secondPageLeftTeamLogo}>
-                        3.{' '}
-                        <img
-                          src='/images/team.svg'
-                          alt='Team Logo'
-                          className={IndexCss.secondPageLeftTeamLogoImages}
-                        />
-                      </Col>
-                      <Col md={6} className={IndexCss.secondPageLeftTeamName}>
-                        Execration
-                      </Col>
-                    </Row>
-                  </Col>
-                  <Col sm={12}>
-                    <Row className={IndexCss.secondPageLeftTeamBody}>
-                      <Col md={6} className={IndexCss.secondPageLeftTeamLogo}>
-                        4.{' '}
-                        <img
-                          src='/images/team.svg'
-                          alt='Team Logo'
-                          className={IndexCss.secondPageLeftTeamLogoImages}
-                        />
-                      </Col>
-                      <Col md={6} className={IndexCss.secondPageLeftTeamName}>
-                        Fnatic
-                      </Col>
-                    </Row>
-                  </Col>
-                  <Col sm={12}>
-                    <Row className={IndexCss.secondPageLeftTeamBody}>
-                      <Col md={6} className={IndexCss.secondPageLeftTeamLogo}>
-                        5.{' '}
-                        <img
-                          src='/images/team.svg'
-                          alt='Team Logo'
-                          className={IndexCss.secondPageLeftTeamLogoImages}
-                        />
-                      </Col>
-                      <Col md={6} className={IndexCss.secondPageLeftTeamName}>
-                        Neon Esport
-                      </Col>
-                    </Row>
-                  </Col>
-                </Row>
+                <Tombol
+                  variant='warning'
+                  borderRadius='21px'
+                  backgroundColor='rgba(244, 183, 64, 0.35)'
+                  width='138px'
+                  height='145px'
+                >
+                  <span className={IndexCss.StepsNumber}>1</span>
+                </Tombol>
+                <div className={IndexCss.StepsText}>
+                  <span className={IndexCss.StepsTextHeader}>Sign Up</span>{' '}
+                  <br />
+                  <p className={IndexCss.StepsTextBottom}>
+                    Create Account and Get Started
+                  </p>
+                </div>
+              </Col>
+              <Col md={4}>
+                <Tombol
+                  variant='warning'
+                  borderRadius='21px'
+                  backgroundColor='rgba(244, 183, 64, 0.35)'
+                  width='138px'
+                  height='145px'
+                >
+                  <span className={IndexCss.StepsNumber}>2</span>
+                </Tombol>
+                <div className={IndexCss.StepsText}>
+                  <span className={IndexCss.StepsTextHeader}>
+                    Build or Join a Team
+                  </span>{' '}
+                  <br />
+                  <p className={IndexCss.StepsTextBottom}>
+                    Get yout squad ready!
+                  </p>
+                </div>
+              </Col>
+              <Col md={4}>
+                <Tombol
+                  variant='warning'
+                  borderRadius='21px'
+                  backgroundColor='rgba(244, 183, 64, 0.35)'
+                  width='138px'
+                  height='145px'
+                >
+                  <span className={IndexCss.StepsNumber}>3</span>
+                </Tombol>
+                <div className={IndexCss.StepsText}>
+                  <span className={IndexCss.StepsTextHeader}>
+                    Compete and Win
+                  </span>{' '}
+                  <br />
+                  <p className={IndexCss.StepsTextBottom}>
+                    Compete at the Tournaments
+                  </p>
+                </div>
               </Col>
             </Row>
           </Col>
         </Row>
       </Col>
       {/* Tournament Section */}
-
       <Col xl={12}>
         <Row className={IndexCss.thirdPageSection}>
           <Col md={12} className={IndexCss.thirdPageSectionLine}></Col>

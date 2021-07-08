@@ -4,8 +4,8 @@ const RoutesNav = [
     title: 'Discover',
   },
   {
-    path: '/tournaments',
-    title: 'Tournaments',
+    path: '/tournament',
+    title: 'Tournament',
   },
   {
     path: '/forum',

@@ -1,5 +1,6 @@
 import Navbar from './Navbar'
 import Image from 'next/image'
+import Footer from './Footer'
 import { Col, Container, Row } from 'react-bootstrap'
 
 const Layout = ({ children, urlBackground }) => {
@@ -9,7 +10,7 @@ const Layout = ({ children, urlBackground }) => {
         <Row>
           <Navbar />
           {children}
-          {/* <Footer /> */}
+          <Footer />
         </Row>
       </Container>
     </>
