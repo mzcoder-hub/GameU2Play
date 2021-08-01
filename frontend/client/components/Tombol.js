@@ -15,11 +15,15 @@ const Tombol = ({
   width,
   fontSize,
   border,
+  onClick,
+  type,
 }) => {
   return (
     <Button
-      variant={variant}
-      size={size}
+      onClick={onClick ? onClick : undefined}
+      type={type ? type : undefined}
+      variant={variant ? variant : undefined}
+      size={size ? size : undefined}
       style={{
         fontWeight: fontWeight,
         color: color,
@@ -39,6 +43,8 @@ const Tombol = ({
 }
 
 Tombol.defaultProps = {
+  type: '',
+  onClick: '',
   variant: 'secondary',
   color: '#000',
   fontWeight: '',

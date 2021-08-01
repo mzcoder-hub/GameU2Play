@@ -1,0 +1,35 @@
+.modalForm {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 25px;
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.015em;
+}
+
+.modalHeader {
+  border-bottom: none;
+}
+
+.noSpinner::-webkit-inner-spin-button,
+.noSpinner::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.checkBoxs {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 28px;
+}
+.checkBoxs a {
+  text-decoration: none;
+  color: #f4b740;
+}
+.checkBoxs a:hover {
+  text-decoration: underline;
+  color: #64460b;
+}

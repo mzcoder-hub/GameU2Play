@@ -1,6 +1,7 @@
 const Role = {
-  Admin: 'Admin',
-  SuperUser: 'SuperUser',
+  Admin: 'admin',
+  SuperAdmin: 'superadmin',
+  User: 'user',
 }
 
 export { Role }

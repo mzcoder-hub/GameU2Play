@@ -2,7 +2,7 @@ import { DBConnection } from '../db/db-connection.js'
 import { multipleColumnSet } from '../utils/common.utils.js'
 import { Role } from '../utils/userRoles.utils.js'
 
-const tableName = 'categorize'
+const tableName = 'tournaments'
 const db = await new DBConnection().query
 
 const find = async (params = {}) => {
@@ -30,11 +30,37 @@ const findOne = async (params) => {
   return result[0]
 }
 
-const create = async ({ nameCategory, description, slug }) => {
+const create = async ({
+  title,
+  description,
+  venue,
+  prizepool,
+  rule_link,
+  contact_person,
+  registration_start,
+  registration_end,
+  start,
+  end,
+  create_date,
+  difficult,
+}) => {
   const sql = `INSERT INTO ${tableName}
-        (nameCategory, description, slug) VALUES (?,?,?)`
+        ( title, description, venue, prizepool, rule_link, contact_person, registration_start, registration_end, start, end, difficult) 
+        VALUES (?,?,?,?,?,?,?,?,?,?,?)`
 
-  const result = await db(sql, [nameCategory, description, slug])
+  const result = await db(sql, [
+    title,
+    description,
+    venue,
+    prizepool,
+    rule_link,
+    contact_person,
+    registration_start,
+    registration_end,
+    start,
+    end,
+    difficult,
+  ])
   const affectedRows = result ? result.affectedRows : 0
   return affectedRows
 }
@@ -42,20 +68,20 @@ const create = async ({ nameCategory, description, slug }) => {
 const update = async (params, id) => {
   const { columnSet, values } = multipleColumnSet(params)
 
-  const sql = `UPDATE ${tableName} SET ${columnSet} WHERE catId = ?`
+  const sql = `UPDATE ${tableName} SET ${columnSet} WHERE idPost = ?`
 
   const result = await db(sql, [...values, id])
 
   return result
 }
 
-const deleteCatData = async (id) => {
+const deletePostData = async (id) => {
   const sql = `DELETE FROM ${tableName}
-        WHERE catId = ?`
+        WHERE idPost = ?`
   const result = await db(sql, [id])
   const affectedRows = result ? result.affectedRows : 0
 
   return affectedRows
 }
 
-export { find, findOne, update, create, deleteCatData }
+export { find, findOne, update, create, deletePostData }

@@ -19,7 +19,7 @@ const auth = (...roles) => {
 
       // Verify Token
       const decoded = jwt.verify(token, secretKey)
-      const user = await findOne({ idUser: decoded.user_id })
+      const user = await findOne({ uid: decoded.user_id })
 
       if (!user) {
         throw new HttpException(401, 'Authentication failed!')

@@ -121,4 +121,13 @@ const validateLogin = [
     .withMessage('Password must be filled'),
 ]
 
-export { createUserSchema, updateUserSchema, validateLogin }
+const validateVerification = [
+  body('verification_code').exists().withMessage('Code is required'),
+]
+
+export {
+  createUserSchema,
+  updateUserSchema,
+  validateLogin,
+  validateVerification,
+}

@@ -1,8 +1,7 @@
 import { DBConnection } from '../db/db-connection.js'
 import { multipleColumnSet } from '../utils/common.utils.js'
-import { Role } from '../utils/userRoles.utils.js'
 
-const tableName = 'user'
+const tableName = 'users'
 const db = await new DBConnection().query
 
 const find = async (params = {}) => {
@@ -31,25 +30,25 @@ const findOne = async (params) => {
 }
 
 const create = async ({
-  nickname,
-  password,
   first_name,
   last_name,
   email,
-  role = Role.SuperUser,
-  birthDate = '',
+  phone_number,
+  password,
+  role = 'user',
+  verification_code,
 }) => {
   const sql = `INSERT INTO ${tableName}
-        (nickname, email, password, first_name, last_name, role, birthDate) VALUES (?,?,?,?,?,?,?)`
+        (first_name, last_name, email, phone_number, password, role, verification_code) VALUES (?,?,?,?,?,?,?)`
 
   const result = await db(sql, [
-    nickname,
-    email,
-    password,
     first_name,
     last_name,
+    email,
+    phone_number,
+    password,
     role,
-    birthDate,
+    verification_code,
   ])
   const affectedRows = result ? result.affectedRows : 0
   return affectedRows
@@ -58,7 +57,7 @@ const create = async ({
 const update = async (params, id) => {
   const { columnSet, values } = multipleColumnSet(params)
 
-  const sql = `UPDATE user SET ${columnSet} WHERE idUser = ?`
+  const sql = `UPDATE users SET ${columnSet} WHERE uid = ?`
 
   const result = await db(sql, [...values, id])
 
@@ -67,7 +66,7 @@ const update = async (params, id) => {
 
 const deleteUserData = async (id) => {
   const sql = `DELETE FROM ${tableName}
-        WHERE idUser = ?`
+        WHERE uid = ?`
   const result = await db(sql, [id])
   const affectedRows = result ? result.affectedRows : 0
 

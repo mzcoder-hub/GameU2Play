@@ -37,7 +37,9 @@
     "express": "^4.17.1",
     "express-validator": "^6.10.1",
     "jsonwebtoken": "^8.5.1",
-    "mysql2": "^2.2.5"
+    "mysql2": "^2.2.5",
+    "nodemailer": "^6.6.3",
+    "nodemailer-smtp-transport": "^2.7.4"
   },
   "devDependencies": {
     "concurrently": "^6.0.2",
