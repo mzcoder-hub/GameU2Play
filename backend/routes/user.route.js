@@ -39,7 +39,7 @@ router.patch(
 router.delete('/id/:id', auth(Role.SuperAdmin), awaitHandlerFactory(deleteUser)) // localhost:3000/api/v1/users/id/1 DELETE USER (ADMIN ONLY)
 
 router.get('/', auth(Role.Admin), awaitHandlerFactory(getAllUsers)) // localhost:3000/api/v1/users GET ALL USER (ADMIN ONLY)
-router.get('/id/:id', auth(), awaitHandlerFactory(getUserById)) // localhost:3000/api/v1/users/id/1 GET USER BY ID
+router.get('/id/:id', auth(Role.Admin), awaitHandlerFactory(getUserById)) // localhost:3000/api/v1/users/id/1 GET USER BY ID
 // router.get(
 //   '/nickname/:nickname',
 //   auth(),

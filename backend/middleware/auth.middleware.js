@@ -1,5 +1,5 @@
 import { HttpException } from '../utils/HttpException.utils.js'
-import { find, findOne, create, deleteUserData } from '../models/user.model.js'
+import { findOne } from '../models/user.model.js'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 dotenv.config()
@@ -7,6 +7,7 @@ dotenv.config()
 const auth = (...roles) => {
   return async function (req, res, next) {
     try {
+      // console.log(req.params.id)
       const authHeader = req.headers.authorization
       const bearer = 'Bearer '
 
@@ -26,7 +27,7 @@ const auth = (...roles) => {
       }
 
       // check if the current user is the owner user
-      const ownerAuthorized = req.params.id == user.id
+      const ownerAuthorized = req.params.id == user.uid
 
       // if the current user is not the owner and
       // if the user role don't have the permission to do this action.

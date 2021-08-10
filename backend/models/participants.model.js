@@ -2,8 +2,8 @@ import { DBConnection } from '../db/db-connection.js'
 import { multipleColumnSet } from '../utils/common.utils.js'
 import { Role } from '../utils/userRoles.utils.js'
 
-const tableName = 'tournaments'
-const theId = 'tournament_id'
+const tableName = 'participants'
+const theId = 'participant_id'
 const db = await new DBConnection().query
 
 const find = async (params = {}) => {
@@ -31,51 +31,17 @@ const findOne = async (params) => {
   return result[0]
 }
 
-const create = async ({
-  title,
-  description,
-  venue,
-  prizepool,
-  rule_link,
-  contact_person,
-  registration_start,
-  registration_end,
-  start,
-  end,
-  difficult,
-}) => {
+const register = async ({ team_player_id, tournament_id }) => {
   const sql = `INSERT INTO ${tableName}
-        ( title, description, venue, prizepool, rule_link, contact_person, registration_start, registration_end, start, end, difficult) 
-        VALUES (?,?,?,?,?,?,?,?,?,?,?)`
+        ( team_player_id, tournament_id) 
+        VALUES (?,?)`
 
-  const result = await db(sql, [
-    title,
-    description,
-    venue,
-    prizepool,
-    rule_link,
-    contact_person,
-    registration_start,
-    registration_end,
-    start,
-    end,
-    difficult,
-  ])
+  const result = await db(sql, [team_player_id, tournament_id])
   const affectedRows = result ? result.affectedRows : 0
   return affectedRows
 }
 
-const update = async (params, id) => {
-  const { columnSet, values } = multipleColumnSet(params)
-
-  const sql = `UPDATE ${tableName} SET ${columnSet} WHERE ${theId} = ?`
-
-  const result = await db(sql, [...values, id])
-
-  return result
-}
-
-const deleteTournamentData = async (id) => {
+const deleteTournamentParticipant = async (id) => {
   const sql = `DELETE FROM ${tableName}
         WHERE ${theId} = ?`
   const result = await db(sql, [id])
@@ -84,4 +50,4 @@ const deleteTournamentData = async (id) => {
   return affectedRows
 }
 
-export { find, findOne, update, create, deleteTournamentData }
+export { register, deleteTournamentParticipant }

@@ -543,7 +543,7 @@ const sendVerificationMail = async (req) => {
 }
 
 const createUser = async (req, res, next) => {
-  checkValidation(req.body)
+  checkValidation(req)
 
   await hashPassword(req)
   const email = req.body.email

@@ -18,11 +18,12 @@ const code = () => {
 
   const { code } = router.query
 
-  const proccedVerification = async (email, code) => {
+  const proccedVerification = async (email, code, token) => {
     // console.log(email)
     const config = {
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
     }
 
@@ -40,7 +41,11 @@ const code = () => {
     } else {
       handleCloseLogin()
       if (getUserLogin.email && code !== undefined) {
-        proccedVerification(getUserLogin.email, router.query.code)
+        proccedVerification(
+          getUserLogin.email,
+          router.query.code,
+          getUserLogin.token
+        )
       }
     }
   }, [router])

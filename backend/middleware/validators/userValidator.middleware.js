@@ -24,7 +24,7 @@ const createUserSchema = [
     .normalizeEmail(),
   body('role')
     .optional()
-    .isIn([Role.Admin, Role.SuperUser])
+    .isIn([Role.Admin, Role.SuperAdmin])
     .withMessage('Invalid Role type'),
   body('password')
     .exists()
