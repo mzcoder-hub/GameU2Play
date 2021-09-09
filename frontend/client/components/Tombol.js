@@ -15,6 +15,7 @@ const Tombol = ({
   width,
   fontSize,
   border,
+  className,
   onClick,
   type,
 }) => {
@@ -34,6 +35,7 @@ const Tombol = ({
         backgroundColor: backgroundColor,
         border: border,
       }}
+      className={className ? className : undefined}
       disabled={disabled}
       block={block}
     >
@@ -45,7 +47,7 @@ const Tombol = ({
 Tombol.defaultProps = {
   type: '',
   onClick: '',
-  variant: 'secondary',
+  variant: '',
   color: '#000',
   fontWeight: '',
   size: '',
@@ -57,6 +59,7 @@ Tombol.defaultProps = {
   fontSize: '',
   backgroundColor: '',
   border: '',
+  className: '',
 }
 
 export default Tombol

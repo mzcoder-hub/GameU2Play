@@ -1,0 +1,24 @@
+.newWestTournament {
+  margin: 10px;
+}
+.newWestTournament > div > h2 {
+  font-size: 25px;
+}
+
+.newWestTournament .item {
+  margin-top: 15px;
+}
+
+.imageNewTournament img {
+  width: 100%;
+  height: 147px;
+}
+
+.detailWidgetTournament h4 {
+  margin-top: 3px;
+  font-size: 19px;
+}
+
+.detailWidgetTournament span {
+  margin: 0;
+}

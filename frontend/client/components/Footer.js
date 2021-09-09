@@ -9,7 +9,7 @@ const Footer = ({ background }) => {
       <Container style={{ marginTop: 50 }}>
         <Row>
           <Col md={12} className='text-center'>
-            <Image src='/webgame.png' alt='logo' height='50' width='199' />
+            <Image src='/webgame.svg' alt='logo' height='50' width='199' />
             <Navbar
               collapseOnSelect
               expand='lg'

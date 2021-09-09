@@ -1,0 +1,56 @@
+.default {
+  background: #1a1a1a;
+  height: 100%;
+  padding: 30px;
+  border-radius: 5px;
+}
+
+.defaultH1 {
+  color: #f4b740;
+  font-size: 36px;
+}
+
+.gasul {
+  list-style: none; /* Remove default bullets */
+  margin-left: -35px;
+}
+
+.gasul li:before {
+  content: '• ';
+}
+
+.gasul li:nth-child(even):before {
+  color: green;
+}
+
+.gasul li:nth-child(odd):before {
+  color: red;
+}
+
+.content h2 {
+  font-size: 24px;
+  margin-bottom: -0.5rem;
+  color: #fcfcfc;
+}
+
+.content span {
+  font-size: 10px;
+  margin-top: -30px;
+  color: #ffffff;
+}
+
+.catnvote span {
+  margin: 15px;
+}
+
+.defaultFontFormForum {
+  font-family: Open Sans;
+  font-style: normal;
+  font-size: 19px;
+  line-height: 49px;
+  padding: 30px;
+}
+
+.widgetContent {
+  padding: 10px;
+}

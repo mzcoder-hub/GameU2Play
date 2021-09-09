@@ -186,7 +186,7 @@ const Header = () => {
         style={{ backgroundColor: '#1A1A1A !important' }}
       >
         <Navbar.Brand href='#' onClick={() => router.push('/')}>
-          <Image src='/webgame.png' alt='logo' height='50' width='199' />
+          <Image src='/webgame.svg' alt='logo' height='50' width='199' />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='responsive-navbar-nav' />
         <Navbar.Collapse id='responsive-navbar-nav'>
@@ -202,7 +202,7 @@ const Header = () => {
                 variant='warning'
                 borderRadius='6px'
                 border='1px solid #F4B740'
-                backgroundColor='#14142B'
+                backgroundColor='#1A1A1A'
                 color='#F4B740'
               >
                 Login

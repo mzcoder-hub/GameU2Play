@@ -2,7 +2,15 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: Geo, Open Sans, sans-serif !important;
+  font-family: Open Sans, Lato !important;
+}
+
+.defaultFont {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 33px;
 }
 
 .container-fluid {
@@ -189,6 +197,9 @@ a {
 
 * {
   box-sizing: border-box;
+}
+.active {
+  border-bottom: 2px solid #f4b740 !important;
 }
 
 @media (max-width: 640px) {

@@ -1,0 +1,37 @@
+.threadDetail {
+  padding: 30px;
+}
+
+.Header h1 {
+  font-size: 30px;
+}
+.articleBody {
+  margin-top: 15px;
+}
+
+.articleBody img {
+  width: 663px;
+  height: 382px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.commentThreadItem {
+  background: #1a1a1a;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 30px;
+}
+
+.commentThreadItem .headerComment {
+  font-size: 18px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.commentThreadItem blockquote {
+  border-left: 3px solid #f4b740;
+  padding: 10px;
+  background: #2b2b2b;
+  font-size: 15px;
+}
