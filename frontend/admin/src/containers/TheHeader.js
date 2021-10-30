@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   CHeader,
@@ -23,8 +23,12 @@ import {
   TheHeaderDropdownTasks,
 } from "./index";
 
-const TheHeader = () => {
+const TheHeader = ({ history }) => {
   const dispatch = useDispatch();
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   const sidebarShow = useSelector((state) => state.sidebarShow);
 
   const toggleSidebar = () => {

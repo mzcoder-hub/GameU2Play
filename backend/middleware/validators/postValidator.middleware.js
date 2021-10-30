@@ -8,28 +8,28 @@ const createPostValidation = [
     .withMessage('Post Title must contain at least 100 characters')
     .notEmpty()
     .withMessage('post_title Must Be Filled'),
-  body('content')
+  body('post_content')
     .exists()
     .withMessage('content Required')
     .isLength({ min: 200 })
     .withMessage('Content must contain at least 200 characters')
     .notEmpty()
     .withMessage('content Must Be Filled'),
-  body('userId')
+  body('uid')
     .exists()
-    .withMessage('userId Required')
+    .withMessage('uid Required')
     .notEmpty()
-    .withMessage('userId Must Be Filled'),
-  body('catId')
+    .withMessage('uid Must Be Filled'),
+  body('cat_id')
     .exists()
-    .withMessage('catId Required')
+    .withMessage('cat_id Required')
     .notEmpty()
-    .withMessage('catId Must Be Filled'),
-  body('primaryImage')
-    .exists()
-    .withMessage('primaryImage Required')
-    .notEmpty()
-    .withMessage('primaryImage Must Be Filled'),
+    .withMessage('cat_id Must Be Filled'),
+  // body('primary_image')
+  //   .exists()
+  //   .withMessage('primary_image Required')
+  //   .notEmpty()
+  //   .withMessage('primary_image Must Be Filled'),
   body('slug')
     .exists()
     .withMessage('slug Required')
@@ -46,9 +46,9 @@ const updatePostValidation = [
     .optional()
     .isLength({ min: 200 })
     .withMessage('Content must contain at least 200 characters'),
-  body('userId').optional(),
-  body('catId').optional(),
-  body('primaryImage').optional(),
+  body('uid').optional(),
+  body('cat_id').optional(),
+  body('primary_image').optional(),
   body('slug').optional(),
   body()
     .custom((value) => {
@@ -60,9 +60,9 @@ const updatePostValidation = [
       const allowUpdates = [
         'post_title',
         'content',
-        'userId',
-        'catId',
-        'primaryImage',
+        'uid',
+        'cat_id',
+        'primary_image',
         'slug',
       ]
       return updates.every((update) => allowUpdates.includes(update))

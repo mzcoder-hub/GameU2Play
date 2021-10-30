@@ -24,7 +24,7 @@ const Pertournament = ({
           <Col md={12}>
             <img
               className={tournamentIndexCss.singleImage}
-              src='/images/sample/tourneysingle.svg'
+              src={featured_images}
               alt='tournament pertama'
               width='100%'
             />
@@ -32,22 +32,22 @@ const Pertournament = ({
           <Col md={12}>
             <Row className={tournamentIndexCss.singleContent}>
               <Col md={6} className='text-left'>
-                Title
+                {title}
               </Col>
               <Col md={6} className='text-right'>
                 Prizepool
               </Col>
               <Col md={6} className='text-left'>
-                Organizer
+                {organizer}
               </Col>
               <Col md={6} className='text-right'>
-                Rp. 15.000.000
+                {prizepool}
               </Col>
               <Col md={6} className='text-left'>
-                date
+                {date}
               </Col>
               <Col md={6} className='text-right'>
-                max_team
+                {max_team}
               </Col>
             </Row>
           </Col>

@@ -8,6 +8,7 @@ import {
   updatePost,
   deletePost,
   getAllPosts,
+  getPostById,
 } from '../controllers/posts.controller.js'
 
 import {
@@ -19,10 +20,12 @@ import { Role } from '../utils/userRoles.utils.js'
 
 router.post(
   '/',
-  auth(Role.Admin),
+  auth(Role.SuperAdmin, Role.Admin),
   createPostValidation,
   awaitHandlerFactory(createPost)
 )
+
+router.get('/id/:id', auth(), awaitHandlerFactory(getPostById))
 
 router.patch(
   '/id/:id',

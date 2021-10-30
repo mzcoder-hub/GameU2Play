@@ -52,7 +52,7 @@ router.post(
 /******************************************************************************
  *                              Detail Tournament Route                       *
  ******************************************************************************/
-router.post('/detail/:id', auth(), awaitHandlerFactory(getDetailTournament))
+router.get('/detail/:id', auth(), awaitHandlerFactory(getDetailTournament))
 router.get('/details', auth(), awaitHandlerFactory(getAllTournament))
 
 /******************************************************************************

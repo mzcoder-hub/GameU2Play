@@ -6,7 +6,7 @@ const tableName = 'categorize'
 const db = await new DBConnection().query
 
 const find = async (params = {}) => {
-  let sql = `SELECT * FROM ${tableName}`
+  let sql = `SELECT CONVERT(cat_id, char) as cat_id,category_title,category_desc,slug   FROM ${tableName}`
 
   if (!Object.keys(params).length) {
     return await db(sql)
@@ -30,11 +30,11 @@ const findOne = async (params) => {
   return result[0]
 }
 
-const create = async ({ nameCategory, description, slug }) => {
+const create = async ({ category_title, category_desc, slug }) => {
   const sql = `INSERT INTO ${tableName}
-        (nameCategory, description, slug) VALUES (?,?,?)`
+        (category_title, category_desc, slug) VALUES (?,?,?)`
 
-  const result = await db(sql, [nameCategory, description, slug])
+  const result = await db(sql, [category_title, category_desc, slug])
   const affectedRows = result ? result.affectedRows : 0
   return affectedRows
 }
@@ -42,7 +42,7 @@ const create = async ({ nameCategory, description, slug }) => {
 const update = async (params, id) => {
   const { columnSet, values } = multipleColumnSet(params)
 
-  const sql = `UPDATE ${tableName} SET ${columnSet} WHERE catId = ?`
+  const sql = `UPDATE ${tableName} SET ${columnSet} WHERE cat_id = ?`
 
   const result = await db(sql, [...values, id])
 
@@ -51,7 +51,7 @@ const update = async (params, id) => {
 
 const deleteCatData = async (id) => {
   const sql = `DELETE FROM ${tableName}
-        WHERE catId = ?`
+        WHERE cat_id = ?`
   const result = await db(sql, [id])
   const affectedRows = result ? result.affectedRows : 0
 

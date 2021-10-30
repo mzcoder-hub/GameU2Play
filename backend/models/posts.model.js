@@ -6,7 +6,7 @@ const tableName = 'posts'
 const db = await new DBConnection().query
 
 const find = async (params = {}) => {
-  let sql = `SELECT * FROM ${tableName}`
+  let sql = `SELECT *, CONVERT(post_id, char) as post_id, CONVERT(uid, char) as uid, CONVERT(cat_id, char) as cat_id FROM ${tableName} ORDER BY created_at DESC`
 
   if (!Object.keys(params).length) {
     return await db(sql)
@@ -27,28 +27,35 @@ const findOne = async (params) => {
   const result = await db(sql, [...values])
 
   // return back the first row (user)
-  return result[0]
+  return { ...result[0] }
 }
 
 const create = async ({
   post_title,
-  content,
-  userId,
-  catId,
-  primaryImage,
+  post_content,
+  uid,
+  cat_id,
+  primary_image,
   slug,
 }) => {
+  // console.log(post_title, post_content, uid, cat_id, primary_image, slug)
   const sql = `INSERT INTO ${tableName}
-        (post_title, content, userId, catId, primaryImage, slug) VALUES (?,?,?,?,?,?)`
+        (post_title, post_content, uid, cat_id, slug) VALUES (?,?,?,?,?)`
 
-  const result = await db(sql, [
-    post_title,
-    content,
-    userId,
-    catId,
-    primaryImage,
-    slug,
-  ])
+  const result = await db(sql, [post_title, post_content, uid, cat_id, slug])
+
+  const getPostDetail = await db(
+    `SELECT * FROM ${tableName} WHERE post_id = ${result.insertId}`,
+    [],
+    function (err, result) {
+      return result
+    }
+  )
+  const getPost_recent_id = { ...getPostDetail[0] }
+  const sqlInsertPivot = await db(
+    `INSERT INTO categorize_has_posts (cat_id, post_id) VALUES (${getPost_recent_id.post_id}, ${cat_id})`
+  )
+
   const affectedRows = result ? result.affectedRows : 0
   return affectedRows
 }

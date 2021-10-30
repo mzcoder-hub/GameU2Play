@@ -7,6 +7,7 @@ import {
   update,
   deleteCatData,
   find,
+  findOne,
 } from '../models/category.model.js'
 import { HttpException } from '../utils/HttpException.utils.js'
 
@@ -24,8 +25,6 @@ const checkValidation = (req) => {
 const createCategory = async (req, res, next) => {
   checkValidation(req.body)
 
-  await hashPassword(req)
-
   const result = await create(req.body)
 
   if (!result) {
@@ -36,7 +35,8 @@ const createCategory = async (req, res, next) => {
 }
 
 const updateCat = async (req, res, next) => {
-  checkValidation(req)
+  // console.log(req.body)
+  checkValidation(req.body)
 
   // do the update query and get the result
   // it can be partial edit
@@ -79,8 +79,19 @@ const getAllCategory = async (req, res, next) => {
   res.send(postList)
 }
 
+const getCatById = async (req, res, next) => {
+  // console.log(req.params.id)
+  let post = await findOne({ cat_id: req.params.id })
+  // console.log(Object.keys(post).length)
+  if (Object.keys(post).length === 0) {
+    throw new HttpException(404, 'Posts not found')
+  }
+
+  res.send(post)
+}
+
 /******************************************************************************
  *                               Export                                       *
  ******************************************************************************/
 
-export { createCategory, updateCat, deleteCat, getAllCategory }
+export { createCategory, updateCat, deleteCat, getAllCategory, getCatById }

@@ -43,7 +43,7 @@ const resultMessage = (responsCode, status, message, data = '') => {
 const checkValidation = (req) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    throw new HttpException(400, 'Validation failed', errors)
+    throw new HttpException(400, JSON.stringify(errors))
   }
 }
 
@@ -546,11 +546,15 @@ const createUser = async (req, res, next) => {
   checkValidation(req)
 
   await hashPassword(req)
-  const email = req.body.email
-  const user = await findOne({ email })
+  const getEmailAddress = req.body.email
+  const getPhoneNumber = req.body.phone_number
+  const user = await findOne({ email: getEmailAddress })
+  const phone_number = await findOne({ phone_number: getPhoneNumber })
 
   if (user) {
     res.send(resultMessage(400, 'warning', 'Email Already Exist'))
+  } else if (phone_number) {
+    res.send(resultMessage(400, 'warning', 'Phone Already Exist'))
   } else {
     req.body.verification_code = randomNumber(1000, 5000)
 

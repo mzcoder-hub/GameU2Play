@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import { Col, Row } from 'react-bootstrap'
+import CommentFormForum from '../../../components/forumComponent/CommentFormForum'
 import CommentThreadItem from '../../../components/forumComponent/CommentThreadItem'
 import ThreadDetailComponent from '../../../components/forumComponent/ThreadDetailComponent'
 import WidgetForum from '../../../components/forumComponent/WidgetForum'
@@ -31,6 +32,7 @@ const slug = () => {
                 threadId='1'
               />
             ))}
+            <CommentFormForum />
           </Col>
           <Col md={4}>
             <div style={{ background: '#1A1A1A' }}>

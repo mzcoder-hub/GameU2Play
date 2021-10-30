@@ -5,7 +5,7 @@ const tableName = 'users'
 const db = await new DBConnection().query
 
 const find = async (params = {}) => {
-  let sql = `SELECT * FROM ${tableName}`
+  let sql = `SELECT *, CONVERT(uid, char) as uid FROM ${tableName}`
 
   if (!Object.keys(params).length) {
     return await db(sql)
@@ -20,7 +20,7 @@ const find = async (params = {}) => {
 const findOne = async (params) => {
   const { columnSet, values } = multipleColumnSet(params)
 
-  const sql = `SELECT * FROM ${tableName}
+  const sql = `SELECT *, CONVERT(uid, char) as uid FROM ${tableName}
         WHERE ${columnSet}`
 
   const result = await db(sql, [...values])

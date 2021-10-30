@@ -11,6 +11,7 @@ import {
 } from 'react-bootstrap'
 import { createUseStyles } from 'react-jss'
 import { useRouter } from 'next/router'
+import Cookies from 'js-cookie'
 import validator from 'validator'
 import axios from 'axios'
 import Navigation from './Navigation'
@@ -104,8 +105,11 @@ const Header = () => {
           last_name: NamaBelakang,
           email: Email,
           phone_number: FormNoTlp,
+          role: 'user',
           password: Password,
+          confirm_password: PasswordConfirm,
         }
+        // console.log(registerUser)
 
         const config = {
           headers: {
@@ -168,9 +172,9 @@ const Header = () => {
 
     if (data.status === 'non') {
       router.push('/auth/verifikasi/')
-      localStorage.setItem('userLogin', JSON.stringify(data))
+      Cookies.set('userLogin', JSON.stringify(data))
     } else {
-      localStorage.setItem('userLogin', JSON.stringify(data))
+      Cookies.set('userLogin', JSON.stringify(data))
     }
   }
 

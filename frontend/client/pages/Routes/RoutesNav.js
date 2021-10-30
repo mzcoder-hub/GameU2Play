@@ -1,6 +1,6 @@
 const RoutesNav = [
   {
-    path: '/discovers',
+    path: '/discover',
     title: 'Jelajahi',
     icon: '/icons/tetris.svg',
   },
@@ -10,7 +10,7 @@ const RoutesNav = [
     icon: '/icons/trophy.svg',
   },
   {
-    path: '/peringkat',
+    path: '/leaderboards',
     title: 'Peringkat',
     icon: '/icons/crowd.svg',
   },

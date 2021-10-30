@@ -1,0 +1,104 @@
+.firstPageDiscoverySectionHeadText {
+  margin-top: 66px;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 49px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.015em;
+
+  /* Warning / Default */
+
+  color: #f4b740;
+}
+
+.firstPageDiscoverySectionPost {
+  margin-top: 65px;
+}
+
+.firstPageDiscoverySectionPostDesc {
+  position: absolute;
+  bottom: 8px;
+  margin: 15px;
+  font-size: 18px;
+}
+
+.firstPageDiscoverySectionPostDesc h2 {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 33px;
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.015em;
+  color: #ffffff;
+}
+
+.firstPageDiscoverySectionPostDesc p {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+  letter-spacing: -0.015em;
+
+  color: #ffffff;
+}
+
+.firstPageDiscoverySectionPostDesc span {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.015em;
+  text-decoration-line: underline;
+
+  /* Warning / Default */
+
+  color: #f4b740;
+}
+
+.postInfo h1 {
+  font-size: 25px;
+}
+
+.postInfo span a {
+  color: #f4b740;
+}
+
+.entryHeader {
+  color: #fff;
+  position: absolute;
+  bottom: 0;
+  padding-bottom: 5px;
+  width: 100%;
+}
+
+.postTitle {
+  max-width: 960px;
+  font-size: 58px;
+  color: #fff;
+}
+
+.kategoryList {
+  padding: 10px;
+}
+
+.kategoryList a {
+  color: #f4b740;
+}
+.shareButton {
+  border-top: 1px solid #d9dbe9;
+  border-bottom: 1px solid #d9dbe9;
+  padding: 10px;
+}

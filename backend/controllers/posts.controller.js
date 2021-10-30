@@ -2,7 +2,13 @@ import { validationResult } from 'express-validator'
 import dotenv from 'dotenv'
 dotenv.config()
 
-import { create, update, deletePostData, find } from '../models/posts.model.js'
+import {
+  create,
+  update,
+  deletePostData,
+  find,
+  findOne,
+} from '../models/posts.model.js'
 import { HttpException } from '../utils/HttpException.utils.js'
 
 /******************************************************************************
@@ -17,12 +23,11 @@ const checkValidation = (req) => {
 }
 
 const createPost = async (req, res, next) => {
+  // console.log(req.body)
   checkValidation(req.body)
 
-  await hashPassword(req)
-
   const result = await create(req.body)
-
+  // console.log(result)
   if (!result) {
     throw new HttpException(500, 'Something went wrong')
   }
@@ -74,8 +79,19 @@ const getAllPosts = async (req, res, next) => {
   res.send(postList)
 }
 
+const getPostById = async (req, res, next) => {
+  // console.log(req.params.id)
+  let post = await findOne({ post_id: req.params.id })
+  // console.log(Object.keys(post).length)
+  if (Object.keys(post).length === 0) {
+    throw new HttpException(404, 'Posts not found')
+  }
+
+  res.send(post)
+}
+
 /******************************************************************************
  *                               Export                                       *
  ******************************************************************************/
 
-export { createPost, updatePost, deletePost, getAllPosts }
+export { createPost, updatePost, deletePost, getAllPosts, getPostById }

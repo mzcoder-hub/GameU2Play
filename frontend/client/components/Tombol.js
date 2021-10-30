@@ -11,6 +11,7 @@ const Tombol = ({
   backgroundColor,
   borderColor,
   borderRadius,
+  marginRight,
   height,
   width,
   fontSize,
@@ -34,6 +35,7 @@ const Tombol = ({
         fontSize: fontSize,
         backgroundColor: backgroundColor,
         border: border,
+        marginRight: marginRight,
       }}
       className={className ? className : undefined}
       disabled={disabled}
@@ -60,6 +62,7 @@ Tombol.defaultProps = {
   backgroundColor: '',
   border: '',
   className: '',
+  marginRight: '',
 }
 
 export default Tombol

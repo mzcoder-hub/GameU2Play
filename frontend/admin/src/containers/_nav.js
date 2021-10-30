@@ -7,34 +7,52 @@ const _nav = [
     name: "Dashboard",
     to: "/dashboard",
     icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
-    badge: {
-      color: "info",
-      text: "NEW",
-    },
   },
   {
+    _tag: "CSidebarNavItem",
+    name: "Post List",
+    to: "/post/list",
+    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
+  },
+  {
+    _tag: "CSidebarNavItem",
+    name: "Category Manajemen",
+    to: "/category/list",
+    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
+  },
+  {
+    _tag: "CSidebarNavItem",
+    name: "Tournament Manajemen",
+    to: "/tournament/list",
+    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
+  },
+  {
+    _tag: "CSidebarNavItem",
+    name: "User Manajemen",
+    to: "/users/list",
+    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
+  },
+
+  {
     _tag: "CSidebarNavDropdown",
-    name: "Post",
-    route: "/post",
+    name: "Setting",
+    route: "/setting",
     icon: "cil-puzzle",
     _children: [
       {
         _tag: "CSidebarNavItem",
-        name: "Post List",
-        to: "/post/list",
+        name: "Ads Setting",
+        to: "/tournament/list",
       },
-    ],
-  },
-  {
-    _tag: "CSidebarNavDropdown",
-    name: "Category",
-    route: "/category",
-    icon: "cil-puzzle",
-    _children: [
       {
         _tag: "CSidebarNavItem",
-        name: "Category List",
-        to: "/category/list",
+        name: "Hotline Setting",
+        to: "/tournament/list",
+      },
+      {
+        _tag: "CSidebarNavItem",
+        name: "Setting List",
+        to: "/tournament/list",
       },
     ],
   },

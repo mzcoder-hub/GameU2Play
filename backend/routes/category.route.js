@@ -8,6 +8,7 @@ import {
   updateCat,
   deleteCat,
   getAllCategory,
+  getCatById,
 } from '../controllers/category.controller.js'
 
 import {
@@ -19,17 +20,19 @@ import { Role } from '../utils/userRoles.utils.js'
 
 router.post(
   '/',
-  auth(Role.Admin),
+  auth(Role.SuperAdmin, Role.Admin),
   createCategoryValidation,
   awaitHandlerFactory(createCategory)
 )
 
 router.patch(
   '/id/:id',
-  auth(Role.Admin),
+  auth(Role.SuperAdmin, Role.Admin),
   updateCatValidation,
   awaitHandlerFactory(updateCat)
 ) // localhost:3000/api/v1/posts/id/1 , using patch for partial UPDATE Posts
+
+router.get('/id/:id', auth(), awaitHandlerFactory(getCatById))
 
 router.delete('/id/:id', auth(Role.Admin), awaitHandlerFactory(deleteCat)) // localhost:3000/api/v1/posts/id/1 DELETE Posts (ADMIN ONLY)
 

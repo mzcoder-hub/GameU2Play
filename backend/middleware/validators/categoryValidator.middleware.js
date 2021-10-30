@@ -1,14 +1,12 @@
 import { body } from 'express-validator'
 
 const createCategoryValidation = [
-  body('nameCategory')
+  body('category_title')
     .exists()
-    .withMessage('nameCategory Required')
-    .isLength({ min: 100 })
-    .withMessage('Name Category must contain at least 100 characters')
+    .withMessage('category_title Required')
     .notEmpty()
-    .withMessage('nameCategory Must Be Filled'),
-  body('description').optional(),
+    .withMessage('category_title Must Be Filled'),
+  body('category_desc').optional(),
   body('slug')
     .exists()
     .withMessage('slug Required')
@@ -17,14 +15,12 @@ const createCategoryValidation = [
 ]
 
 const updateCatValidation = [
-  body('nameCategory')
+  body('category_title')
     .exists()
-    .withMessage('nameCategory Required')
-    .isLength({ min: 100 })
-    .withMessage('Name Category must contain at least 100 characters')
+    .withMessage('category_title Required')
     .notEmpty()
-    .withMessage('nameCategory Must Be Filled'),
-  body('description').optional(),
+    .withMessage('category_title Must Be Filled'),
+  body('category_desc').optional(),
   body('slug')
     .exists()
     .withMessage('slug Required')
@@ -37,7 +33,7 @@ const updateCatValidation = [
     .withMessage('Please provide required field to update')
     .custom((value) => {
       const updates = Object.keys(value)
-      const allowUpdates = ['nameCategory', 'description', 'slug']
+      const allowUpdates = ['category_title', 'category_desc', 'slug']
       return updates.every((update) => allowUpdates.includes(update))
     })
     .withMessage('Invalid updates!'),
