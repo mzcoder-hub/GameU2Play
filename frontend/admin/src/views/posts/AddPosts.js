@@ -18,6 +18,7 @@ import {
 } from "@coreui/react";
 
 import { createPost } from "src/redux/actions/postActions";
+import axios from "axios";
 
 const PostList = () => {
   var toolbarOptions = {
@@ -55,6 +56,9 @@ const PostList = () => {
   const [postCategory, setpostCategory] = useState("");
   const [postSlug, setpostSlug] = useState("");
 
+  const [image, setImage] = useState("");
+  const [uploading, setUploading] = useState(false);
+
   const submitHandler = (e) => {
     e.preventDefault();
     try {
@@ -73,6 +77,40 @@ const PostList = () => {
     }
   };
 
+  const uploadFileHandler = async (e) => {
+    const formData = new FormData();
+    const reader = new FileReader();
+
+    if (e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+    }
+    reader.onload = (readerEvent) => {
+      formData.append("image", readerEvent.target.result);
+    };
+
+    // console.log(file);
+    // console.log(formData);
+    setUploading(true);
+
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+
+      const { data } = await axios.post(
+        "/api/v1/uploads/primary",
+        formData,
+        config
+      );
+      setImage(data);
+      setUploading(false);
+    } catch (error) {
+      console.error(error);
+      setUploading(false);
+    }
+  };
   return (
     <>
       <CRow>
@@ -127,12 +165,18 @@ const PostList = () => {
                   </CLabel>
                   <CInput
                     style={{ height: "calc(2em + 0.75rem + 2px)" }}
+                    accept="*"
                     type="file"
                     id="images"
                     placeholder="Choose Featured Images"
-                    value={primaryImage}
-                    onChange={(e) => setPrimaryImage(e.target.value)}
+                    value={image}
+                    onChange={uploadFileHandler}
                   />
+                  {uploading && (
+                    <div className="spinner-border text-primary" role="status">
+                      <span className="sr-only">Loading...</span>
+                    </div>
+                  )}
                 </CFormGroup>
                 <CFormGroup>
                   <ReactQuill

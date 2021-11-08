@@ -65,9 +65,9 @@ const TournamentList = () => {
                 <div className="text-right">
                   <CButton
                     color="primary"
-                    onClick={(e) => history.push(`/category/add`)}
+                    onClick={(e) => history.push(`/tournament/add`)}
                   >
-                    Add Posts
+                    Create New Tournament
                   </CButton>
                 </div>
               </CCardHeader>

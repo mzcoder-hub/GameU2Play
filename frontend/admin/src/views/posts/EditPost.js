@@ -37,6 +37,7 @@ const PostList = ({ match }) => {
 
   useEffect(() => {
     dispatch(getPostById(match.params.id));
+
     setpostTitle(post.post_title);
     // setPrimaryImage(post.primary_image);
     setpostCategory(post.cat_id);

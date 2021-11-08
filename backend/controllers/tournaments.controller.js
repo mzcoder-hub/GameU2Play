@@ -41,7 +41,7 @@ const resultMessage = (responsCode, status, message, data = '') => {
 const checkValidation = (req) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    throw new HttpException(400, 'Validation failed', errors)
+    throw new HttpException(400, JSON.stringify(errors))
   }
 }
 

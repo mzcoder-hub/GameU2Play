@@ -5,7 +5,7 @@ import Meta from '../../../components/Meta'
 import NewBerita from '../../../components/widget/NewBerita'
 import NewestTournament from '../../../components/widget/NewestTournament'
 
-const index = () => {
+const index = ({ post }) => {
   const data = ['1', '2', '3', '4', '5']
   return (
     <Layout>
@@ -45,3 +45,24 @@ const index = () => {
 }
 
 export default index
+
+export const getServerSideProps = async (ctx) => {
+  const { req, res } = ctx
+  // const getCookies = JSON.parse(req.cookies.userLogin)
+  // // console.log(getCookies.token)
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }
+
+  const getAllPost = await axios.get('http://localhost:3002/api/v1/posts')
+
+  // console.log(getAllTournament.data)
+  return {
+    props: {
+      post: getAllPost,
+    },
+  }
+}

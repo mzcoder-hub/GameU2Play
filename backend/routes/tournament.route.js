@@ -53,7 +53,7 @@ router.post(
  *                              Detail Tournament Route                       *
  ******************************************************************************/
 router.get('/detail/:id', auth(), awaitHandlerFactory(getDetailTournament))
-router.get('/details', auth(), awaitHandlerFactory(getAllTournament))
+router.get('/details', awaitHandlerFactory(getAllTournament))
 
 /******************************************************************************
  *                              Delete Tournament Route                       *

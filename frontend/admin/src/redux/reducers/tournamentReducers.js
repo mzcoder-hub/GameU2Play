@@ -54,7 +54,7 @@ export const tournamentCreateReducer = (state = {}, action) => {
     case TOURNAMENT_CREATE_SUCCESS:
       return { loading: false, success: true, tournament: action.payload };
     case TOURNAMENT_CREATE_FAIL:
-      return { loading: false, error: action.payload };
+      return { loading: false, error: JSON.parse(action.payload) };
     case TOURNAMENT_CREATE_RESET:
       return {};
     default:

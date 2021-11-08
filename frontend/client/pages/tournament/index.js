@@ -116,6 +116,7 @@ const index = ({ tournament }) => {
                   {tournament.map((val) => (
                     <Col md={4} key={val.tournament_id}>
                       <Pertournament
+                        tournament_id={val.tournament_id}
                         featured_images={val.featured_image}
                         title={val.title}
                         organizer={val.organizer}
@@ -140,13 +141,12 @@ export default index
 export const getServerSideProps = async (ctx) => {
   const { req, res } = ctx
 
-  const getCookies = JSON.parse(req.cookies.userLogin)
+  // const getCookies = JSON.parse(req.cookies.userLogin)
   // console.log(getCookies.token)
 
   const config = {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${getCookies.token}`,
     },
   }
 
@@ -155,7 +155,7 @@ export const getServerSideProps = async (ctx) => {
     config
   )
 
-  // console.log(getAllTournament.data)
+  console.log(getAllTournament.data)
   return {
     props: {
       tournament: getAllTournament.data,

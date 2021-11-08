@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Col, Row, Tabs, Tab } from 'react-bootstrap'
+import { GetServerSideProps } from 'next'
 import Layout from '../../components/Layout'
 import Meta from '../../components/Meta'
 import Tombol from '../../components/Tombol'
@@ -7,9 +8,12 @@ import TeamSlider from '../../components/TeamSlider'
 import teamData from '../../components/data/teamData'
 
 import tournamentCss from '../../styles/tournament.module.css'
+import axios from 'axios'
+import { useRouter } from 'next/router'
 
-const tournament = () => {
+const tournament = ({ tournamentDetailId }) => {
   const [key, setKey] = useState('detail')
+
   return (
     <Layout>
       <Meta />
@@ -28,45 +32,17 @@ const tournament = () => {
                   <Col md={7}>
                     <div className={tournamentCss.contentTourney}>
                       <div className={tournamentCss.titleDetail}>
-                        <h1>Dota 2 1 vs1 Online Tournament</h1>
+                        <h1>{tournamentDetailId.title}</h1>
                       </div>
                       <div className={tournamentCss.descDetail}>
                         <h2>Deskripsi</h2>
-                        <p>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Ut enim ad minim veniam, quis
-                          nostrud exercitation ullamco laboris nisi ut aliquip
-                          ex ea commodo consequat. Duis aute irure dolor in
-                          reprehenderit in voluptate velit esse cillum dolore eu
-                          fugiat nulla pariatur. Excepteur sint occaecat
-                          cupidatat non proident, sunt in culpa qui officia
-                          deserunt mollit anim id est laboruma Sed ut
-                          perspiciatis unde omnis iste natus error sit
-                          voluptatem accusantium doloremque laudantium, totam
-                          rem aperiam, eaque ipsa quae ab illo inventore
-                          veritatis et quasi architecto beatae vitae dicta sunt
-                          explicabo. Nemo enim ipsam voluptatem quia voluptas
-                          sit aspernatur aut odit aut fugit, sed quia
-                          consequuntur magni dolores eos qui ratione voluptatem
-                          sequi nesciunt. Neque porro quisquam est, qui dolorem
-                          ipsum quia dolor sit amet, consectetur, adipisci
-                          velit, sed quia non numquam eius modi tempora incidunt
-                          ut labore et dolore magnam aliquam quaerat voluptatem
-                        </p>
+                        <p>{tournamentDetailId.description}</p>
                       </div>
                       <div className={tournamentCss.tagapagAyos}>
                         <h2>Penyelenggara</h2>
                         <ol>
-                          <li>ACER Predator Team</li>
-                          <li>
-                            Contact Person 1 (Adi):{' '}
-                            <a href='whastapp'>+6212345678</a>
-                          </li>
-                          <li>
-                            Contact Person 2 (Andi):{' '}
-                            <a href='whastapp'>+6212345678</a>
-                          </li>
+                          <li>{tournamentDetailId.organizer}</li>
+                          <li>{tournamentDetailId.contact_person}</li>
                         </ol>
                       </div>
                     </div>
@@ -76,12 +52,13 @@ const tournament = () => {
                       <div className={tournamentCss.rules}>
                         <h2>Peraturan</h2>
                         <p>
-                          Download <a href=''>PDF</a>
+                          Download{' '}
+                          <a href={tournamentDetailId.rule_link}>PDF</a>
                         </p>
                       </div>
                       <div className={tournamentCss.Prices}>
                         <h2>Total Hadiah</h2>
-                        <p>Rp. 1.000.000.000,-</p>
+                        <p>{tournamentDetailId.prizepool}</p>
                       </div>
                       <div className={tournamentCss.Streams}>
                         <h2>Live Stream</h2>
@@ -99,7 +76,9 @@ const tournament = () => {
                   <Col md={2}>
                     <Row>
                       <Col md={2} className='text-right'>
-                        <div className={tournamentCss.countSlot}>12/36</div>
+                        <div className={tournamentCss.countSlot}>
+                          0/{tournamentDetailId.max_team}
+                        </div>
                       </Col>
                       <Col md={10} className='text-right'>
                         <Tombol
@@ -123,14 +102,8 @@ const tournament = () => {
                   </Col>
                 </Row>
               </Tab>
-              <Tab eventKey='profile' title='Profile'>
-                O! lest the world should task you to recite What merit lived in
-                me, that you should love After my death,--dear love, forget me
-                quite, For you in me can nothing worthy prove; Unless you would
-                devise some virtuous lie, To do more for me than mine own
-                desert, And hang more praise upon deceased I Than niggard truth
-                would willingly impart: O! lest your true love may seem false in
-                this That you for love speak well of me untrue,
+              <Tab eventKey='profile' title='Bracket'>
+                Bracket Will be here
               </Tab>
             </Tabs>
           </Col>
@@ -141,3 +114,28 @@ const tournament = () => {
 }
 
 export default tournament
+
+export const getServerSideProps = async (ctx) => {
+  const { req, res, query } = ctx
+
+  const getCookies = JSON.parse(req.cookies.userLogin)
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${getCookies.token}`,
+    },
+  }
+
+  const detailTournamentById = await axios.get(
+    `http://localhost:3002/api/v1/tournament/detail/${query.tournament_id}`,
+    config
+  )
+
+  // console.log(detailTournamentById.data.data)
+  return {
+    props: {
+      tournamentDetailId: detailTournamentById.data.data,
+    },
+  }
+}

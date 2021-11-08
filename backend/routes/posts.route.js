@@ -25,17 +25,17 @@ router.post(
   awaitHandlerFactory(createPost)
 )
 
-router.get('/id/:id', auth(), awaitHandlerFactory(getPostById))
+router.get('/id/:id', awaitHandlerFactory(getPostById))
 
 router.patch(
   '/id/:id',
-  auth(Role.Admin),
+  auth(Role.SuperAdmin, Role.Admin),
   updatePostValidation,
   awaitHandlerFactory(updatePost)
 ) // localhost:3000/api/v1/posts/id/1 , using patch for partial UPDATE Posts
 
 router.delete('/id/:id', auth(Role.Admin), awaitHandlerFactory(deletePost)) // localhost:3000/api/v1/posts/id/1 DELETE Posts (ADMIN ONLY)
 
-router.get('/', auth(), awaitHandlerFactory(getAllPosts)) // localhost:3000/api/v1/posts GET ALL Posts
+router.get('/', awaitHandlerFactory(getAllPosts)) // localhost:3000/api/v1/posts GET ALL Posts
 
 export default router

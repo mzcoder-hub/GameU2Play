@@ -26,28 +26,32 @@ const EditTournament = ({ match }) => {
 
   const tournamentDetail = useSelector((state) => state.tournamentDetail);
   const { loading, tournament } = tournamentDetail;
+  // console.log(tournament.data);
 
   useEffect(() => {
     dispatch(getTournamentById(match.params.id));
-  }, [match, dispatch]);
+    if (tournament.data) {
+      settournamentTitle(tournament.data.title);
+      settournamentDescription(tournament.data.description);
+      settournamentPrizepool(tournament.data.prizepool);
+      settournamentContantPerson(tournament.data.contant_person);
+      settournamentRegistrationStart(tournament.data.registration_start);
+      settournamentRegistrationEnd(tournament.data.registration_end);
+      settournamentStart(tournament.data.start);
+      settournamentEnd(tournament.data.end);
+    }
+  }, [match, dispatch, tournament]);
 
-  const [tournamentTitle, settournamentTitle] = useState(tournament.data.title);
-  const [tournamentDescription, settournamentDescription] = useState(
-    tournament.data.description
-  );
-  const [tournamentPrizepool, settournamentPrizepool] = useState(
-    tournament.data.prizepool
-  );
-  const [tournamentContantPerson, settournamentContantPerson] = useState(
-    tournament.data.contant_person
-  );
+  const [tournamentTitle, settournamentTitle] = useState("");
+  const [tournamentDescription, settournamentDescription] = useState("");
+  const [tournamentPrizepool, settournamentPrizepool] = useState("");
+  const [tournamentContantPerson, settournamentContantPerson] = useState("");
   const [tournamentRegistrationStart, settournamentRegistrationStart] =
-    useState(tournament.data.registration_start);
-  const [tournamentRegistrationEnd, settournamentRegistrationEnd] = useState(
-    tournament.data.registration_end
-  );
-  const [tournamentStart, settournamentStart] = useState(tournament.data.start);
-  const [tournamentEnd, settournamentEnd] = useState(tournament.data.end);
+    useState("");
+  const [tournamentRegistrationEnd, settournamentRegistrationEnd] =
+    useState("");
+  const [tournamentStart, settournamentStart] = useState("");
+  const [tournamentEnd, settournamentEnd] = useState("");
   //   const [tournamentSlug, settournamentSlug] = useState("");
 
   const submitHandler = (e) => {

@@ -1,7 +1,9 @@
 import { Col, Row, Select } from 'react-bootstrap'
 import tournamentIndexCss from '../styles/tournamentIndex.module.css'
+import { useRouter } from 'next/router'
 
 const Pertournament = ({
+  tournament_id,
   featured_images,
   title,
   organizer,
@@ -9,6 +11,7 @@ const Pertournament = ({
   date,
   prizepool,
 }) => {
+  const router = useRouter()
   return (
     <>
       <div
@@ -22,18 +25,36 @@ const Pertournament = ({
       >
         <Row>
           <Col md={12}>
-            <img
-              className={tournamentIndexCss.singleImage}
-              src={featured_images}
-              alt='tournament pertama'
-              width='100%'
-            />
+            <a
+              style={{
+                textDecoration: 'none',
+                color: 'white',
+              }}
+              onClick={(e) => router.push(`/tournament/${tournament_id}`)}
+            >
+              <img
+                className={tournamentIndexCss.singleImage}
+                src={featured_images}
+                alt='tournament pertama'
+                width='100%'
+              />
+            </a>
           </Col>
           <Col md={12}>
             <Row className={tournamentIndexCss.singleContent}>
               <Col md={6} className='text-left'>
-                {title}
+                <a
+                  style={{
+                    textDecoration: 'none',
+                    color: 'white',
+                  }}
+                  onClick={(e) => router.push(`/tournament/${tournament_id}`)}
+                >
+                  {' '}
+                  {title}{' '}
+                </a>
               </Col>
+
               <Col md={6} className='text-right'>
                 Prizepool
               </Col>
@@ -55,15 +76,6 @@ const Pertournament = ({
       </div>
     </>
   )
-}
-
-Pertournament.defaultProps = {
-  featured_images: '',
-  title: '',
-  organizer: '',
-  max_team: '',
-  date: '',
-  prizepool: '',
 }
 
 export default Pertournament

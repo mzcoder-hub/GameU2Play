@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { Col, Row } from 'react-bootstrap'
 import ThePostStyle from '../../components/discoveryComponent/ThePostStyle'
 import Layout from '../../components/Layout'
@@ -55,3 +56,26 @@ const index = () => {
 }
 
 export default index
+
+export const getServerSideProps = async (ctx) => {
+  const { req, res } = ctx
+  // const getCookies = JSON.parse(req.cookies.userLogin)
+  // // console.log(getCookies.token)
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }
+
+  const getAllPost = await axios.get('http://localhost:3002/api/v1/posts')
+
+  console.log(getAllPost.data)
+
+  // console.log(getAllTournament.data)
+  return {
+    props: {
+      post: getAllPost.data,
+    },
+  }
+}
