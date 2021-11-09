@@ -12,6 +12,7 @@ import {
   CButton,
 } from "@coreui/react";
 
+import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { listPosts } from "src/redux/actions/postActions";
 import { listCategorys } from "src/redux/actions/categoryActions";
@@ -45,6 +46,9 @@ const CategoryList = () => {
   const allCategoryList = useSelector((state) => state.allCategoryList);
   const { loading, categorize } = allCategoryList;
 
+  const actionDelete = (id) => {
+    console.log("actionDelete", id);
+  };
   useEffect(() => {
     currentPage !== page && setPage(currentPage);
     dispatch(listCategorys());
@@ -106,7 +110,23 @@ const CategoryList = () => {
                         Edit
                       </CButton>
                       |
-                      <CButton color="danger" size="sm" className="m-2">
+                      <CButton color="danger" size="sm" className="m-2"
+                        onClick={(e) => {
+                          Swal.fire({
+                            icon: "error",
+                            title: "Peringatan!",
+                            text: `Yakin akan menghapus category ini ?`,
+                            showCancelButton: true,
+                            confirmButtonText: `Hapus`,
+                            cancelButtonText: `Batal`,
+                            confirmButtonColor: "#E55353",
+                          }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+                              actionDelete(item.cat_id);
+                            }
+                          });
+                        }}>
                         Delete
                       </CButton>
                     </td>

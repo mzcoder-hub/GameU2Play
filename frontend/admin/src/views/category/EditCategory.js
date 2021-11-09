@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import ReactQuill from "react-quill";
 
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import {
   CButton,
   CCard,
@@ -15,6 +17,7 @@ import {
   CLabel,
   CRow,
   CSelect,
+  CSpinner,
 } from "@coreui/react";
 
 import { createPost, getPostById } from "src/redux/actions/postActions";
@@ -24,7 +27,9 @@ import {
   updateCategory,
 } from "src/redux/actions/categoryActions";
 
+import { useHistory } from "react-router-dom";
 const EditCategory = ({ match }) => {
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -33,43 +38,57 @@ const EditCategory = ({ match }) => {
   const detailedCategory = useSelector((state) => state.detailedCategory);
   const { loading, category } = detailedCategory;
 
+  const [load, setLoad] = useState(false);
+
+  const [data, setData] = useState({
+    category_title: "",
+    slug: "",
+    category_desc: "",
+  });
+  let initialValues = {
+    category_title: "",
+    slug: "",
+    category_desc: "",
+  };
+  const FormSchema = Yup.object().shape({
+    category_title: Yup.string().required("Judul kategori tidak boleh kosong"),
+    slug: Yup.string().required("Slug tidak boleh kosong"),
+    category_desc: Yup.string().required("Deskripsi tidak boleh kosong"),
+  });
+
+  const formik = useFormik({
+    initialValues: data || initialValues,
+    validationSchema: FormSchema,
+    enableReinitialize: true,
+    onSubmit: async (values, { resetForm }) => {
+      await setLoad(true);
+      console.log("values", values);
+      // try {
+      //   dispatch(
+      //     updateCategory({
+      //       cat_id: match.params.id,
+      //       category_title: categoryTitle,
+      //       slug: categorySlug,
+      //       category_desc: categoryContent,
+      //     })
+      //   );
+      //   await setLoad(false)
+
+      // } catch (error) {
+      //   console.error(error);
+      //   // setUploading(false)
+      // }
+
+      await setLoad(false);
+    },
+  });
   useEffect(() => {
+    // console.log("state", category); 
     dispatch(getCategoryById(match.params.id));
+    console.log("state detailedCategory", detailedCategory);
+    console.log("state userLogin", userLogin);
   }, [match, dispatch]);
 
-  const [categoryTitle, setcategoryTitle] = useState(category.category_title);
-  const [categorySlug, setcategorySlug] = useState(category.slug);
-  const [categoryContent, setcategoryContent] = useState(
-    category.category_desc
-  );
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-    try {
-      dispatch(
-        updateCategory({
-          cat_id: match.params.id,
-          category_title: categoryTitle,
-          slug: categorySlug,
-          category_desc: categoryContent,
-        })
-      );
-    } catch (error) {
-      console.error(error);
-      // setUploading(false)
-    }
-  };
-
-  const handleChangeTitle = (e) => {
-    setcategoryTitle(e.currentTarget.value);
-    console.log(e.currentTarget.value);
-  };
-  const handleChangeSlug = (e) => {
-    setcategorySlug(e.currentTarget.value);
-  };
-  const handleChangeContent = (e) => {
-    setcategoryContent(e.currentTarget.value);
-  };
   return (
     <>
       <CRow>
@@ -77,81 +96,108 @@ const EditCategory = ({ match }) => {
           <CCard>
             <CCardHeader>
               <div className="text-left">
-                Add New Post
-                <small className="text-muted"> example</small>
+                Edit category
               </div>
             </CCardHeader>
             <CCardBody style={{ height: "auto" }}>
-              <CForm>
-                <CFormGroup>
-                  <CLabel
-                    htmlFor="title"
-                    style={{ fontWeight: "bold", fontSize: 15 }}
-                  >
-                    Title
-                  </CLabel>
-                  <CInput
-                    style={{ height: "calc(2em + 0.75rem + 2px)" }}
-                    type="text"
-                    id="title"
-                    placeholder="Masukan Judul Artikel disini"
-                    value={categoryTitle}
-                    onChange={handleChangeTitle}
-                  />
-                </CFormGroup>
-                <CFormGroup>
-                  <CLabel
-                    htmlFor="slug"
-                    style={{ fontWeight: "bold", fontSize: 15 }}
-                  >
-                    Slug
-                  </CLabel>
-                  <CInput
-                    style={{ height: "calc(2em + 0.75rem + 2px)" }}
-                    type="text"
-                    id="slug"
-                    placeholder="example-slug-here"
-                    value={categorySlug}
-                    onChange={handleChangeSlug}
-                  />
-                </CFormGroup>
-                <CFormGroup>
-                  <CLabel
-                    htmlFor="title"
-                    style={{ fontWeight: "bold", fontSize: 15 }}
-                  >
-                    Description
-                  </CLabel>
-                  <CInput
-                    style={{ height: "calc(2em + 0.75rem + 2px)" }}
-                    type="text"
-                    id="title"
-                    placeholder="Masukan Description Categori disini"
-                    value={categoryContent}
-                    onChange={handleChangeContent}
-                  />
-                </CFormGroup>
-                <div className="text-right">
-                  <CButton
-                    color="danger"
-                    shape="square"
-                    className="m-2"
-                    size="lg"
-                    onClick={(e) => submitHandler(e)}
-                  >
-                    Cancel
-                  </CButton>
-                  <CButton
-                    color="primary"
-                    shape="square"
-                    className="m-2"
-                    size="lg"
-                    onClick={(e) => submitHandler(e)}
-                  >
-                    Publish
-                  </CButton>
-                </div>
-              </CForm>
+              {load && !category ? (
+                <CSpinner
+                  className="d-flex mx-auto"
+                  style={{ width: "5rem", height: "5rem", borderWidth: "6px" }}
+                  color="info"
+                />
+              ) : (
+                <CForm onSubmit={formik.handleSubmit}>
+                  <CFormGroup>
+                    <CLabel
+                      htmlFor="title"
+                      style={{ fontWeight: "bold", fontSize: 15 }}
+                    >
+                      Title
+                    </CLabel>
+                    <CInput
+                      style={{ height: "calc(2em + 0.75rem + 2px)" }}
+                      disabled={load}
+                      id="category_title"
+                      name="category_title"
+                      placeholder="Masukan Judul Artikel disini"
+                      onChange={formik.handleChange}
+                      value={formik.values.category_title}
+                    />
+                    {formik.errors.category_title &&
+                      formik.touched.category_title && (
+                        <small className="form-text text-danger login-error">
+                          {formik.errors.category_title}
+                        </small>
+                      )}
+                  </CFormGroup>
+                  <CFormGroup>
+                    <CLabel
+                      htmlFor="slug"
+                      style={{ fontWeight: "bold", fontSize: 15 }}
+                    >
+                      Slug
+                    </CLabel>
+                    <CInput
+                      style={{ height: "calc(2em + 0.75rem + 2px)" }}
+                      disabled={load}
+                      id="slug"
+                      name="slug"
+                      placeholder="example-slug-here"
+                      onChange={formik.handleChange}
+                      value={formik.values.slug}
+                    />
+                    {formik.errors.slug && formik.touched.slug && (
+                      <small className="form-text text-danger login-error">
+                        {formik.errors.slug}
+                      </small>
+                    )}
+                  </CFormGroup>
+                  <CFormGroup>
+                    <CLabel
+                      htmlFor="title"
+                      style={{ fontWeight: "bold", fontSize: 15 }}
+                    >
+                      Description
+                    </CLabel>
+                    <CInput
+                      style={{ height: "calc(2em + 0.75rem + 2px)" }}
+                      disabled={load}
+                      id="category_desc"
+                      name="category_desc"
+                      placeholder="Masukan Description Categori disini"
+                      onChange={formik.handleChange}
+                      value={formik.values.category_desc}
+                    />
+                    {formik.errors.category_desc &&
+                      formik.touched.category_desc && (
+                        <small className="form-text text-danger login-error">
+                          {formik.errors.category_desc}
+                        </small>
+                      )}
+                  </CFormGroup>
+                  <div className="text-right">
+                    <CButton
+                      color="danger"
+                      shape="square"
+                      className="m-2"
+                      size="lg"
+                      onClick={(e) => history.push(`/category/list`)}
+                    >
+                      Cancel
+                    </CButton>
+                    <CButton
+                      type="submit"
+                      color="primary"
+                      shape="square"
+                      className="m-2"
+                      size="lg"
+                    >
+                      Publish
+                    </CButton>
+                  </div>
+                </CForm>
+              )}
             </CCardBody>
           </CCard>
         </CCol>

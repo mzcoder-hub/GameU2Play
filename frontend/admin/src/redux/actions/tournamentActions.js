@@ -13,6 +13,7 @@ import {
   TOURNAMENT_UPDATE_REQUEST,
   TOURNAMENT_UPDATE_SUCCESS,
 } from "../constants/tournamentConstants";
+import { baseUrl } from "../../constant/api";
 
 export const listTournaments = () => async (dispatch, getState) => {
   try {
@@ -28,7 +29,10 @@ export const listTournaments = () => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.get(`/api/v1/tournament/details`, config);
+    const { data } = await axios.get(
+      baseUrl + `/api/v1/tournament/details`,
+      config
+    );
 
     dispatch({
       type: TOURNAMENT_LIST_SUCCESS,
@@ -61,7 +65,7 @@ export const getTournamentById =
         },
       };
       const { data } = await axios.get(
-        `/api/v1/tournament/detail/${tournament_id}`,
+        baseUrl + `/api/v1/tournament/detail/${tournament_id}`,
         config
       );
 
@@ -96,7 +100,11 @@ export const createTournament = (tournament) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.post(`/api/v1/tournament`, tournament, config);
+    const { data } = await axios.post(
+      baseUrl + `/api/v1/tournament`,
+      tournament,
+      config
+    );
 
     dispatch({
       type: TOURNAMENT_CREATE_SUCCESS,
@@ -134,7 +142,7 @@ export const updateTournament = (tournament) => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.patch(
-      `/api/v1/tournament/id/${tournament.cat_id}`,
+      baseUrl + `/api/v1/tournament/id/${tournament.cat_id}`,
       tournament,
       config
     );

@@ -13,6 +13,7 @@ import {
   CATEGORY_UPDATE_REQUEST,
   CATEGORY_UPDATE_SUCCESS,
 } from "../constants/categoryConstants";
+import { baseUrl } from "../../constant/api";
 
 export const listCategorys = () => async (dispatch, getState) => {
   try {
@@ -28,7 +29,7 @@ export const listCategorys = () => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.get(`/api/v1/category`, config);
+    const { data } = await axios.get(baseUrl + `/api/v1/category`, config);
 
     dispatch({
       type: CATEGORY_LIST_SUCCESS,
@@ -48,7 +49,6 @@ export const listCategorys = () => async (dispatch, getState) => {
 export const getCategoryById = (catId) => async (dispatch, getState) => {
   try {
     dispatch({ type: CATEGORY_DETAILS_REQUEST });
-
     const {
       userLogin: { userInfo },
     } = getState();
@@ -59,7 +59,11 @@ export const getCategoryById = (catId) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.get(`/api/v1/category/id/${catId}`, config);
+    const { data } = await axios.get(
+      baseUrl + `/api/v1/category/id/${catId}`,
+      config
+    );
+    console.log("getCategoryById data", data)
 
     dispatch({
       type: CATEGORY_DETAILS_SUCCESS,
@@ -92,7 +96,11 @@ export const createCategory = (category) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.post(`/api/v1/category`, category, config);
+    const { data } = await axios.post(
+      baseUrl + `/api/v1/category`,
+      category,
+      config
+    );
 
     dispatch({
       type: CATEGORY_CREATE_SUCCESS,
@@ -130,7 +138,7 @@ export const updateCategory = (category) => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.patch(
-      `/api/v1/category/id/${category.cat_id}`,
+      baseUrl + `/api/v1/category/id/${category.cat_id}`,
       category,
       config
     );

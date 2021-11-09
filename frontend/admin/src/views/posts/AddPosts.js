@@ -19,6 +19,7 @@ import {
 
 import { createPost } from "src/redux/actions/postActions";
 import axios from "axios";
+import { baseUrl } from "src/constant/api";
 
 const PostList = () => {
   var toolbarOptions = {
@@ -78,6 +79,7 @@ const PostList = () => {
   };
 
   const uploadFileHandler = async (e) => {
+    console.log("uploadFileHandler", e)
     const formData = new FormData();
     const reader = new FileReader();
 
@@ -99,11 +101,12 @@ const PostList = () => {
         },
       };
 
-      const { data } = await axios.post(
+      const { data } = await axios.post(baseUrl +
         "/api/v1/uploads/primary",
         formData,
         config
       );
+      console.log("upload data", data)
       setImage(data);
       setUploading(false);
     } catch (error) {

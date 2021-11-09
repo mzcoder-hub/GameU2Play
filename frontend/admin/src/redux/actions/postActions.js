@@ -13,7 +13,7 @@ import {
   POST_UPDATE_REQUEST,
   POST_UPDATE_SUCCESS,
 } from "../constants/postConstants";
-
+import { baseUrl } from "../../constant/api";
 export const listPosts = () => async (dispatch, getState) => {
   try {
     dispatch({ type: POST_LIST_REQUEST });
@@ -28,7 +28,7 @@ export const listPosts = () => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.get(`/api/v1/posts`, config);
+    const { data } = await axios.get(baseUrl + `/api/v1/posts`, config);
 
     dispatch({
       type: POST_LIST_SUCCESS,
@@ -59,7 +59,10 @@ export const getPostById = (postId) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.get(`/api/v1/posts/id/${postId}`, config);
+    const { data } = await axios.get(
+      baseUrl + `/api/v1/posts/id/${postId}`,
+      config
+    );
 
     dispatch({
       type: POST_DETAILS_SUCCESS,
@@ -88,11 +91,11 @@ export const createPost = (post) => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.post(`/api/v1/posts`, post, config);
+    const { data } = await axios.post(baseUrl + `/api/v1/posts`, post, config);
 
     dispatch({
       type: POST_CREATE_SUCCESS,
@@ -130,7 +133,7 @@ export const updatePost = (product) => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.patch(
-      `/api/products/slug/${product.slug}`,
+      baseUrl + `/api/products/slug/${product.slug}`,
       product,
       config
     );
