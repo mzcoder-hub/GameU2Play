@@ -25,11 +25,11 @@ const createPostValidation = [
     .withMessage('cat_id Required')
     .notEmpty()
     .withMessage('cat_id Must Be Filled'),
-  // body('primary_image')
-  //   .exists()
-  //   .withMessage('primary_image Required')
-  //   .notEmpty()
-  //   .withMessage('primary_image Must Be Filled'),
+  body('primary_image')
+    .exists()
+    .withMessage('primary_image Required')
+    .notEmpty()
+    .withMessage('primary_image Must Be Filled'),
   body('slug')
     .exists()
     .withMessage('slug Required')
