@@ -23,11 +23,11 @@ import {
   TheHeaderDropdownTasks,
 } from "./index";
 
-const TheHeader = ({ history }) => {
+const TheHeader = () => {
   const dispatch = useDispatch();
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  // const userLogin = useSelector((state) => state.userLogin);
+  // const { userInfo } = userLogin;
 
   const sidebarShow = useSelector((state) => state.sidebarShow);
 

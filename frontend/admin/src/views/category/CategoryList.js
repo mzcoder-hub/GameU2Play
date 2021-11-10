@@ -10,6 +10,7 @@ import {
   CRow,
   CPagination,
   CButton,
+  CSpinner,
 } from "@coreui/react";
 
 import Swal from "sweetalert2";
@@ -78,79 +79,91 @@ const CategoryList = () => {
                   {button_tetle_addKategori}
                 </CButton>
               </div>
-            </CCardHeader>
-            <CCardBody>
-              <CDataTable
-                items={categorize}
-                fields={[
-                  { key: "cat_id", _classes: "font-weight-bold" },
-                  "category_title",
-                  "slug",
-                  "action",
-                ]}
-                hover
-                striped
-                itemsPerPage={5}
-                activePage={page}
-                clickableRows
-                // onRowClick={(item) => history.push(`/post/${item.id}`)}
-                scopedSlots={{
-                  status: (item) => (
-                    <td>
-                      <CBadge color={getBadge(item.status)}>
-                        {item.status}
-                      </CBadge>
-                    </td>
-                  ),
-                  action: (item) => (
-                    <td>
-                      <CButton
-                        key={item.cat_id}
-                        color="primary"
-                        size="sm"
-                        className="m-2"
-                        onClick={(e) => {
-                          history.push(`/category/edit/${item.cat_id}`);
-                        }}
-                      >
-                        {button_tetle_editKategori}
-                      </CButton>
-                      |
-                      <CButton
-                        color="danger"
-                        size="sm"
-                        className="m-2"
-                        onClick={(e) => {
-                          Swal.fire({
-                            icon: "error",
-                            title: titleAlertDelete,
-                            text: textAlertDelete,
-                            showCancelButton: true,
-                            confirmButtonText: confirmButtonText,
-                            cancelButtonText: cancelButtonText,
-                            confirmButtonColor: "#E55353",
-                          }).then((result) => {
-                            /* Read more about isConfirmed, isDenied below */
-                            if (result.isConfirmed) {
-                              actionDelete(item.cat_id);
-                            }
-                          });
-                        }}
-                      >
-                        {button_tetle_deleteKategori}
-                      </CButton>
-                    </td>
-                  ),
+            </CCardHeader>{" "}
+            {loading ? (
+              <CSpinner
+                className="d-flex mx-auto"
+                style={{
+                  width: "5rem",
+                  height: "5rem",
+                  borderWidth: "6px",
                 }}
+                color="info"
               />
-              <CPagination
-                activePage={page}
-                onActivePageChange={pageChange}
-                pages={5}
-                doubleArrows={false}
-                align="center"
-              />
-            </CCardBody>
+            ) : (
+              <CCardBody>
+                <CDataTable
+                  items={categorize}
+                  fields={[
+                    { key: "cat_id", _classes: "font-weight-bold" },
+                    "category_title",
+                    "slug",
+                    "action",
+                  ]}
+                  hover
+                  striped
+                  itemsPerPage={5}
+                  activePage={page}
+                  clickableRows
+                  // onRowClick={(item) => history.push(`/post/${item.id}`)}
+                  scopedSlots={{
+                    status: (item) => (
+                      <td>
+                        <CBadge color={getBadge(item.status)}>
+                          {item.status}
+                        </CBadge>
+                      </td>
+                    ),
+                    action: (item) => (
+                      <td>
+                        <CButton
+                          key={item.cat_id}
+                          color="primary"
+                          size="sm"
+                          className="m-2"
+                          onClick={(e) => {
+                            history.push(`/category/edit/${item.cat_id}`);
+                          }}
+                        >
+                          {button_tetle_editKategori}
+                        </CButton>
+                        |
+                        <CButton
+                          color="danger"
+                          size="sm"
+                          className="m-2"
+                          onClick={(e) => {
+                            Swal.fire({
+                              icon: "error",
+                              title: titleAlertDelete,
+                              text: textAlertDelete,
+                              showCancelButton: true,
+                              confirmButtonText: confirmButtonText,
+                              cancelButtonText: cancelButtonText,
+                              confirmButtonColor: "#E55353",
+                            }).then((result) => {
+                              /* Read more about isConfirmed, isDenied below */
+                              if (result.isConfirmed) {
+                                actionDelete(item.cat_id);
+                              }
+                            });
+                          }}
+                        >
+                          {button_tetle_deleteKategori}
+                        </CButton>
+                      </td>
+                    ),
+                  }}
+                />
+                <CPagination
+                  activePage={page}
+                  onActivePageChange={pageChange}
+                  pages={5}
+                  doubleArrows={false}
+                  align="center"
+                />
+              </CCardBody>
+            )}
           </CCard>
         </CCol>
       </CRow>

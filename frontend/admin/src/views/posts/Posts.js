@@ -14,21 +14,23 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 import { listPosts } from "src/redux/actions/postActions";
+import { button_title_addPost, button_title_deletePost, button_title_editPost, cancelButtonText, confirmButtonText, textAlertDelete, titleAlertDelete, title_listPost } from "./constan";
+import Swal from "sweetalert2";
 
-const getBadge = (status) => {
-  switch (status) {
-    case "Active":
-      return "success";
-    case "Inactive":
-      return "secondary";
-    case "Pending":
-      return "warning";
-    case "Banned":
-      return "danger";
-    default:
-      return "primary";
-  }
-};
+// const getBadge = (status) => {
+//   switch (status) {
+//     case "Active":
+//       return "success";
+//     case "Inactive":
+//       return "secondary";
+//     case "Pending":
+//       return "warning";
+//     case "Banned":
+//       return "danger";
+//     default:
+//       return "primary";
+//   }
+// };
 
 const PostList = () => {
   const history = useHistory();
@@ -44,6 +46,11 @@ const PostList = () => {
   const allPostList = useSelector((state) => state.allPostList);
   const { loading, posts } = allPostList;
 
+  const actionDelete = async (id) => {
+    console.log("actionDelete id = ", id)
+    // await setLoad(true); 
+    // await setLoad(false); 
+  };
   useEffect(() => {
     currentPage !== page && setPage(currentPage);
     dispatch(listPosts());
@@ -71,15 +78,14 @@ const PostList = () => {
             <CCard>
               <CCardHeader>
                 <div className="text-left">
-                  PostList
-                  <small className="text-muted"> example</small>
+                  {title_listPost}
                 </div>
                 <div className="text-right">
                   <CButton
                     color="primary"
                     onClick={(e) => history.push(`/post/add`)}
                   >
-                    Add Posts
+                    {button_title_addPost}
                   </CButton>
                 </div>
               </CCardHeader>
@@ -119,11 +125,27 @@ const PostList = () => {
                             history.push(`/post/edit/${item.post_id}`);
                           }}
                         >
-                          Edit
+                          {button_title_editPost}
                         </CButton>
                         |
-                        <CButton color="danger" size="sm" className="m-2">
-                          Delete
+                        <CButton color="danger" size="sm" className="m-2"
+                          onClick={(e) => {
+                            Swal.fire({
+                              icon: "error",
+                              title: titleAlertDelete,
+                              text: textAlertDelete,
+                              showCancelButton: true,
+                              confirmButtonText: confirmButtonText,
+                              cancelButtonText: cancelButtonText,
+                              confirmButtonColor: "#E55353",
+                            }).then((result) => {
+                              /* Read more about isConfirmed, isDenied below */
+                              if (result.isConfirmed) {
+                                actionDelete(item.post_id);
+                              }
+                            });
+                          }}>
+                          {button_title_deletePost}
                         </CButton>
                       </td>
                     ),
