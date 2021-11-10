@@ -40,9 +40,16 @@ const create = async ({
 }) => {
   // console.log(post_title, post_content, uid, cat_id, primary_image, slug)
   const sql = `INSERT INTO ${tableName}
-        (post_title, post_content, uid, cat_id, slug) VALUES (?,?,?,?,?)`
+        (post_title, post_content, uid, cat_id, primary_image, slug) VALUES (?,?,?,?,?,?)`
 
-  const result = await db(sql, [post_title, post_content, uid, cat_id, slug])
+  const result = await db(sql, [
+    post_title,
+    post_content,
+    uid,
+    cat_id,
+    primary,
+    slug,
+  ])
 
   const getPostDetail = await db(
     `SELECT * FROM ${tableName} WHERE post_id = ${result.insertId}`,
@@ -52,6 +59,7 @@ const create = async ({
     }
   )
   const getPost_recent_id = { ...getPostDetail[0] }
+
   const sqlInsertPivot = await db(
     `INSERT INTO categorize_has_posts (cat_id, post_id) VALUES (${getPost_recent_id.post_id}, ${cat_id})`
   )
