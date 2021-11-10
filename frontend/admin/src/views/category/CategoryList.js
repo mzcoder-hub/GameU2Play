@@ -110,7 +110,10 @@ const CategoryList = () => {
                         Edit
                       </CButton>
                       |
-                      <CButton color="danger" size="sm" className="m-2"
+                      <CButton
+                        color="danger"
+                        size="sm"
+                        className="m-2"
                         onClick={(e) => {
                           Swal.fire({
                             icon: "error",
@@ -126,7 +129,8 @@ const CategoryList = () => {
                               actionDelete(item.cat_id);
                             }
                           });
-                        }}>
+                        }}
+                      >
                         Delete
                       </CButton>
                     </td>

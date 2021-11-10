@@ -83,7 +83,7 @@ const EditCategory = ({ match }) => {
     },
   });
   useEffect(() => {
-    // console.log("state", category); 
+    // console.log("state", category);
     dispatch(getCategoryById(match.params.id));
     console.log("state detailedCategory", detailedCategory);
     console.log("state userLogin", userLogin);
@@ -95,9 +95,7 @@ const EditCategory = ({ match }) => {
         <CCol xl={12}>
           <CCard>
             <CCardHeader>
-              <div className="text-left">
-                Edit category
-              </div>
+              <div className="text-left">Edit category</div>
             </CCardHeader>
             <CCardBody style={{ height: "auto" }}>
               {load && !category ? (
