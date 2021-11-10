@@ -10,10 +10,27 @@ import {
   CRow,
   CPagination,
   CButton,
+  CSpinner,
 } from "@coreui/react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { listTournaments } from "src/redux/actions/tournamentActions";
+import {
+  button_title_addTournament,
+  button_title_deleteTournament,
+  button_title_editTournament,
+  cancelButtonText,
+  confirmButtonText,
+  responseDeleteTournament_failed,
+  responseDeleteTournament_success,
+  textAlertDelete,
+  titleAlertDelete,
+  title_listTournament,
+} from "./constan";
+import Swal from "sweetalert2";
+import axios from "axios";
+import { tournamentUrl } from "src/constant/api";
+import { userInfoFromStorage } from "../category/constan";
 
 const getBadge = (status) => {
   switch (status) {
@@ -41,9 +58,47 @@ const TournamentList = () => {
     currentPage !== newPage && history.push(`/tournament/list?page=${newPage}`);
   };
 
+  const [load, setLoad] = useState(false);
   const tournamentList = useSelector((state) => state.tournamentList);
   const { loading, tournaments } = tournamentList;
 
+  const userLogin = userInfoFromStorage;
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${userLogin.token}`,
+    },
+  };
+  const actionDelete = async (id) => {
+    await setLoad(true);
+    try {
+      const deleteData = await axios.delete(tournamentUrl + `/${id}`, config);
+
+      if (deleteData) {
+        await dispatch(listTournaments());
+        await Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: responseDeleteTournament_success,
+        });
+      } else {
+        await Swal.fire({
+          icon: "error",
+          title: "Ooops...!",
+          text: responseDeleteTournament_failed,
+        });
+      }
+      await setLoad(false);
+    } catch (error) {
+      await Swal.fire({
+        icon: "error",
+        title: "Ooops...!",
+        text: responseDeleteTournament_failed,
+      });
+      console.log("getDataByID error", error);
+      await setLoad(false);
+    }
+  };
   useEffect(() => {
     currentPage !== page && setPage(currentPage);
     dispatch(listTournaments());
@@ -51,23 +106,28 @@ const TournamentList = () => {
 
   return (
     <>
-      {loading ? (
-        <></>
+      {loading || load ? (
+        <CSpinner
+          className="d-flex mx-auto"
+          style={{
+            width: "5rem",
+            height: "5rem",
+            borderWidth: "6px",
+          }}
+          color="info"
+        />
       ) : (
         <CRow>
           <CCol xl={12}>
             <CCard>
               <CCardHeader>
-                <div className="text-left">
-                  TournamentList
-                  <small className="text-muted"> example</small>
-                </div>
+                <div className="text-left">{title_listTournament}</div>
                 <div className="text-right">
                   <CButton
                     color="primary"
                     onClick={(e) => history.push(`/tournament/add`)}
                   >
-                    Create New Tournament
+                    {button_title_addTournament}
                   </CButton>
                 </div>
               </CCardHeader>
@@ -111,11 +171,31 @@ const TournamentList = () => {
                             );
                           }}
                         >
-                          Edit
+                          {button_title_editTournament}
                         </CButton>
                         |
-                        <CButton color="danger" size="sm" className="m-2">
-                          Delete
+                        <CButton
+                          color="danger"
+                          size="sm"
+                          className="m-2"
+                          onClick={(e) => {
+                            Swal.fire({
+                              icon: "error",
+                              title: titleAlertDelete,
+                              text: textAlertDelete,
+                              showCancelButton: true,
+                              confirmButtonText: confirmButtonText,
+                              cancelButtonText: cancelButtonText,
+                              confirmButtonColor: "#E55353",
+                            }).then((result) => {
+                              /* Read more about isConfirmed, isDenied below */
+                              if (result.isConfirmed) {
+                                actionDelete(item.tournament_id);
+                              }
+                            });
+                          }}
+                        >
+                          {button_title_deleteTournament}
                         </CButton>
                       </td>
                     ),
