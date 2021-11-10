@@ -87,8 +87,6 @@ const EditTournament = ({ match }) => {
       delete values.tournament_id;
       delete values.create_date;
       delete values.featured_image;
-      delete values.max_team;
-      delete values.organizer;
       try {
         const { data } = await axios.patch(
           edittournamentUrl(match.params.id),
