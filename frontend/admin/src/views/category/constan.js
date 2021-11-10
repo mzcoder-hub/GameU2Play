@@ -1,3 +1,8 @@
+
+export const userInfoFromStorage = localStorage.getItem("userInfo")
+    ? JSON.parse(localStorage.getItem("userInfo"))
+    : null;
+
 export const title_listKategori = "Data Kategori";
 export const button_tetle_addKategori = "Add Kategori";
 export const button_tetle_editKategori = "Edit";

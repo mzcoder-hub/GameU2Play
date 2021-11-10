@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import ReactQuill from "react-quill";
-
 import {
   CButton,
   CCard,

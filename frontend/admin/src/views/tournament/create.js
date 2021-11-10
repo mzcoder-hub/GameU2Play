@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-
-import ReactQuill from "react-quill";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 import {
   CButton,
@@ -16,134 +14,114 @@ import {
   CRow,
   CSelect,
 } from "@coreui/react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import {
-  createTournament,
-  getTournamentById,
-} from "src/redux/actions/tournamentActions";
+  responseAddTournament_failed,
+  responseAddTournament_success,
+  titleAddTournament,
+} from "./constan";
+import { userInfoFromStorage } from "../category/constan";
+import { tournamentUrl } from "src/constant/api";
+import Swal from "sweetalert2";
+import axios from "axios";
+const AddTurnament = () => {
+  const history = useHistory();
+  const userLogin = userInfoFromStorage;
+  const [load, setLoad] = useState(false);
+  let initialValues = {
+    title: "",
+    organizer: "",
+    description: "",
+    venue: "",
+    featured_image: "/images/sample/tourneysingle.svg",
+    prizepool: "",
+    rule_link: "",
+    contact_person: "",
+    registration_start: "",
+    registration_end: "",
+    start: "",
+    end: "",
+    difficult: "beginner",
+    max_team: "",
+  };
+  const FormSchema = Yup.object().shape({
+    title: Yup.string().required("Nama Tournament tidak boleh kosong"),
+    organizer: Yup.string().required("organizer tidak boleh kosong"),
+    description: Yup.string().required("description tidak boleh kosong"),
+    // featured_image: Yup.string().required("featured image tidak boleh kosong"),
+    venue: Yup.string().required("venue tidak boleh kosong"),
+    prizepool: Yup.string().required("prizepool tidak boleh kosong"),
+    rule_link: Yup.string().required("rule_link tidak boleh kosong"),
+    contact_person: Yup.string().required("contact_person tidak boleh kosong"),
+    registration_start: Yup.string().required(
+      "registration_start tidak boleh kosong"
+    ),
+    registration_end: Yup.string().required(
+      "registration_end tidak boleh kosong"
+    ),
+    start: Yup.string().required("start tidak boleh kosong"),
+    end: Yup.string().required("end tidak boleh kosong"),
+    difficult: Yup.string().required("difficult tidak boleh kosong"),
+    max_team: Yup.string().required("max_team tidak boleh kosong"),
+  });
+  const formik = useFormik({
+    initialValues: initialValues,
+    validationSchema: FormSchema,
+    enableReinitialize: true,
+    onSubmit: async (values, { resetForm }) => {
+      await setLoad(true);
+      console.log(values)
+      try {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userLogin.token}`,
+          },
+        };
+        const { data } = await axios.post(
+          tournamentUrl,
+          values,
+          config
+        );
+        if (data) {
+          await history.push(`/tournament/list`);
+          await Swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: responseAddTournament_success,
+          });
+        } else {
+          await Swal.fire({
+            icon: "error",
+            title: "Ooops...!",
+            text: responseAddTournament_failed,
+          });
+        }
+        await setLoad(false);
+      } catch (error) {
+        console.error("error", error);
+        await Swal.fire({
+          icon: "error",
+          title: "Ooops...!",
+          text: responseAddTournament_failed,
+        });
+        await setLoad(false);
+      }
+    },
+  });
 
-const EditTournament = ({ match }) => {
-  const dispatch = useDispatch();
-
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
-
-  const [tournamentTitle, settournamentTitle] = useState("");
-  const [tournamentDescription, settournamentDescription] = useState("");
-  const [tournamentOrganizer, settournamentOrganizer] = useState("");
-  const [tournamentVenue, settournamentVenue] = useState("");
-  const [tournamentPrizepool, settournamentPrizepool] = useState("");
-  const [tournamentRuleLink, settournamentRuleLink] = useState("");
-  const [tournamentContantPerson, settournamentContantPerson] = useState("");
-  const [tournamentRegistrationStart, settournamentRegistrationStart] =
-    useState("");
-  const [tournamentRegistrationEnd, settournamentRegistrationEnd] =
-    useState("");
-  const [tournamentStart, settournamentStart] = useState("");
-  const [tournamentEnd, settournamentEnd] = useState("");
-  const [tournamentDifficult, settournamentDifficult] = useState("");
-  const [tournamentMaxTeam, settournamentMaxTeam] = useState("");
-  //   const [tournamentSlug, settournamentSlug] = useState("");
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-    try {
-      // console.log({
-      //   title: tournamentTitle,
-      //   organizer: tournamentOrganizer,
-      //   description: tournamentDescription,
-      //   featured_image: "/images/sample/tourneysingle.svg",
-      //   venue: tournamentVenue,
-      //   prizepool: tournamentPrizepool,
-      //   rule_link: tournamentRuleLink,
-      //   contact_person: tournamentContantPerson,
-      //   registration_start: tournamentRegistrationStart,
-      //   registration_end: tournamentRegistrationEnd,
-      //   start: tournamentStart,
-      //   end: tournamentEnd,
-      //   difficult: tournamentDifficult,
-      //   max_team: tournamentMaxTeam,
-      // });
-      dispatch(
-        createTournament({
-          title: tournamentTitle,
-          organizer: tournamentOrganizer,
-          description: tournamentDescription,
-          featured_image: "/images/sample/tourneysingle.svg",
-          venue: tournamentVenue,
-          prizepool: tournamentPrizepool,
-          rule_link: tournamentRuleLink,
-          contact_person: tournamentContantPerson,
-          registration_start: tournamentRegistrationStart,
-          registration_end: tournamentRegistrationEnd,
-          start: tournamentStart,
-          end: tournamentEnd,
-          difficult: tournamentDifficult,
-          max_team: tournamentMaxTeam,
-        })
-      );
-    } catch (error) {
-      console.error(error);
-      // setUploading(false)
-    }
-  };
-  const handleChangeTournamentTitle = (e) => {
-    settournamentTitle(e.currentTarget.value);
-  };
-  const handleChangeTournamentDescription = (e) => {
-    settournamentDescription(e.currentTarget.value);
-  };
-  const handleChangeTournamentOrganizer = (e) => {
-    settournamentOrganizer(e.currentTarget.value);
-  };
-  const handleChangeTournamentVenue = (e) => {
-    settournamentVenue(e.currentTarget.value);
-  };
-  const handleChangeTournamentPrizepool = (e) => {
-    settournamentPrizepool(e.currentTarget.value);
-  };
-  const handleChangeTournamentRuleLink = (e) => {
-    settournamentRuleLink(e.currentTarget.value);
-  };
-  const handleChangeTournamentDifficult = (e) => {
-    settournamentDifficult(e.currentTarget.value);
-  };
-  const handleChangeTournamentMaxTeam = (e) => {
-    settournamentMaxTeam(e.currentTarget.value);
-  };
-  const handleChangeTournamentContantPerson = (e) => {
-    settournamentContantPerson(e.currentTarget.value);
-  };
-  const handleChangeTournamentRegistrationStart = (e) => {
-    settournamentRegistrationStart(e.currentTarget.value);
-  };
-  const handleChangeTournamentRegistrationEnd = (e) => {
-    settournamentRegistrationEnd(e.currentTarget.value);
-  };
-  const handleChangeTournamentStart = (e) => {
-    settournamentStart(e.currentTarget.value);
-  };
-  const handleChangeTournamentEnd = (e) => {
-    settournamentEnd(e.currentTarget.value);
-  };
-  //   const handleChangeTournamentSlug = (e) => {
-  //     settournamentSlug(e.currentTarget.value);
-  //   };
+  // console.log(formik.errors); 
   return (
     <>
       <CRow>
         <CCol xl={12}>
           <CCard>
             <CCardHeader>
-              <div className="text-left">
-                Create New Tournament
-                <small className="text-muted">
-                  {" "}
-                  create new competitive for better env
-                </small>
-              </div>
+              <div className="text-left">{titleAddTournament}</div>
             </CCardHeader>
             <CCardBody style={{ height: "auto" }}>
-              <CForm>
+              <CForm onSubmit={formik.handleSubmit}>
                 <CFormGroup>
                   <CLabel
                     htmlFor="title"
@@ -153,12 +131,18 @@ const EditTournament = ({ match }) => {
                   </CLabel>
                   <CInput
                     style={{ height: "calc(2em + 0.75rem + 2px)" }}
-                    type="text"
+                    disabled={load}
                     id="title"
+                    name="title"
                     placeholder="Masukan Nama Tournament disini"
-                    value={tournamentTitle}
-                    onChange={handleChangeTournamentTitle}
+                    onChange={formik.handleChange}
+                    value={formik.values.title}
                   />
+                  {formik.errors.title && formik.touched.title && (
+                    <small className="form-text text-danger login-error">
+                      {formik.errors.title}
+                    </small>
+                  )}
                 </CFormGroup>
                 <CFormGroup>
                   <CLabel
@@ -169,12 +153,18 @@ const EditTournament = ({ match }) => {
                   </CLabel>
                   <CInput
                     style={{ height: "calc(2em + 0.75rem + 2px)" }}
-                    type="text"
-                    id="title"
+                    disabled={load}
+                    id="description"
+                    name="description"
                     placeholder="Masukan Deskripsi Tournament disini"
-                    value={tournamentDescription}
-                    onChange={handleChangeTournamentDescription}
+                    onChange={formik.handleChange}
+                    value={formik.values.description}
                   />
+                  {formik.errors.description && formik.touched.description && (
+                    <small className="form-text text-danger login-error">
+                      {formik.errors.description}
+                    </small>
+                  )}
                 </CFormGroup>
                 <CFormGroup>
                   <CLabel
@@ -185,12 +175,18 @@ const EditTournament = ({ match }) => {
                   </CLabel>
                   <CInput
                     style={{ height: "calc(2em + 0.75rem + 2px)" }}
-                    type="text"
-                    id="Prizepool"
-                    placeholder="Masukan Prizepool Tournament disini"
-                    value={tournamentOrganizer}
-                    onChange={handleChangeTournamentOrganizer}
+                    disabled={load}
+                    id="organizer"
+                    name="organizer"
+                    placeholder="Masukan organizer Tournament disini"
+                    onChange={formik.handleChange}
+                    value={formik.values.organizer}
                   />
+                  {formik.errors.organizer && formik.touched.organizer && (
+                    <small className="form-text text-danger login-error">
+                      {formik.errors.organizer}
+                    </small>
+                  )}
                 </CFormGroup>
                 <CFormGroup>
                   <CLabel
@@ -201,12 +197,18 @@ const EditTournament = ({ match }) => {
                   </CLabel>
                   <CInput
                     style={{ height: "calc(2em + 0.75rem + 2px)" }}
-                    type="text"
-                    id="Prizepool"
-                    placeholder="Masukan Prizepool Tournament disini"
-                    value={tournamentVenue}
-                    onChange={handleChangeTournamentVenue}
+                    disabled={load}
+                    id="venue"
+                    name="venue"
+                    placeholder="Masukan Venue Tournament disini"
+                    onChange={formik.handleChange}
+                    value={formik.values.venue}
                   />
+                  {formik.errors.venue && formik.touched.venue && (
+                    <small className="form-text text-danger login-error">
+                      {formik.errors.venue}
+                    </small>
+                  )}
                 </CFormGroup>
                 <CFormGroup>
                   <CLabel
@@ -217,12 +219,18 @@ const EditTournament = ({ match }) => {
                   </CLabel>
                   <CInput
                     style={{ height: "calc(2em + 0.75rem + 2px)" }}
-                    type="number"
-                    id="Prizepool"
+                    disabled={load}
+                    id="prizepool"
+                    name="prizepool"
                     placeholder="Masukan Prizepool Tournament disini"
-                    value={tournamentPrizepool}
-                    onChange={handleChangeTournamentPrizepool}
+                    onChange={formik.handleChange}
+                    value={formik.values.prizepool}
                   />
+                  {formik.errors.prizepool && formik.touched.prizepool && (
+                    <small className="form-text text-danger login-error">
+                      {formik.errors.prizepool}
+                    </small>
+                  )}
                 </CFormGroup>
                 <CFormGroup>
                   <CLabel
@@ -233,12 +241,18 @@ const EditTournament = ({ match }) => {
                   </CLabel>
                   <CInput
                     style={{ height: "calc(2em + 0.75rem + 2px)" }}
-                    type="text"
-                    id="Prizepool"
-                    placeholder="Masukan Prizepool Tournament disini"
-                    value={tournamentRuleLink}
-                    onChange={handleChangeTournamentRuleLink}
+                    disabled={load}
+                    id="rule_link"
+                    name="rule_link"
+                    placeholder="Masukan Rule Link Tournament disini"
+                    onChange={formik.handleChange}
+                    value={formik.values.rule_link}
                   />
+                  {formik.errors.rule_link && formik.touched.rule_link && (
+                    <small className="form-text text-danger login-error">
+                      {formik.errors.rule_link}
+                    </small>
+                  )}
                 </CFormGroup>
                 <CFormGroup>
                   <CLabel
@@ -249,12 +263,19 @@ const EditTournament = ({ match }) => {
                   </CLabel>
                   <CInput
                     style={{ height: "calc(2em + 0.75rem + 2px)" }}
-                    type="text"
-                    id="title"
+                    disabled={load}
+                    id="contact_person"
+                    name="contact_person"
                     placeholder="Masukan Contact Person Tournament disini"
-                    value={tournamentContantPerson}
-                    onChange={handleChangeTournamentContantPerson}
+                    onChange={formik.handleChange}
+                    value={formik.values.contact_person}
                   />
+                  {formik.errors.contact_person &&
+                    formik.touched.contact_person && (
+                      <small className="form-text text-danger login-error">
+                        {formik.errors.contact_person}
+                      </small>
+                    )}
                 </CFormGroup>
                 <CRow>
                   <CCol>
@@ -267,11 +288,19 @@ const EditTournament = ({ match }) => {
                       </CLabel>
                       <CInput
                         style={{ height: "calc(2em + 0.75rem + 2px)" }}
+                        disabled={load}
+                        id="registration_start"
+                        name="registration_start"
                         type="date"
-                        id="title"
-                        value={tournamentRegistrationStart}
-                        onChange={handleChangeTournamentRegistrationStart}
+                        onChange={formik.handleChange}
+                        value={formik.values.registration_start}
                       />
+                      {formik.errors.registration_start &&
+                        formik.touched.registration_start && (
+                          <small className="form-text text-danger login-error">
+                            {formik.errors.registration_start}
+                          </small>
+                        )}
                     </CFormGroup>
                   </CCol>
                   <CCol>
@@ -285,11 +314,19 @@ const EditTournament = ({ match }) => {
                       </CLabel>
                       <CInput
                         style={{ height: "calc(2em + 0.75rem + 2px)" }}
+                        disabled={load}
+                        id="registration_end"
+                        name="registration_end"
                         type="date"
-                        id="title"
-                        value={tournamentRegistrationEnd}
-                        onChange={handleChangeTournamentRegistrationEnd}
+                        onChange={formik.handleChange}
+                        value={formik.values.registration_end}
                       />
+                      {formik.errors.registration_end &&
+                        formik.touched.registration_end && (
+                          <small className="form-text text-danger login-error">
+                            {formik.errors.registration_end}
+                          </small>
+                        )}
                     </CFormGroup>
                   </CCol>
                 </CRow>
@@ -304,11 +341,18 @@ const EditTournament = ({ match }) => {
                       </CLabel>
                       <CInput
                         style={{ height: "calc(2em + 0.75rem + 2px)" }}
+                        disabled={load}
+                        id="start"
+                        name="start"
                         type="date"
-                        id="title"
-                        value={tournamentStart}
-                        onChange={handleChangeTournamentStart}
+                        onChange={formik.handleChange}
+                        value={formik.values.start}
                       />
+                      {formik.errors.start && formik.touched.start && (
+                        <small className="form-text text-danger login-error">
+                          {formik.errors.start}
+                        </small>
+                      )}
                     </CFormGroup>
                   </CCol>
                   <CCol>
@@ -322,11 +366,18 @@ const EditTournament = ({ match }) => {
                       </CLabel>
                       <CInput
                         style={{ height: "calc(2em + 0.75rem + 2px)" }}
+                        disabled={load}
+                        id="end"
+                        name="end"
                         type="date"
-                        id="title"
-                        value={tournamentEnd}
-                        onChange={handleChangeTournamentEnd}
+                        onChange={formik.handleChange}
+                        value={formik.values.end}
                       />
+                      {formik.errors.end && formik.touched.end && (
+                        <small className="form-text text-danger login-error">
+                          {formik.errors.end}
+                        </small>
+                      )}
                     </CFormGroup>
                   </CCol>
                 </CRow>
@@ -341,8 +392,10 @@ const EditTournament = ({ match }) => {
                         Difficult
                       </CLabel>
                       <CSelect
-                        value={tournamentDifficult}
-                        onChange={handleChangeTournamentDifficult}
+                        name="difficult"
+                        disabled={load}
+                        onChange={formik.handleChange}
+                        value={formik.values.difficult}
                       >
                         <option key="1" value="newbie">
                           newbie
@@ -366,12 +419,19 @@ const EditTournament = ({ match }) => {
                       </CLabel>
                       <CInput
                         style={{ height: "calc(2em + 0.75rem + 2px)" }}
+                        disabled={load}
                         type="number"
                         id="max_team"
+                        name="max_team"
                         placeholder="Max team number"
-                        value={tournamentMaxTeam}
-                        onChange={handleChangeTournamentMaxTeam}
+                        onChange={formik.handleChange}
+                        value={formik.values.max_team}
                       />
+                      {formik.errors.max_team && formik.touched.max_team && (
+                        <small className="form-text text-danger login-error">
+                          {formik.errors.max_team}
+                        </small>
+                      )}
                     </CFormGroup>
                   </CCol>
                 </CRow>
@@ -398,7 +458,7 @@ const EditTournament = ({ match }) => {
                     shape="square"
                     className="m-2"
                     size="lg"
-                    onClick={(e) => submitHandler(e)}
+                    onClick={(e) => history.push(`/tournament/list`)}
                   >
                     Cancel
                   </CButton>
@@ -407,7 +467,7 @@ const EditTournament = ({ match }) => {
                     shape="square"
                     className="m-2"
                     size="lg"
-                    onClick={(e) => submitHandler(e)}
+                    type="submit"
                   >
                     Save
                   </CButton>
@@ -421,4 +481,4 @@ const EditTournament = ({ match }) => {
   );
 };
 
-export default EditTournament;
+export default AddTurnament;
