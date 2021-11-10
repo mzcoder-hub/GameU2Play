@@ -15,7 +15,16 @@ import {
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { listCategorys } from "src/redux/actions/categoryActions";
-import { button_tetle_addKategori, button_tetle_deleteKategori, button_tetle_editKategori, cancelButtonText, confirmButtonText, textAlertDelete, titleAlertDelete, title_listKategori } from "./constan";
+import {
+  button_tetle_addKategori,
+  button_tetle_deleteKategori,
+  button_tetle_editKategori,
+  cancelButtonText,
+  confirmButtonText,
+  textAlertDelete,
+  titleAlertDelete,
+  title_listKategori,
+} from "./constan";
 
 const getBadge = (status) => {
   switch (status) {
@@ -60,9 +69,7 @@ const CategoryList = () => {
         <CCol xl={12}>
           <CCard>
             <CCardHeader>
-              <div className="text-left">
-                {title_listKategori}
-              </div>
+              <div className="text-left">{title_listKategori}</div>
               <div className="text-right">
                 <CButton
                   color="primary"
@@ -109,7 +116,10 @@ const CategoryList = () => {
                         {button_tetle_editKategori}
                       </CButton>
                       |
-                      <CButton color="danger" size="sm" className="m-2"
+                      <CButton
+                        color="danger"
+                        size="sm"
+                        className="m-2"
                         onClick={(e) => {
                           Swal.fire({
                             icon: "error",
@@ -125,7 +135,8 @@ const CategoryList = () => {
                               actionDelete(item.cat_id);
                             }
                           });
-                        }}>
+                        }}
+                      >
                         {button_tetle_deleteKategori}
                       </CButton>
                     </td>

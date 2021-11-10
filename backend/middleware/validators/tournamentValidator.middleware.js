@@ -108,6 +108,7 @@ const updateTourValidation = [
       const updates = Object.keys(value)
       const allowUpdates = [
         'title',
+        'organizer',
         'description',
         'venue',
         'prizepool',
@@ -118,6 +119,7 @@ const updateTourValidation = [
         'start',
         'end',
         'difficult',
+        'max_team',
       ]
       return updates.every((update) => allowUpdates.includes(update))
     })

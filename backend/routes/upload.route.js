@@ -5,7 +5,7 @@ const router = express.Router()
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, 'uploads/blog/images/')
+    cb(null, 'uploads/assets/images/')
   },
   filename(req, file, cb) {
     cb(
