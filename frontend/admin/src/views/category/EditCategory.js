@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-
-import ReactQuill from "react-quill";
+import { useSelector } from "react-redux";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -16,27 +14,24 @@ import {
   CInput,
   CLabel,
   CRow,
-  CSelect,
   CSpinner,
 } from "@coreui/react";
 
-import { createPost, getPostById } from "src/redux/actions/postActions";
-import {
-  createCategory,
-  getCategoryById,
-  updateCategory,
-} from "src/redux/actions/categoryActions";
-
 import { useHistory } from "react-router-dom";
+import axios from "axios";
+import { baseUrl } from "src/constant/api";
+import Swal from "sweetalert2";
+import {
+  responseEditKategori_failed,
+  responseEditKategori_success,
+  responseGetKategori_failed,
+  titleEditKategori,
+} from "./constan";
 const EditCategory = ({ match }) => {
   const history = useHistory();
-  const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-
-  const detailedCategory = useSelector((state) => state.detailedCategory);
-  const { loading, category } = detailedCategory;
 
   const [load, setLoad] = useState(false);
 
@@ -45,11 +40,6 @@ const EditCategory = ({ match }) => {
     slug: "",
     category_desc: "",
   });
-  let initialValues = {
-    category_title: "",
-    slug: "",
-    category_desc: "",
-  };
   const FormSchema = Yup.object().shape({
     category_title: Yup.string().required("Judul kategori tidak boleh kosong"),
     slug: Yup.string().required("Slug tidak boleh kosong"),
@@ -57,37 +47,89 @@ const EditCategory = ({ match }) => {
   });
 
   const formik = useFormik({
-    initialValues: data || initialValues,
+    initialValues: data,
     validationSchema: FormSchema,
     enableReinitialize: true,
     onSubmit: async (values, { resetForm }) => {
       await setLoad(true);
-      console.log("values", values);
-      // try {
-      //   dispatch(
-      //     updateCategory({
-      //       cat_id: match.params.id,
-      //       category_title: categoryTitle,
-      //       slug: categorySlug,
-      //       category_desc: categoryContent,
-      //     })
-      //   );
-      //   await setLoad(false)
-
-      // } catch (error) {
-      //   console.error(error);
-      //   // setUploading(false)
-      // }
-
+      try {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        };
+        const { data } = await axios.patch(
+          baseUrl + `/api/v1/category/id/${match.params.id}`,
+          {
+            category_title: values.category_title,
+            slug: values.slug,
+            category_desc: values.category_desc,
+          },
+          config
+        );
+        if (data) {
+          await Swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: responseEditKategori_success,
+          });
+        } else {
+          await Swal.fire({
+            icon: "error",
+            title: "Ooops...!",
+            text: responseEditKategori_failed,
+          });
+        }
+        await setLoad(false);
+      } catch (error) {
+        console.error("error", error);
+        await setLoad(false);
+      }
       await setLoad(false);
     },
   });
+  const getDataByID = async (id) => {
+    await setLoad(true);
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.get(
+        baseUrl + `/api/v1/category/id/${id}`,
+        config
+      );
+
+      if (data) {
+        await setData({
+          category_title: data.category_title,
+          slug: data.slug,
+          category_desc: data.category_desc,
+        });
+      } else {
+        await Swal.fire({
+          icon: "error",
+          title: "Ooops...!",
+          text: responseGetKategori_failed,
+        });
+      }
+      await setLoad(false);
+    } catch (error) {
+      await Swal.fire({
+        icon: "error",
+        title: "Ooops...!",
+        text: responseGetKategori_failed,
+      });
+      console.log("getDataByID error", error);
+      await setLoad(false);
+    }
+  };
   useEffect(() => {
-    // console.log("state", category);
-    dispatch(getCategoryById(match.params.id));
-    console.log("state detailedCategory", detailedCategory);
-    console.log("state userLogin", userLogin);
-  }, [match, dispatch]);
+    getDataByID(match.params.id);
+  }, [match]);
 
   return (
     <>
@@ -95,10 +137,10 @@ const EditCategory = ({ match }) => {
         <CCol xl={12}>
           <CCard>
             <CCardHeader>
-              <div className="text-left">Edit category</div>
+              <div className="text-left">{titleEditKategori}</div>
             </CCardHeader>
             <CCardBody style={{ height: "auto" }}>
-              {load && !category ? (
+              {load ? (
                 <CSpinner
                   className="d-flex mx-auto"
                   style={{ width: "5rem", height: "5rem", borderWidth: "6px" }}

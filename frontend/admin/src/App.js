@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter, HashRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "react-quill/dist/quill.snow.css";
 import "./scss/style.scss";
 

@@ -14,8 +14,17 @@ import {
 
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
-import { listPosts } from "src/redux/actions/postActions";
 import { listCategorys } from "src/redux/actions/categoryActions";
+import {
+  button_tetle_addKategori,
+  button_tetle_deleteKategori,
+  button_tetle_editKategori,
+  cancelButtonText,
+  confirmButtonText,
+  textAlertDelete,
+  titleAlertDelete,
+  title_listKategori,
+} from "./constan";
 
 const getBadge = (status) => {
   switch (status) {
@@ -40,7 +49,7 @@ const CategoryList = () => {
   const [page, setPage] = useState(currentPage);
 
   const pageChange = (newPage) => {
-    currentPage !== newPage && history.push(`/post/list?page=${newPage}`);
+    currentPage !== newPage && history.push(`/category/list?page=${newPage}`);
   };
 
   const allCategoryList = useSelector((state) => state.allCategoryList);
@@ -60,16 +69,13 @@ const CategoryList = () => {
         <CCol xl={12}>
           <CCard>
             <CCardHeader>
-              <div className="text-left">
-                CategoryList
-                <small className="text-muted"> example</small>
-              </div>
+              <div className="text-left">{title_listKategori}</div>
               <div className="text-right">
                 <CButton
                   color="primary"
                   onClick={(e) => history.push(`/category/add`)}
                 >
-                  Add Posts
+                  {button_tetle_addKategori}
                 </CButton>
               </div>
             </CCardHeader>
@@ -107,7 +113,7 @@ const CategoryList = () => {
                           history.push(`/category/edit/${item.cat_id}`);
                         }}
                       >
-                        Edit
+                        {button_tetle_editKategori}
                       </CButton>
                       |
                       <CButton
@@ -117,11 +123,11 @@ const CategoryList = () => {
                         onClick={(e) => {
                           Swal.fire({
                             icon: "error",
-                            title: "Peringatan!",
-                            text: `Yakin akan menghapus category ini ?`,
+                            title: titleAlertDelete,
+                            text: textAlertDelete,
                             showCancelButton: true,
-                            confirmButtonText: `Hapus`,
-                            cancelButtonText: `Batal`,
+                            confirmButtonText: confirmButtonText,
+                            cancelButtonText: cancelButtonText,
                             confirmButtonColor: "#E55353",
                           }).then((result) => {
                             /* Read more about isConfirmed, isDenied below */
@@ -131,7 +137,7 @@ const CategoryList = () => {
                           });
                         }}
                       >
-                        Delete
+                        {button_tetle_deleteKategori}
                       </CButton>
                     </td>
                   ),

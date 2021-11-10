@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-
-import ReactQuill from "react-quill";
 
 import {
   CButton,
@@ -17,68 +15,87 @@ import {
   CRow,
 } from "@coreui/react";
 
-import { createCategory } from "src/redux/actions/categoryActions";
-
-const AddCategory = ({ match }) => {
-  const dispatch = useDispatch();
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import {
+  responseAddKategori_failed,
+  responseAddKategori_success,
+  titleAddKategori,
+} from "./constan";
+import Swal from "sweetalert2";
+import axios from "axios";
+import { baseUrl } from "src/constant/api";
+const AddCategory = () => {
   const history = useHistory();
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-
-  const createsCategory = useSelector((state) => state.createsCategory);
-  const { success, error } = createsCategory;
-
-  useEffect(() => {
-    if (success) {
-      history.push(`/category/list`);
-    }
-  }, [success, history]);
-
-  const [categoryTitle, setcategoryTitle] = useState("");
-  const [categorySlug, setcategorySlug] = useState("");
-  const [categoryContent, setcategoryContent] = useState("");
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-    try {
-      dispatch(
-        createCategory({
-          cat_id: match.params.id,
-          category_title: categoryTitle,
-          slug: categorySlug,
-          category_desc: categoryContent,
-        })
-      );
-    } catch (error) {
-      console.error(error);
-      // setUploading(false)
-    }
+  const [load, setLoad] = useState(false);
+  let initialValues = {
+    category_title: "",
+    slug: "",
+    category_desc: "",
   };
+  const FormSchema = Yup.object().shape({
+    category_title: Yup.string().required("Judul kategori tidak boleh kosong"),
+    slug: Yup.string().required("Slug tidak boleh kosong"),
+    category_desc: Yup.string().required("Deskripsi tidak boleh kosong"),
+  });
 
-  const handleChangeTitle = (e) => {
-    setcategoryTitle(e.currentTarget.value);
-    console.log(e.currentTarget.value);
-  };
-  const handleChangeSlug = (e) => {
-    setcategorySlug(e.currentTarget.value);
-  };
-  const handleChangeContent = (e) => {
-    setcategoryContent(e.currentTarget.value);
-  };
+  const formik = useFormik({
+    initialValues: initialValues,
+    validationSchema: FormSchema,
+    enableReinitialize: true,
+    onSubmit: async (values, { resetForm }) => {
+      await setLoad(true);
+      try {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        };
+        const { data } = await axios.post(
+          baseUrl + `/api/v1/category`,
+          {
+            category_title: values.category_title,
+            slug: values.slug,
+            category_desc: values.category_desc,
+          },
+          config
+        );
+        if (data) {
+          await Swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: responseAddKategori_success,
+          });
+        } else {
+          await Swal.fire({
+            icon: "error",
+            title: "Ooops...!",
+            text: responseAddKategori_failed,
+          });
+        }
+        await setLoad(false);
+      } catch (error) {
+        console.error("error", error);
+        await setLoad(false);
+      }
+      await setLoad(false);
+    },
+  });
+
   return (
     <>
       <CRow>
         <CCol xl={12}>
           <CCard>
             <CCardHeader>
-              <div className="text-left">
-                Add New Post
-                <small className="text-muted"> example</small>
-              </div>
+              <div className="text-left">{titleAddKategori}</div>
             </CCardHeader>
             <CCardBody style={{ height: "auto" }}>
-              <CForm>
+              <CForm onSubmit={formik.handleSubmit}>
                 <CFormGroup>
                   <CLabel
                     htmlFor="title"
@@ -88,12 +105,19 @@ const AddCategory = ({ match }) => {
                   </CLabel>
                   <CInput
                     style={{ height: "calc(2em + 0.75rem + 2px)" }}
-                    type="text"
-                    id="title"
+                    disabled={load}
+                    id="category_title"
+                    name="category_title"
                     placeholder="Masukan Judul Artikel disini"
-                    value={categoryTitle}
-                    onChange={handleChangeTitle}
+                    onChange={formik.handleChange}
+                    value={formik.values.category_title}
                   />
+                  {formik.errors.category_title &&
+                    formik.touched.category_title && (
+                      <small className="form-text text-danger login-error">
+                        {formik.errors.category_title}
+                      </small>
+                    )}
                 </CFormGroup>
                 <CFormGroup>
                   <CLabel
@@ -104,12 +128,18 @@ const AddCategory = ({ match }) => {
                   </CLabel>
                   <CInput
                     style={{ height: "calc(2em + 0.75rem + 2px)" }}
-                    type="text"
+                    disabled={load}
                     id="slug"
+                    name="slug"
                     placeholder="example-slug-here"
-                    value={categorySlug}
-                    onChange={handleChangeSlug}
+                    onChange={formik.handleChange}
+                    value={formik.values.slug}
                   />
+                  {formik.errors.slug && formik.touched.slug && (
+                    <small className="form-text text-danger login-error">
+                      {formik.errors.slug}
+                    </small>
+                  )}
                 </CFormGroup>
                 <CFormGroup>
                   <CLabel
@@ -120,12 +150,19 @@ const AddCategory = ({ match }) => {
                   </CLabel>
                   <CInput
                     style={{ height: "calc(2em + 0.75rem + 2px)" }}
-                    type="text"
-                    id="title"
+                    disabled={load}
+                    id="category_desc"
+                    name="category_desc"
                     placeholder="Masukan Description Categori disini"
-                    value={categoryContent}
-                    onChange={handleChangeContent}
+                    onChange={formik.handleChange}
+                    value={formik.values.category_desc}
                   />
+                  {formik.errors.category_desc &&
+                    formik.touched.category_desc && (
+                      <small className="form-text text-danger login-error">
+                        {formik.errors.category_desc}
+                      </small>
+                    )}
                 </CFormGroup>
                 <div className="text-right">
                   <CButton
@@ -133,16 +170,16 @@ const AddCategory = ({ match }) => {
                     shape="square"
                     className="m-2"
                     size="lg"
-                    onClick={(e) => submitHandler(e)}
+                    onClick={(e) => history.push(`/category/list`)}
                   >
                     Cancel
                   </CButton>
                   <CButton
+                    type="submit"
                     color="primary"
                     shape="square"
                     className="m-2"
                     size="lg"
-                    onClick={(e) => submitHandler(e)}
                   >
                     Publish
                   </CButton>
