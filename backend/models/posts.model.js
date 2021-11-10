@@ -47,7 +47,7 @@ const create = async ({
     post_content,
     uid,
     cat_id,
-    primary,
+    primary_image,
     slug,
   ])
 
