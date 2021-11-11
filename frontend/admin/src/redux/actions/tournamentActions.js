@@ -13,40 +13,31 @@ import {
   TOURNAMENT_UPDATE_REQUEST,
   TOURNAMENT_UPDATE_SUCCESS,
 } from "../constants/tournamentConstants";
-import { baseUrl } from "../../constant/api";
+import { baseUrl, listtournamentALLUrl } from "../../constant/api";
+import fetchData from "src/helpers/fetch";
 
 export const listTournaments = () => async (dispatch, getState) => {
-  try {
-    dispatch({ type: TOURNAMENT_LIST_REQUEST });
-
-    const {
-      userLogin: { userInfo },
-    } = getState();
-
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-    const { data } = await axios.get(
-      baseUrl + `/api/v1/tournament/details`,
-      config
-    );
-
-    dispatch({
-      type: TOURNAMENT_LIST_SUCCESS,
-      payload: data,
+  dispatch({ type: TOURNAMENT_LIST_REQUEST });
+  fetchData({
+    url: listtournamentALLUrl,
+    method: "GET",
+    // params: query,
+  })
+    .then((res) => {
+      dispatch({
+        type: TOURNAMENT_LIST_SUCCESS,
+        payload: res,
+      });
+    })
+    .catch((error) => {
+      dispatch({
+        type: TOURNAMENT_LIST_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
     });
-  } catch (error) {
-    dispatch({
-      type: TOURNAMENT_LIST_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
 };
 
 export const getTournamentById =

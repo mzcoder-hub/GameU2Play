@@ -13,36 +13,30 @@ import {
   POST_UPDATE_REQUEST,
   POST_UPDATE_SUCCESS,
 } from "../constants/postConstants";
-import { baseUrl } from "../../constant/api";
+import { baseUrl, PostUrl } from "../../constant/api";
+import fetchData from "src/helpers/fetch";
 export const listPosts = () => async (dispatch, getState) => {
-  try {
-    dispatch({ type: POST_LIST_REQUEST });
-
-    const {
-      userLogin: { userInfo },
-    } = getState();
-
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-    const { data } = await axios.get(baseUrl + `/api/v1/posts`, config);
-
-    dispatch({
-      type: POST_LIST_SUCCESS,
-      payload: data,
+  dispatch({ type: POST_LIST_REQUEST });
+  fetchData({
+    url: PostUrl,
+    method: "GET",
+    // params: query,
+  })
+    .then((res) => {
+      dispatch({
+        type: POST_LIST_SUCCESS,
+        payload: res,
+      });
+    })
+    .catch((error) => {
+      dispatch({
+        type: POST_LIST_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
     });
-  } catch (error) {
-    dispatch({
-      type: POST_LIST_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
 };
 
 export const getPostById = (postId) => async (dispatch, getState) => {

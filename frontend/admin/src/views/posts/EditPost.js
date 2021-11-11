@@ -338,8 +338,9 @@ const PostList = ({ match }) => {
                           Category
                         </CLabel>
                         <Select
-                          className="basic-single"
+                          className="basic-multi-select"
                           classNamePrefix="select"
+                          isMulti
                           isDisabled={loading}
                           isLoading={loading}
                           name="cat_id"

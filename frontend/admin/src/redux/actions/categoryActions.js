@@ -13,37 +13,32 @@ import {
   CATEGORY_UPDATE_REQUEST,
   CATEGORY_UPDATE_SUCCESS,
 } from "../constants/categoryConstants";
-import { baseUrl } from "../../constant/api";
+import { baseUrl, categoryUrl } from "../../constant/api";
+import fetchData from "src/helpers/fetch";
 
 export const listCategorys = () => async (dispatch, getState) => {
-  try {
-    dispatch({ type: CATEGORY_LIST_REQUEST });
+  dispatch({ type: CATEGORY_LIST_REQUEST });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
-
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-    const { data } = await axios.get(baseUrl + `/api/v1/category`, config);
-
-    dispatch({
-      type: CATEGORY_LIST_SUCCESS,
-      payload: data,
+  fetchData({
+    url: categoryUrl,
+    method: "GET",
+    // params: query,
+  })
+    .then((res) => {
+      dispatch({
+        type: CATEGORY_LIST_SUCCESS,
+        payload: res,
+      });
+    })
+    .catch((error) => {
+      dispatch({
+        type: CATEGORY_LIST_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
     });
-  } catch (error) {
-    dispatch({
-      type: CATEGORY_LIST_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
 };
 
 export const getCategoryById = (catId) => async (dispatch, getState) => {
@@ -63,7 +58,7 @@ export const getCategoryById = (catId) => async (dispatch, getState) => {
       baseUrl + `/api/v1/category/id/${catId}`,
       config
     );
-    console.log("getCategoryById data", data)
+    console.log("getCategoryById data", data);
 
     dispatch({
       type: CATEGORY_DETAILS_SUCCESS,

@@ -17,7 +17,8 @@ import {
   USER_UPDATE_REQUEST,
   USER_UPDATE_SUCCESS,
 } from "../constants/userConstants";
-import { baseUrl } from "../../constant/api";
+import { baseUrl, usersUrl } from "../../constant/api";
+import fetchData from "src/helpers/fetch";
 export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({ type: USER_LOGIN_REQUEST });
@@ -85,35 +86,27 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
 };
 
 export const listUsers = () => async (dispatch, getState) => {
-  try {
-    dispatch({
-      type: USER_LIST_REQUEST,
+  dispatch({ type: USER_LIST_REQUEST });
+  fetchData({
+    url: usersUrl,
+    method: "GET",
+    // params: query,
+  })
+    .then((res) => {
+      dispatch({
+        type: USER_LIST_SUCCESS,
+        payload: res,
+      });
+    })
+    .catch((error) => {
+      dispatch({
+        type: USER_LIST_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
     });
-
-    const {
-      userLogin: { userInfo },
-    } = getState();
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-    const { data } = await axios.get(baseUrl + `/api/v1/users`, config);
-
-    dispatch({
-      type: USER_LIST_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: USER_LIST_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
 };
 
 export const deleteUser = (id) => async (dispatch, getState) => {
