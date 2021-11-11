@@ -40,9 +40,11 @@ app.use('/api/v1/uploads', uploadRouter)
 
 const __dirname = path.resolve()
 
+// console.log(path.join(__dirname, '/uploads/assets/images'))
+
 app.use(
   '/api/v1/uploads',
-  express.static(path.join(__dirname, '/frontend/public/images'))
+  express.static(path.join(__dirname, '/uploads/assets/images'))
 )
 
 if (process.env.NODE_ENV === 'production') {

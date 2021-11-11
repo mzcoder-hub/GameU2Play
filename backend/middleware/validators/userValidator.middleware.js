@@ -40,7 +40,7 @@ const createUserSchema = [
     .withMessage(
       'confirm_password field must have the same value as the password field'
     ),
-  body('birthDate').optional(),
+  body('birth_date').optional(),
 ]
 
 const updateUserSchema = [
@@ -65,10 +65,7 @@ const updateUserSchema = [
     .isEmail()
     .withMessage('Must be a valid email')
     .normalizeEmail(),
-  body('role')
-    .optional()
-    .isIn([Role.Admin, Role.SuperUser])
-    .withMessage('Invalid Role type'),
+  body('role').optional(),
   body('password')
     .optional()
     .notEmpty()
@@ -84,7 +81,7 @@ const updateUserSchema = [
     .withMessage(
       'confirm_password field must have the same value as the password field'
     ),
-  body('birthDate').optional(),
+  body('birth_date').optional(),
   body()
     .custom((value) => {
       return !!Object.keys(value).length
@@ -93,14 +90,16 @@ const updateUserSchema = [
     .custom((value) => {
       const updates = Object.keys(value)
       const allowUpdates = [
-        'username',
-        'password',
-        'confirm_password',
-        'email',
-        'role',
         'first_name',
         'last_name',
-        'birthDate',
+        'birth_date',
+        'gender',
+        'email',
+        'phone_number',
+        'address',
+        'password',
+        'role',
+        'status',
       ]
       return updates.every((update) => allowUpdates.includes(update))
     })

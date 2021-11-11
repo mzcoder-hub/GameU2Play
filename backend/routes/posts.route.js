@@ -34,7 +34,11 @@ router.patch(
   awaitHandlerFactory(updatePost)
 ) // localhost:3000/api/v1/posts/id/1 , using patch for partial UPDATE Posts
 
-router.delete('/id/:id', auth(Role.Admin), awaitHandlerFactory(deletePost)) // localhost:3000/api/v1/posts/id/1 DELETE Posts (ADMIN ONLY)
+router.delete(
+  '/id/:id',
+  auth(Role.SuperAdmin, Role.Admin),
+  awaitHandlerFactory(deletePost)
+) // localhost:3000/api/v1/posts/id/1 DELETE Posts (ADMIN ONLY)
 
 router.get('/', awaitHandlerFactory(getAllPosts)) // localhost:3000/api/v1/posts GET ALL Posts
 
