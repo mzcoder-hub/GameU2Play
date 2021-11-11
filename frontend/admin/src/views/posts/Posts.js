@@ -14,8 +14,21 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 import { listPosts } from "src/redux/actions/postActions";
-import { button_title_addPost, button_title_deletePost, button_title_editPost, cancelButtonText, confirmButtonText, textAlertDelete, titleAlertDelete, title_listPost } from "./constan";
+import {
+  button_title_addPost,
+  button_title_deletePost,
+  button_title_editPost,
+  cancelButtonText,
+  confirmButtonText,
+  responseDeletePost_failed,
+  responseDeletePost_success,
+  textAlertDelete,
+  titleAlertDelete,
+  title_listPost,
+} from "./constan";
 import Swal from "sweetalert2";
+import fetchData from "src/helpers/fetch";
+import { getPostByIdUrl } from "src/constant/api";
 
 // const getBadge = (status) => {
 //   switch (status) {
@@ -38,6 +51,7 @@ const PostList = () => {
   const queryPage = useLocation().search.match(/page=([0-9]+)/, "");
   const currentPage = Number(queryPage && queryPage[1] ? queryPage[1] : 1);
   const [page, setPage] = useState(currentPage);
+  const [load, setLoad] = useState(false);
 
   const pageChange = (newPage) => {
     currentPage !== newPage && history.push(`/post/list?page=${newPage}`);
@@ -47,9 +61,30 @@ const PostList = () => {
   const { loading, posts } = allPostList;
 
   const actionDelete = async (id) => {
-    console.log("actionDelete id = ", id)
-    // await setLoad(true); 
-    // await setLoad(false); 
+    await setLoad(true);
+
+    fetchData({
+      url: getPostByIdUrl(id),
+      method: "DELETE",
+    })
+      .then(async (res) => {
+        if (currentPage !== page) await setPage(currentPage);
+        await dispatch(listPosts());
+        await Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: responseDeletePost_success,
+        });
+      })
+      .catch((error) => {
+        Swal.fire({
+          icon: "error",
+          title: "Ooops...!",
+          text: responseDeletePost_failed,
+        });
+        console.log("getDataByID error", error);
+      });
+    await setLoad(false);
   };
   useEffect(() => {
     currentPage !== page && setPage(currentPage);
@@ -70,16 +105,14 @@ const PostList = () => {
   };
   return (
     <>
-      {loading ? (
+      {loading || load ? (
         <></>
       ) : (
         <CRow>
           <CCol xl={12}>
             <CCard>
               <CCardHeader>
-                <div className="text-left">
-                  {title_listPost}
-                </div>
+                <div className="text-left">{title_listPost}</div>
                 <div className="text-right">
                   <CButton
                     color="primary"
@@ -128,7 +161,10 @@ const PostList = () => {
                           {button_title_editPost}
                         </CButton>
                         |
-                        <CButton color="danger" size="sm" className="m-2"
+                        <CButton
+                          color="danger"
+                          size="sm"
+                          className="m-2"
                           onClick={(e) => {
                             Swal.fire({
                               icon: "error",
@@ -144,7 +180,8 @@ const PostList = () => {
                                 actionDelete(item.post_id);
                               }
                             });
-                          }}>
+                          }}
+                        >
                           {button_title_deletePost}
                         </CButton>
                       </td>

@@ -7,6 +7,8 @@ export const titleAlertDelete = "Peringatan.!";
 export const textAlertDelete = "Yakin akan menghapus post ini ?";
 export const confirmButtonText = "Hapus";
 export const cancelButtonText = "Batal";
+export const responseDeletePost_success = "Hapus post berhasil";
+export const responseDeletePost_failed = "Hapus post gagal";
 
 
 
