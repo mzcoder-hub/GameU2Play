@@ -6,7 +6,7 @@ const tableName = 'posts'
 const db = await new DBConnection().query
 
 const find = async (params = {}) => {
-  let sql = `SELECT *, CONVERT(post_id, char) as post_id, CONVERT(uid, char) as uid, CONVERT(cat_id, char) as cat_id FROM ${tableName} ORDER BY created_at DESC`
+  let sql = `SELECT *, CONVERT(post_id, char) as post_id, CONVERT(uid, char) as uid FROM ${tableName} ORDER BY created_at DESC`
 
   if (!Object.keys(params).length) {
     return await db(sql)
