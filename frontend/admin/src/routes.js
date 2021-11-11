@@ -49,6 +49,12 @@ const routes = [
 
   { path: "/users/list", exact: true, name: "Users", component: Users },
   {
+    path: "/users/add",
+    exact: true,
+    name: "Users Add",
+    component: UsersEdit,
+  },
+  {
     path: "/users/edit/:id",
     exact: true,
     name: "Users Edit",

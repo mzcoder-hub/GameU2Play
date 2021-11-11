@@ -14,6 +14,20 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 import { listUsers } from "src/redux/actions/userActions";
+import {
+  button_title_addUsers,
+  cancelButtonText,
+  confirmButtonColor,
+  confirmButtonText,
+  responseDeleteUsers_failed,
+  responseDeleteUsers_success,
+  textAlertDelete,
+  titleAlertDelete,
+  title_listUsers,
+} from "./constan";
+import { getUsersByIdUrl } from "src/constant/api";
+import Swal from "sweetalert2";
+import fetchData from "src/helpers/fetch";
 
 const getBadge = (status) => {
   switch (status) {
@@ -52,6 +66,33 @@ const Users = () => {
   const userList = useSelector((state) => state.userList);
   const { loading, users } = userList;
 
+  const [load, setLoad] = useState(false);
+  const actionDelete = async (id) => {
+    await setLoad(true);
+
+    fetchData({
+      url: getUsersByIdUrl(id),
+      method: "DELETE",
+    })
+      .then(async (res) => {
+        if (currentPage !== page) await setPage(currentPage);
+        await dispatch(listUsers());
+        await Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: responseDeleteUsers_success,
+        });
+      })
+      .catch((error) => {
+        console.log("getDataByID error", error);
+        Swal.fire({
+          icon: "error",
+          title: "Ooops...!",
+          text: responseDeleteUsers_failed,
+        });
+      });
+    await setLoad(false);
+  };
   useEffect(() => {
     currentPage !== page && setPage(currentPage);
     dispatch(listUsers());
@@ -59,24 +100,21 @@ const Users = () => {
 
   return (
     <>
-      {loading ? (
+      {loading || load ? (
         <></>
       ) : (
         <CRow>
           <CCol xl={12}>
             <CCard>
               <CCardHeader>
-                <div className="text-left">
-                  TournamentList
-                  <small className="text-muted"> example</small>
-                </div>
+                <div className="text-left">{title_listUsers}</div>
                 <div className="text-right">
-                  {/* <CButton
+                  <CButton
                     color="primary"
                     onClick={(e) => history.push(`/users/add`)}
                   >
-                    Add Posts
-                  </CButton> */}
+                    {button_title_addUsers}
+                  </CButton>
                 </div>
               </CCardHeader>
               <CCardBody>
@@ -126,7 +164,27 @@ const Users = () => {
                           Edit
                         </CButton>
                         |
-                        <CButton color="danger" size="sm" className="m-2">
+                        <CButton
+                          color="danger"
+                          size="sm"
+                          className="m-2"
+                          onClick={(e) => {
+                            Swal.fire({
+                              icon: "error",
+                              title: titleAlertDelete,
+                              text: textAlertDelete,
+                              showCancelButton: true,
+                              confirmButtonText: confirmButtonText,
+                              cancelButtonText: cancelButtonText,
+                              confirmButtonColor: confirmButtonColor,
+                            }).then((result) => {
+                              /* Read more about isConfirmed, isDenied below */
+                              if (result.isConfirmed) {
+                                actionDelete(item.uid);
+                              }
+                            });
+                          }}
+                        >
                           Delete
                         </CButton>
                       </td>
