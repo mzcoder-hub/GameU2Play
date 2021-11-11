@@ -25,13 +25,13 @@ router.post('/', createUserSchema, awaitHandlerFactory(createUser)) // localhost
 router.post('/login', validateLogin, awaitHandlerFactory(userLogin)) // localhost:3000/api/v1/users/login, LOGIN USER
 router.post(
   '/verification/:id',
-  auth(Role.User),
+  auth(),
   validateVerification,
   awaitHandlerFactory(verification)
 ) // localhost:3000/api/v1/users/verification, USER Verification Send
 router.patch(
   '/id/:id',
-  auth(Role.Admin),
+  auth(),
   updateUserSchema,
   awaitHandlerFactory(updateUser)
 ) // localhost:3000/api/v1/users/id/1 , using patch for partial UPDATE USER

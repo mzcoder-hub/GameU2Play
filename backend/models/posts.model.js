@@ -34,35 +34,22 @@ const create = async ({
   post_title,
   post_content,
   uid,
-  cat_id,
+  categories_id,
   primary_image,
   slug,
 }) => {
-  // console.log(post_title, post_content, uid, cat_id, primary_image, slug)
+  // console.log(post_title, post_content, uid, categories_id, primary_image, slug)
   const sql = `INSERT INTO ${tableName}
-        (post_title, post_content, uid, cat_id, primary_image, slug) VALUES (?,?,?,?,?,?)`
+        (post_title, post_content, uid, categories_id, primary_image, slug) VALUES (?,?,?,?,?,?)`
 
   const result = await db(sql, [
     post_title,
     post_content,
     uid,
-    cat_id,
+    categories_id,
     primary_image,
     slug,
   ])
-
-  const getPostDetail = await db(
-    `SELECT * FROM ${tableName} WHERE post_id = ${result.insertId}`,
-    [],
-    function (err, result) {
-      return result
-    }
-  )
-  const getPost_recent_id = { ...getPostDetail[0] }
-
-  const sqlInsertPivot = await db(
-    `INSERT INTO categorize_has_posts (cat_id, post_id) VALUES (${getPost_recent_id.post_id}, ${cat_id})`
-  )
 
   const affectedRows = result ? result.affectedRows : 0
   return affectedRows
@@ -71,7 +58,7 @@ const create = async ({
 const update = async (params, id) => {
   const { columnSet, values } = multipleColumnSet(params)
 
-  const sql = `UPDATE ${tableName} SET ${columnSet} WHERE idPost = ?`
+  const sql = `UPDATE ${tableName} SET ${columnSet} WHERE post_id = ?`
 
   const result = await db(sql, [...values, id])
 
@@ -80,7 +67,7 @@ const update = async (params, id) => {
 
 const deletePostData = async (id) => {
   const sql = `DELETE FROM ${tableName}
-        WHERE idPost = ?`
+        WHERE post_id = ?`
   const result = await db(sql, [id])
   const affectedRows = result ? result.affectedRows : 0
 

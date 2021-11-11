@@ -20,11 +20,11 @@ const createPostValidation = [
     .withMessage('uid Required')
     .notEmpty()
     .withMessage('uid Must Be Filled'),
-  body('cat_id')
+  body('categories_id')
     .exists()
-    .withMessage('cat_id Required')
+    .withMessage('categories_id Required')
     .notEmpty()
-    .withMessage('cat_id Must Be Filled'),
+    .withMessage('categories_id Must Be Filled'),
   body('primary_image')
     .exists()
     .withMessage('primary_image Required')
@@ -40,14 +40,14 @@ const createPostValidation = [
 const updatePostValidation = [
   body('post_title')
     .optional()
-    .isLength({ min: 100 })
-    .withMessage('Post Title must contain at least 100 characters'),
+    .isLength({ min: 50 })
+    .withMessage('Post Title must contain at least 50 characters'),
   body('content')
     .optional()
-    .isLength({ min: 200 })
-    .withMessage('Content must contain at least 200 characters'),
+    .isLength({ min: 50 })
+    .withMessage('Content must contain at least 50 characters'),
   body('uid').optional(),
-  body('cat_id').optional(),
+  body('categories_id').optional(),
   body('primary_image').optional(),
   body('slug').optional(),
   body()
@@ -59,9 +59,9 @@ const updatePostValidation = [
       const updates = Object.keys(value)
       const allowUpdates = [
         'post_title',
-        'content',
+        'post_content',
         'uid',
-        'cat_id',
+        'categories_id',
         'primary_image',
         'slug',
       ]
