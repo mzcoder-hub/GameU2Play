@@ -6,10 +6,9 @@ const CommentFormForum = () => {
     <Row style={{ padding: 15 }}>
       <Col md={1} className='text-center'>
         <img
-          src='/images/sample/avatar.svg'
+          src='/avatar.jpg'
           alt='username'
-          width='50'
-          height='50'
+          style={{ borderRadius: "50%", marginRight: 10, maxHeight: "50px" }}
         />{' '}
       </Col>
       <Col md={11}>

@@ -1,33 +1,35 @@
-import { useState } from 'react'
-import { Col, Row, Tabs, Tab } from 'react-bootstrap'
-import { GetServerSideProps } from 'next'
-import Layout from '../../components/Layout'
-import Meta from '../../components/Meta'
-import Tombol from '../../components/Tombol'
-import TeamSlider from '../../components/TeamSlider'
-import teamData from '../../components/data/teamData'
+import { useState } from "react";
+import { Col, Row, Tabs, Tab } from "react-bootstrap";
+// import { GetServerSideProps } from "next";
+import Layout from "../../components/Layout";
+import Meta from "../../components/Meta";
+import Tombol from "../../components/Tombol";
+import TeamSlider from "../../components/TeamSlider";
+import teamData from "../../components/data/teamData";
 
-import tournamentCss from '../../styles/tournament.module.css'
-import axios from 'axios'
-import { useRouter } from 'next/router'
-
+import tournamentCss from "../../styles/tournament.module.css";
+// import axios from "axios";
+// import { useRouter } from "next/router";
+import dayjs from "dayjs";
+import { listtournamentUrl } from "../../helpers/api";
+import fetchData from "../../helpers/fetch";
+import { formatPrice } from "../../helpers/currency";
 const tournament = ({ tournamentDetailId }) => {
-  const [key, setKey] = useState('detail')
-
+  const [key, setKey] = useState("detail");
+  // featured_image: "/images/sample/post1.png" 
   return (
     <Layout>
       <Meta />
-
       <Col xl={12} className={tournamentCss.firstSectiontourney}></Col>
       <Col xl={12} className={tournamentCss.secondSectiontourney}>
         <Row style={{ padding: 50 }}>
-          <Col md={12} style={{ color: '#fff' }}>
+          <Col md={12} style={{ color: "#fff" }}>
             <Tabs
-              id='controlled-tab-example'
+              id="controlled-tab-example"
               activeKey={key}
               onSelect={(k) => setKey(k)}
             >
-              <Tab eventKey='detail' title='Detail'>
+              <Tab eventKey="detail" title="Detail">
                 <Row>
                   <Col md={7}>
                     <div className={tournamentCss.contentTourney}>
@@ -36,6 +38,11 @@ const tournament = ({ tournamentDetailId }) => {
                       </div>
                       <div className={tournamentCss.descDetail}>
                         <h2>Deskripsi</h2>
+                        <span>
+                          Level : {tournamentDetailId.difficult}
+                          <br />
+                          Venue : {tournamentDetailId.venue}{" "}
+                        </span>
                         <p>{tournamentDetailId.description}</p>
                       </div>
                       <div className={tournamentCss.tagapagAyos}>
@@ -45,6 +52,18 @@ const tournament = ({ tournamentDetailId }) => {
                           <li>{tournamentDetailId.contact_person}</li>
                         </ol>
                       </div>
+                      <div className={tournamentCss.descDetail}>
+                        <h2>Waktu Pendaftaran</h2>
+                        <p>
+                          {dayjs(tournamentDetailId.registration_start).format(
+                            "DD MMMM YYYY"
+                          )}{" "}
+                          -{" "}
+                          {dayjs(tournamentDetailId.registration_end).format(
+                            "DD MMMM YYYY"
+                          )}
+                        </p>
+                      </div>
                     </div>
                   </Col>
                   <Col md={3}>
@@ -52,40 +71,50 @@ const tournament = ({ tournamentDetailId }) => {
                       <div className={tournamentCss.rules}>
                         <h2>Peraturan</h2>
                         <p>
-                          Download{' '}
+                          Download{" "}
                           <a href={tournamentDetailId.rule_link}>PDF</a>
                         </p>
                       </div>
                       <div className={tournamentCss.Prices}>
                         <h2>Total Hadiah</h2>
-                        <p>{tournamentDetailId.prizepool}</p>
+                        <p>{formatPrice(tournamentDetailId.prizepool)}</p>
                       </div>
-                      <div className={tournamentCss.Streams}>
+                      <div className={tournamentCss.descDetail}>
+                        <h2>Waktu Pelaksanaan</h2>
+                        <p>
+                          {dayjs(tournamentDetailId.start).format(
+                            "DD MMMM YYYY"
+                          )}{" "}
+                          -{" "}
+                          {dayjs(tournamentDetailId.end).format("DD MMMM YYYY")}
+                        </p>
+                      </div>
+                      {/* <div className={tournamentCss.Streams}>
                         <h2>Live Stream</h2>
                         <ul>
                           <li>
-                            Youtube: <a href=''>WxC Indonesia</a>
+                            Youtube: <a href="">WxC Indonesia</a>
                           </li>
                           <li>
-                            Twitch: <a href=''>Dotatv Indonesia</a>
+                            Twitch: <a href="">Dotatv Indonesia</a>
                           </li>
                         </ul>
-                      </div>
+                      </div> */}
                     </div>
                   </Col>
                   <Col md={2}>
                     <Row>
-                      <Col md={2} className='text-right'>
+                      <Col md={2} className="text-right">
                         <div className={tournamentCss.countSlot}>
                           0/{tournamentDetailId.max_team}
                         </div>
                       </Col>
-                      <Col md={10} className='text-right'>
+                      <Col md={10} className="text-right">
                         <Tombol
-                          variant='warning'
-                          borderRadius='6px'
-                          color='#14142B'
-                          width='100%'
+                          variant="warning"
+                          borderRadius="6px"
+                          color="#14142B"
+                          width="100%"
                         >
                           Join Now!
                         </Tombol>
@@ -102,7 +131,7 @@ const tournament = ({ tournamentDetailId }) => {
                   </Col>
                 </Row>
               </Tab>
-              <Tab eventKey='profile' title='Bracket'>
+              <Tab eventKey="profile" title="Bracket">
                 Bracket Will be here
               </Tab>
             </Tabs>
@@ -110,32 +139,44 @@ const tournament = ({ tournamentDetailId }) => {
         </Row>
       </Col>
     </Layout>
-  )
-}
+  );
+};
 
-export default tournament
+export default tournament;
 
 export const getServerSideProps = async (ctx) => {
-  const { req, res, query } = ctx
+  const { req, query } = ctx;
 
-  const getCookies = JSON.parse(req.cookies.userLogin)
+  const getCookies = JSON.parse(req.cookies.userLogin);
+  let detailTournament = null;
+  await fetchData({
+    url: listtournamentUrl + `/${query.tournament_id}`,
+    token: getCookies.token,
+    method: "GET",
+  })
+    .then((res) => {
+      console.log("res", res.data);
+      detailTournament = res.data;
+    })
+    .catch((e) => {
+      console.log("errror", e);
+    });
+  // const config = {
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     Authorization: `Bearer ${getCookies.token}`,
+  //   },
+  // };
 
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${getCookies.token}`,
-    },
-  }
-
-  const detailTournamentById = await axios.get(
-    `http://localhost:3002/api/v1/tournament/detail/${query.tournament_id}`,
-    config
-  )
+  // const detailTournamentById = await axios.get(
+  //   listtournamentUrl + `/${query.tournament_id}`,
+  //   config
+  // );
 
   // console.log(detailTournamentById.data.data)
   return {
     props: {
-      tournamentDetailId: detailTournamentById.data.data,
+      tournamentDetailId: detailTournament ? detailTournament : null,
     },
-  }
-}
+  };
+};

@@ -1,44 +1,46 @@
-import { Col, Container, Row } from 'react-bootstrap'
-import TagPostStyle from '../components/discoveryComponent/TagPostStyle'
-import Layout from '../components/Layout'
-import Meta from '../components/Meta'
-import NewBerita from '../components/widget/NewBerita'
-import Tombol from '../components/Tombol'
+import { Col, Container, Row } from "react-bootstrap";
+import Layout from "../components/Layout";
+import Meta from "../components/Meta";
+import NewBerita from "../components/widget/NewBerita";
+import Tombol from "../components/Tombol";
 
-import NewestTournament from '../components/widget/NewestTournament'
+import NewestTournament from "../components/widget/NewestTournament";
 
-import discoveryCss from '../styles/discovery.module.css'
-import ShareButton from '../components/ShareButton'
-import RelatedContent from '../components/RelatedContent'
-import CommentFormForum from '../components/forumComponent/CommentFormForum'
-
-const slugpost = () => {
-  const data = ['1', '2', '3', '4', '5']
+import dayjs from "dayjs";
+import discoveryCss from "../styles/discovery.module.css";
+import ShareButton from "../components/ShareButton";
+import RelatedContent from "../components/RelatedContent";
+import CommentFormForum from "../components/forumComponent/CommentFormForum";
+import axios from "axios";
+import { getPostByIdUrl } from "../helpers/api";
+const APP_NAME = process.env.APP_NAME;
+const slugpost = (props) => {
+  const { post, metahref, metatitle, metadescription, metaImages } = props;
+  // console.log("ini data detail post", props);
   return (
     <Layout>
-      <Meta />
-      <Col md={12} style={{ height: 540, backgroundColor: '#000000' }}>
+      <Meta url_location_href={metahref} title={metatitle} keywords={metatitle} description={metadescription} url_location_image={metaImages} />
+      <Col md={12} style={{ height: 540, backgroundColor: "#000000" }}>
         <div className={discoveryCss.entryHeader}>
           <Container>
-            <h1 className={discoveryCss.postTitle}>
-              Whitemon dan Xepher Jadi Pemain Indonesia Pertama di The
-              International{' '}
-            </h1>
+            <h1 className={discoveryCss.postTitle}>{post.post_title}</h1>
             <span>
-              <img src='/images/sample/avatar.svg' alt='autor' /> by{' '}
-              <span style={{ fontWeight: 'bold' }}>Julian</span> - June 24, 2021{' '}
+              <img src="/avatar.jpg" alt="autor" style={{ borderRadius: "50%", marginRight: 10, maxHeight: "30px" }} />
+              by <span style={{ fontWeight: "bold" }}>Julian</span> - {dayjs(post.created_at).format('DD MMMM YYYY')}
+
+              {" "}
               <Tombol
-                variant='warning'
-                borderRadius='0px'
-                backgroundColor='#F4B740'
-                fontWeight='bold'
-                color='#14142B'
+                variant="warning"
+                borderRadius="0px"
+                backgroundColor="#F4B740"
+                fontWeight="bold"
+                color="#14142B"
                 onClick={(e) => {
-                  e.preventDefault()
-                  router.push('/forum')
+                  e.preventDefault();
+                  router.push("/forum");
                 }}
               >
-                Dota 2
+                {post.category_title}
               </Tombol>
             </span>
           </Container>
@@ -46,116 +48,26 @@ const slugpost = () => {
       </Col>
       <Col
         md={12}
-        style={{ background: '#0C0C0C', padding: 50, color: '#FFFFFF' }}
+        style={{ background: "#0C0C0C", padding: 50, color: "#FFFFFF" }}
       >
         <Row>
           <Col md={8}>
             <Row>
-              <Col md={12} className='text-center'>
+              <Col md={12} className="text-center" style={{ marginBottom: 10 }}>
                 <img
-                  src='/images/728x90.svg'
-                  alt='ads 728x90'
-                  height='90'
-                  width='728'
+                  src={post.primary_image}
+                  alt="ads 728x90"
+                  style={{ maxHeight: "250px", maxWidth: "auto", }}
                 />
               </Col>
             </Row>
             <Container>
               <div className={discoveryCss.entryContent}>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laboruma Sed ut perspiciatis unde omnis
-                  iste natus error sit voluptatem accusantium doloremque
-                  laudantium, totam rem aperiam, eaque ipsa quae ab illo
-                  inventore veritatis et quasi architecto beatae vitae dicta
-                  sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-                  aspernatur aut odit aut fugit, sed quia consequuntur magni
-                  dolores eos qui ratione voluptatem sequi nesciunt. Neque porro
-                  quisquam est, qui dolorem ipsum quia dolor sit amet,
-                  consectetur, adipisci velit, sed quia non numquam eius modi
-                  tempora incidunt ut labore et dolore magnam aliquam quaerat
-                  voluptatem Lorem ipsum dolor sit amet, consectetur adipiscing
-                  elit, sed do eiusmod tempor incididunt ut labore et dolore
-                  magna aliqua. Ut enim ad minim veniam, quis nostrud
-                  exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                  consequat. Duis aute irure dolor in reprehenderit in voluptate
-                  velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-                  sint occaecat cupidatat non proident, sunt in culpa qui
-                  officia deserunt mollit anim id est laboruma Sed ut
-                  perspiciatis unde omnis iste natus error sit voluptatem
-                  accusantium doloremque laudantium, totam rem aperiam, eaque
-                  ipsa quae ab illo inventore veritatis et quasi architecto
-                  beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem
-                  quia voluptas sit aspernatur aut odit aut fugit, sed quia
-                  consequuntur magni dolores eos qui ratione voluptatem sequi
-                  nesciunt. Neque porro quisquam est Neque porro quisquam est,
-                  qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
-                  velit, sed quia non numquam eius modi tempora incidunt ut
-                  labore et dolore magnam aliquam quaerat voluptatem Lorem ipsum
-                  dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                  minim veniam, quis nostrud exercitation ullamco laboris nisi
-                  ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                  reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                  nulla pariatur. Excepteur sint occaecat cupidatat non
-                  proident, sunt in culpa qui officia deserunt mollit anim id
-                  est laboruma Sed ut perspiciatis unde omnis iste natus error
-                  sit voluptatem accusantium doloremque laudantium, totam rem
-                  aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-                  architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam
-                  voluptatem quia voluptas sit aspernatur aut odit aut fugit,
-                  sed quia consequuntur magni dolores eos qui ratione voluptatem
-                  sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum
-                  quia dolor sit amet, consectetur, adipisci velit, sed quia non
-                  numquam eius modi tempora incidunt ut labore et dolore magnam
-                  aliquam quaerat voluptatem quia non numquam eius modi tempora
-                  incidunt ut labore et dolore magnam aliquam quaerat voluptatem
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laboruma Sed ut perspiciatis unde omnis
-                  iste natus error sit voluptatem accusantium doloremque
-                  laudantium, totam rem aperiam, eaque ipsa quae ab illo
-                  inventore veritatis et quasi architecto beatae vitae dicta
-                  sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-                  aspernatur aut odit aut fugit, sed quia consequuntur magni
-                  dolores eos qui ratione voluptatem sequi nesciunt. Neque porro
-                  quisquam est, qui dolorem ipsum quia dolor sit amet,
-                  consectetur, adipisci velit, sed quia non numquam eius modi
-                  tempora incidunt ut labore et dolore magnam aliquam quaerat
-                  voluptatem quia non numquam eius modi tempora incidunt ut
-                  labore et dolore magnam aliquam quaerat voluptatem Lorem ipsum
-                  dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                  minim veniam, quis nostrud exercitation ullamco laboris nisi
-                  ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                  reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                  nulla pariatur. Excepteur sint occaecat cupidatat non
-                  proident, sunt in culpa qui officia deserunt mollit anim id
-                  est laboruma Sed ut perspiciatis unde omnis iste natus error
-                  sit voluptatem accusantium doloremque laudantium, totam rem
-                  aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-                  architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam
-                  voluptatem quia voluptas sit aspernatur aut odit aut fugit,
-                  sed quia consequuntur magni dolores eos qui ratione voluptatem
-                  sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum
-                  quia dolor sit amet, consectetur, adipisci velit, sed quia non
-                  numquam eius modi tempora incidunt ut labore et dolore magnam
-                  aliquam quaerat voluptatem
-                </p>
+                <p>{post.post_content}</p>
                 <div className={discoveryCss.kategoryList}>
-                  Kategori: <a href=''>Dota 2</a>,{' '}
-                  <a href=''>The International</a>, <a href=''>T1 Esports</a>
+                  Kategori: <a href="">{post.category_title}</a>
+                  {/* ,{" "}
+                  <a href="">The International</a>, <a href="">T1 Esports</a> */}
                 </div>
                 <div className={discoveryCss.shareButton}>
                   Bagikan : <ShareButton />
@@ -169,7 +81,7 @@ const slugpost = () => {
               </div>
               <div
                 className={discoveryCss.commentSection}
-                style={{ borderTop: '1px solid #d9dbe9' }}
+                style={{ borderTop: "1px solid #d9dbe9" }}
               >
                 <CommentFormForum />
               </div>
@@ -184,7 +96,29 @@ const slugpost = () => {
         </Row>
       </Col>
     </Layout>
-  )
-}
+  );
+};
 
-export default slugpost
+export default slugpost;
+
+export const getServerSideProps = async (context) => {
+  const { req, query } = context;
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const getPostById = await axios.get(getPostByIdUrl(query.slugpost), config);
+  const href = req && req.headers && req.headers.host;
+  return {
+    props: {
+      post: getPostById ? getPostById.data : null,
+      metahref: href ? href + req.url : null,
+      host: href ? href : null,
+      metatitle: getPostById && getPostById.data ? APP_NAME + " - " + getPostById.data.post_title : APP_NAME,
+      metadescription: getPostById && getPostById.data ? getPostById.data.post_content : "",
+      metaImages: getPostById && getPostById.data ? href + getPostById.data.primary_image : ""
+    },
+  };
+};

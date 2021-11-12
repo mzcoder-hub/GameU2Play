@@ -20,6 +20,7 @@
     "better-react-spinkit": "^2.0.4",
     "bootstrap": "^4.6.0",
     "classnames": "^2.3.1",
+    "dayjs": "^1.10.7",
     "email-validator": "^2.0.4",
     "firebase": "^8.6.3",
     "formik": "^2.2.9",

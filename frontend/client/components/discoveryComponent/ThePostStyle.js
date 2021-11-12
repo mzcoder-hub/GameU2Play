@@ -1,15 +1,26 @@
-import { Col, Row } from 'react-bootstrap'
+import { Col, Row } from "react-bootstrap";
 
-import discoveryCss from '../../styles/discovery.module.css'
+import discoveryCss from "../../styles/discovery.module.css";
 
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 const ThePostStyle = ({
+  dataPost = [],
   headerTagLine = undefined,
   icon = undefined,
   color = undefined,
 }) => {
-  const router = useRouter()
+  console.log("dataPost", dataPost);
+  //   categories_id: "00002,00001"
+  // created_at: "2021-11-12T00:16:41.000Z"
+  // post_content: "This is the first postThis is the first postThis is the first postThis is the first postThis is the first postThis is the first postThis is the first postThis is the first postThis is the first postThis is the first postThis is the first postThis is the first postThis is the first postThis is the first postThis is the first postThis is the first postThis is the first postThis is the first postThis is the first postThis is the first postThis is the first post"
+  // post_id: "00001"
+  // post_title: "This is the third post"
+  // primary_image: "/images/posts/post-1.png"
+  // slug: "this-is-the-seconds-post"
+  // status: "published"
+  // uid: "0000000001"
+  const router = useRouter();
   return (
     <Col xl={12}>
       <Row>
@@ -20,118 +31,142 @@ const ThePostStyle = ({
                 {headerTagLine}
               </h3>
             </Col>
-            <Col md={12} className={discoveryCss.firstPageDiscoverySectionPost}>
-              <Row>
-                <Col md={4} style={{ padding: 0 }}>
-                  <div
-                    style={{
-                      background: `url('/images/sample/post1.png') no-repeat`,
-                      backgroundSize: '100%',
-                      height: 500,
-                    }}
-                  >
-                    <div
-                      className={discoveryCss.firstPageDiscoverySectionPostDesc}
-                    >
-                      <a onClick={() => router.push('/asdasd')}>
-                        <h2>WePlay Animajor PSG.LGD Keluar Sebagai Juara</h2>
-                      </a>
-                      <p>
-                        Gelaran WePlay Animajor telah selesai diselenggarakan.
-                        Tim Dota 2 asal China yang bekerja sama dengan tim sepak
-                        bola Paris Saint Germain ini berhasil keluarh sebagai
-                        juara setelah mengalahkan tim asal Amerika ...
-                      </p>
-                      <span>Read More ....</span>
-                    </div>
-                  </div>
-                </Col>
-                <Col md={4} style={{ padding: 0 }}>
-                  <Row>
-                    <Col md={12}>
-                      <div
-                        style={{
-                          background: `url('/images/sample/post2.png') no-repeat`,
-                          backgroundSize: '100%',
-                          height: 250,
-                        }}
-                      >
+            {dataPost.length > 0 ? (
+              <Col
+                md={12}
+                className={discoveryCss.firstPageDiscoverySectionPost}
+              >
+                <Row>
+                  {dataPost.length > 0 ? (
+                    <Col md={4} style={{ padding: 0 }}>
+                      <a onClick={() => router.push("/" + dataPost[0].slug)}>
                         <div
-                          className={
-                            discoveryCss.firstPageDiscoverySectionPostDesc
-                          }
+                          style={{
+                            background: `url('${dataPost[0].primary_image}') no-repeat`,
+                            backgroundSize: "100%",
+                            height: 500,
+                          }}
                         >
-                          <a onClick={() => router.push('/asdasd')}>
-                            <h2>Microboy Pindah ke EVOS!</h2>
-                          </a>
-                          <span>Read More ....</span>
+                          <div
+                            className={
+                              discoveryCss.firstPageDiscoverySectionPostDesc
+                            }
+                          >
+                            <h2>{dataPost[0].post_title}</h2>
+                            <p>
+                              {dataPost[0].post_content.substring(170, 0) +
+                                " ..."}
+                            </p>
+                            <span>Read More ....</span>
+                          </div>
                         </div>
-                      </div>
-                    </Col>
-                    <Col md={12}>
-                      <div
-                        style={{
-                          background: `url('/images/sample/post3.png') no-repeat`,
-                          backgroundSize: '100%',
-                          height: 250,
-                        }}
-                      >
-                        <div
-                          className={
-                            discoveryCss.firstPageDiscoverySectionPostDesc
-                          }
-                        >
-                          <a onClick={() => router.push('/asdasd')}>
-                            <h2>
-                              Valorant Master Stage 3 Pilih Berlin Sebagai
-                              Lokasi
-                            </h2>
-                          </a>
-                          <span>Read More ....</span>
-                        </div>
-                      </div>
-                    </Col>
-                  </Row>
-                </Col>
-                <Col md={4} style={{ padding: 0 }}>
-                  <div
-                    style={{
-                      background: `url('/images/sample/post4.png') no-repeat`,
-                      backgroundSize: '100%',
-                      height: 500,
-                    }}
-                  >
-                    <div
-                      className={discoveryCss.firstPageDiscoverySectionPostDesc}
-                    >
-                      <a onClick={() => router.push('/asdasd')}>
-                        <h2>
-                          Whitemon dan Xepher Jadi Pemain Indonesia Pertama di
-                          The International{' '}
-                        </h2>
                       </a>
-                      <p>
-                        Kenny “Xepher” Deo dan Matthew “Whitemon” Filemon
-                        menjadi pemain Indonesia pertama yang akan berlaga di
-                        event terbesar Valve yaitu Dota2 The International 10.
-                        Kedua pemain ini merupakan pemain dari T1 ...
-                      </p>
-                      <span>Read More ....</span>
-                    </div>
-                  </div>
-                </Col>
-              </Row>
-            </Col>
+                    </Col>
+                  ) : null}
+                  <Col md={4} style={{ padding: 0 }}>
+                    <Row>
+                      {dataPost.length > 1 ? (
+                        <Col md={12}>
+                          <a
+                            onClick={() => router.push("/" + dataPost[1].slug)}
+                          >
+                            <div
+                              style={{
+                                background: `url('${dataPost[1].primary_image}') no-repeat`,
+                                backgroundSize: "100%",
+                                height: 250,
+                              }}
+                            >
+                              <div
+                                className={
+                                  discoveryCss.firstPageDiscoverySectionPostDesc
+                                }
+                              >
+                                <h2>{dataPost[1].post_title}</h2>
+                                <p>
+                                  {dataPost[1].post_content.substring(170, 0) +
+                                    " ..."}
+                                </p>
+                                <span>Read More ....</span>
+                              </div>
+                            </div>
+                          </a>
+                        </Col>
+                      ) : null}
+                      {dataPost.length > 2 ? (
+                        <Col md={12}>
+                          <a
+                            onClick={() => router.push("/" + dataPost[2].slug)}
+                          >
+                            <div
+                              style={{
+                                background: `url('${dataPost[2].primary_image}') no-repeat`,
+                                backgroundSize: "100%",
+                                height: 250,
+                              }}
+                            >
+                              <div
+                                className={
+                                  discoveryCss.firstPageDiscoverySectionPostDesc
+                                }
+                              >
+                                <h2>{dataPost[2].post_title}</h2>
+                                <p>
+                                  {dataPost[2].post_content.substring(170, 0) +
+                                    " ..."}
+                                </p>
+                                <span>Read More ....</span>
+                              </div>
+                            </div>
+                          </a>
+                        </Col>
+                      ) : null}
+                    </Row>
+                  </Col>
+
+                  {dataPost.length > 3 ? (
+                    <Col md={4} style={{ padding: 0 }}>
+                      <a onClick={() => router.push("/" + dataPost[3].slug)}>
+                        <div
+                          style={{
+                            background: `url('${dataPost[3].primary_image}') no-repeat`,
+                            backgroundSize: "100%",
+                            height: 500,
+                          }}
+                        >
+                          <div
+                            className={
+                              discoveryCss.firstPageDiscoverySectionPostDesc
+                            }
+                          >
+                            <h2>{dataPost[3].post_title}</h2>
+                            <p>
+                              {dataPost[3].post_content.substring(170, 0) +
+                                " ..."}
+                            </p>
+                            <span>Read More ....</span>
+                          </div>
+                        </div>
+                      </a>
+                    </Col>
+                  ) : null}
+                </Row>
+              </Col>
+            ) : (
+              <Col md={12} style={{ textAlign: "center" }}>
+                <h6>Data tidak ditemukan</h6>
+              </Col>
+            )}
           </Row>
         </Col>
       </Row>
     </Col>
-  )
-}
+  );
+};
 
 ThePostStyle.defaultProps = {
-  headerTagLine: '',
-  icon: '',
-  color: '',
-}
-export default ThePostStyle
+  headerTagLine: "",
+  icon: "",
+  color: "",
+};
+export default ThePostStyle;

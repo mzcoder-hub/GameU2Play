@@ -4,20 +4,23 @@ import { GetServerSideProps } from 'next'
 import Cookies from 'js-cookie'
 
 import Layout from '../../components/Layout'
-import { Col, Row, Select } from 'react-bootstrap'
+import { Alert, Col, Row, Select } from 'react-bootstrap'
 import Meta from '../../components/Meta'
 
 import tournamentIndexCss from '../../styles/tournamentIndex.module.css'
 import Tombol from '../../components/Tombol'
 import Pertournament from '../../components/Pertournament'
+import { listtournamentALLUrl } from '../../helpers/api';
+// import fetchData from '../../helpers/fetch';
 import axios from 'axios'
 
 const index = ({ tournament }) => {
   const [key, setKey] = useState('detail')
   const [query, setQuery] = useState('datang')
 
-  // console.log(tournament)
-  const data = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+  const [isLoggin, setIsLoggin] = useState(true);
+  // console.log("tournament", tournament)
+  // const data = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
   return (
     <Layout>
       <Meta />
@@ -31,9 +34,9 @@ const index = ({ tournament }) => {
               <Col md={12}>
                 <div className={tournamentIndexCss.bannerTournament}>
                   <img
-                    src='/images/sample/bannerTournament.svg'
+                    src='/images/sample/post1.png'
                     alt='this is banner Tournament'
-                    width='100%'
+                    style={{ maxHeight: "400px", width: "100%" }}
                   />
                 </div>
               </Col>
@@ -112,6 +115,10 @@ const index = ({ tournament }) => {
                 </Row>
               </Col>
               <Col md={12}>
+
+                {isLoggin === false && (
+                  <Alert variant="danger" style={{ marginTop: 20 }}>Anda harus login terlebih dahulu</Alert>
+                )}
                 <Row>
                   {tournament.map((val) => (
                     <Col md={4} key={val.tournament_id}>
@@ -123,6 +130,9 @@ const index = ({ tournament }) => {
                         max_team={val.max_team}
                         date={val.start}
                         prizepool={val.prizepool}
+                        isLogin={(e) => {
+                          if (e === false) setIsLoggin(false);
+                        }}
                       />
                     </Col>
                   ))}
@@ -149,9 +159,8 @@ export const getServerSideProps = async (ctx) => {
       'Content-Type': 'application/json',
     },
   }
-
   const getAllTournament = await axios.get(
-    'http://localhost:3002/api/v1/tournament/details',
+    listtournamentALLUrl,
     config
   )
 

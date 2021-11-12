@@ -3,8 +3,10 @@ import { Col, Row } from 'react-bootstrap'
 import ThePostStyle from '../../components/discoveryComponent/ThePostStyle'
 import Layout from '../../components/Layout'
 import Meta from '../../components/Meta'
-
-const index = () => {
+import { PostUrl } from '../../helpers/api';
+const index = (props) => {
+  const { post } = props;
+  // console.log("post", post);
   return (
     <Layout>
       <Meta />
@@ -17,6 +19,17 @@ const index = () => {
         }}
       >
         <ThePostStyle headerTagLine='Berita Terbaru' />
+      </Col>
+      <Col
+        md={12}
+        style={{
+          background: '#0C0C0C',
+          padding: 35,
+          color: '#FFFFFF',
+          marginTop: -40,
+        }}
+      >
+        <ThePostStyle headerTagLine='No Category' dataPost={post} />
       </Col>
       <Col
         md={12}
@@ -68,7 +81,7 @@ export const getServerSideProps = async (ctx) => {
     },
   }
 
-  const getAllPost = await axios.get('http://localhost:3002/api/v1/posts')
+  const getAllPost = await axios.get(PostUrl)
 
   console.log(getAllPost.data)
 

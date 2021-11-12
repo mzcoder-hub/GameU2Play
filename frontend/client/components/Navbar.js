@@ -265,7 +265,7 @@ const Header = () => {
                 alignItems: "center",
               }}
             >
-              <img src="/avatar.jpg" style={{ "border-radius": "50%" }} />
+              <img src="/avatar.jpg" style={{ borderRadius: "50%" }} />
             </Nav>
           )}
         </Navbar.Collapse>
