@@ -34,7 +34,7 @@ const findOne = async (params) => {
   ON n.post_id = p.post_id 
   JOIN categorize a
   ON a.cat_id = n.categorize_id 
-  WHERE p.${columnSet} = ${values}
+  WHERE p.${columnSet} = '${values}'
   ORDER BY created_at DESC`
 
   const result = await db(sql, [...values])
