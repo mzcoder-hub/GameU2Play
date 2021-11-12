@@ -9,6 +9,7 @@ import {
   deletePost,
   getAllPosts,
   getPostById,
+  getPostBySlug,
 } from '../controllers/posts.controller.js'
 
 import {
@@ -26,6 +27,7 @@ router.post(
 )
 
 router.get('/id/:id', awaitHandlerFactory(getPostById))
+router.get('/id/:slug', awaitHandlerFactory(getPostBySlug))
 
 router.patch(
   '/id/:id',

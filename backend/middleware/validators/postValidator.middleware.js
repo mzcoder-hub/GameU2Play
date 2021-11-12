@@ -62,6 +62,7 @@ const updatePostValidation = [
         'post_content',
         'uid',
         'categories_id',
+        'status',
         'primary_image',
         'slug',
       ]

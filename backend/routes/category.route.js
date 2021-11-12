@@ -36,6 +36,6 @@ router.get('/id/:id', auth(), awaitHandlerFactory(getCatById))
 
 router.delete('/id/:id', auth(Role.Admin), awaitHandlerFactory(deleteCat)) // localhost:3000/api/v1/posts/id/1 DELETE Posts (ADMIN ONLY)
 
-router.get('/', auth(), awaitHandlerFactory(getAllCategory)) // localhost:3000/api/v1/posts GET ALL Posts
+router.get('/', awaitHandlerFactory(getAllCategory)) // localhost:3000/api/v1/posts GET ALL Posts
 
 export default router

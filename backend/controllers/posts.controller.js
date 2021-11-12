@@ -90,8 +90,26 @@ const getPostById = async (req, res, next) => {
   res.send(post)
 }
 
+const getPostBySlug = async (req, res, next) => {
+  // console.log(req.params.id)
+  let post = await findOne({ slug: req.params.slug })
+  // console.log(Object.keys(post).length)
+  if (Object.keys(post).length === 0) {
+    throw new HttpException(404, 'Posts not found')
+  }
+
+  res.send(post)
+}
+
 /******************************************************************************
  *                               Export                                       *
  ******************************************************************************/
 
-export { createPost, updatePost, deletePost, getAllPosts, getPostById }
+export {
+  createPost,
+  updatePost,
+  deletePost,
+  getAllPosts,
+  getPostById,
+  getPostBySlug,
+}
