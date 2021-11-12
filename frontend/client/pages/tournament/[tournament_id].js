@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Col, Row, Tabs, Tab } from "react-bootstrap";
-// import { GetServerSideProps } from "next";
 import Layout from "../../components/Layout";
 import Meta from "../../components/Meta";
 import Tombol from "../../components/Tombol";
@@ -8,15 +7,13 @@ import TeamSlider from "../../components/TeamSlider";
 import teamData from "../../components/data/teamData";
 
 import tournamentCss from "../../styles/tournament.module.css";
-// import axios from "axios";
-// import { useRouter } from "next/router";
 import dayjs from "dayjs";
 import { listtournamentUrl } from "../../helpers/api";
 import fetchData from "../../helpers/fetch";
 import { formatPrice } from "../../helpers/currency";
 const tournament = ({ tournamentDetailId }) => {
   const [key, setKey] = useState("detail");
-  // featured_image: "/images/sample/post1.png" 
+  // featured_image: "/images/sample/post1.png"  
   return (
     <Layout>
       <Meta />
@@ -145,38 +142,33 @@ const tournament = ({ tournamentDetailId }) => {
 export default tournament;
 
 export const getServerSideProps = async (ctx) => {
-  const { req, query } = ctx;
-
-  const getCookies = JSON.parse(req.cookies.userLogin);
-  let detailTournament = null;
-  await fetchData({
-    url: listtournamentUrl + `/${query.tournament_id}`,
-    token: getCookies.token,
-    method: "GET",
-  })
-    .then((res) => {
-      console.log("res", res.data);
-      detailTournament = res.data;
+  const { req, res, query } = ctx;
+  if (req && req.cookies && req.cookies.userLogin) {
+    const getCookies = req && req.cookies && req.cookies.userLogin ? JSON.parse(req.cookies.userLogin) : null;
+    let detailTournament = null;
+    await fetchData({
+      url: listtournamentUrl + `/${query.tournament_id}`,
+      token: getCookies ? getCookies.token : null,
+      method: "GET",
     })
-    .catch((e) => {
-      console.log("errror", e);
-    });
-  // const config = {
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //     Authorization: `Bearer ${getCookies.token}`,
-  //   },
-  // };
-
-  // const detailTournamentById = await axios.get(
-  //   listtournamentUrl + `/${query.tournament_id}`,
-  //   config
-  // );
-
-  // console.log(detailTournamentById.data.data)
-  return {
-    props: {
-      tournamentDetailId: detailTournament ? detailTournament : null,
-    },
-  };
+      .then((res) => {
+        console.log("res", res.data);
+        detailTournament = res.data;
+      })
+      .catch((e) => {
+        console.log("errror turnament id", e.response.data);
+      });
+    return {
+      props: {
+        tournamentDetailId: detailTournament ? detailTournament : null,
+      },
+    };
+  } else {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/tournament"
+      }
+    }
+  }
 };

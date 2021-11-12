@@ -63,7 +63,7 @@ const Header = () => {
     errorMessage: "",
   });
   const userLogin = jsCookies.get("userLogin");
-  console.log(userLogin);
+  // console.log(userLogin);
   const [NamaDepan, setFormNamaDepan] = useState("");
   const [NamaBelakang, setFormNamaBelakang] = useState("");
   const [Email, setFormEmail] = useState("");

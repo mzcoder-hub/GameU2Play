@@ -34,19 +34,19 @@ const fetchData = ({
         reject(res);
       })
       .catch((e) => {
-        if (e.response) {
-          console.log(e.response)
-          if (e.response.status === 401) {
-            Object.keys(jsCookies.get()).forEach(function (cookieName) {
-              var neededAttributes = {
-                // Here you pass the same attributes that were used when the cookie was created
-                // and are required when removing the cookie
-              };
-              jsCookies.remove(cookieName, neededAttributes);
-            });
-            window.location.href = "/";
-          }
-        }
+        console.log("respone error fetch", e.response.data)
+        // const resp = e.response;
+        // if (resp) { 
+        //   if (resp.data.status === 401) { 
+        //     // Object.keys(jsCookies.get()).forEach(function (cookieName) {
+        //     //   var neededAttributes = {
+        //     //     // Here you pass the same attributes that were used when the cookie was created
+        //     //     // and are required when removing the cookie
+        //     //   };
+        //     //   jsCookies.remove(cookieName, neededAttributes);
+        //     // }); 
+        //   }
+        // }
         reject(e);
       });
   });
