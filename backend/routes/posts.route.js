@@ -26,7 +26,7 @@ router.post(
   awaitHandlerFactory(createPost)
 )
 
-router.get('/id/:id', awaitHandlerFactory(getPostById))
+router.get('/post_id/:id', awaitHandlerFactory(getPostById))
 router.get('/id/:slug', awaitHandlerFactory(getPostBySlug))
 
 router.patch(
