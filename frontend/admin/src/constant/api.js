@@ -11,6 +11,7 @@ export const edittournamentUrl = (id) => baseUrl + `/api/v1/tournament/update/${
 export const uploadImageSingle = baseUrl + "/api/v1/uploads/primary";
 
 export const categoryUrl = baseUrl + "/api/v1/category";
+export const categorybyIdUrl = (id) => categoryUrl + `/id/${id}`;
 
 export const usersUrl = baseUrl + "/api/v1/users";
 export const getUsersByIdUrl = (id) => usersUrl + `/id/${id}`;
