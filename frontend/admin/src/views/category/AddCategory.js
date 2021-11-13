@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import {
@@ -23,13 +22,11 @@ import {
   titleAddKategori,
 } from "./constan";
 import Swal from "sweetalert2";
-import axios from "axios";
-import { baseUrl } from "src/constant/api";
+import { categoryUrl } from "src/constant/api";
+import fetchData from "src/helpers/fetch";
 const AddCategory = () => {
   const history = useHistory();
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
   const [load, setLoad] = useState(false);
   let initialValues = {
     category_title: "",
@@ -48,40 +45,33 @@ const AddCategory = () => {
     enableReinitialize: true,
     onSubmit: async (values, { resetForm }) => {
       await setLoad(true);
-      try {
-        const config = {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${userInfo.token}`,
-          },
-        };
-        const { data } = await axios.post(
-          baseUrl + `/api/v1/category`,
-          {
-            category_title: values.category_title,
-            slug: values.slug,
-            category_desc: values.category_desc,
-          },
-          config
-        );
-        if (data) {
+      fetchData({
+        url: categoryUrl,
+        method: "POST",
+        data: {
+          category_title: values.category_title,
+          slug: values.slug,
+          category_desc: values.category_desc,
+        },
+      })
+        .then(async (res) => {
+          await history.push(`/category/list`);
           await Swal.fire({
             icon: "success",
             title: "Success!",
             text: responseAddKategori_success,
           });
-        } else {
+          await setLoad(false);
+        })
+        .catch(async (e) => {
+          console.log("e", e.response);
           await Swal.fire({
             icon: "error",
             title: "Ooops...!",
             text: responseAddKategori_failed,
           });
-        }
-        await setLoad(false);
-      } catch (error) {
-        console.error("error", error);
-        await setLoad(false);
-      }
+          await setLoad(false);
+        });
       await setLoad(false);
     },
   });

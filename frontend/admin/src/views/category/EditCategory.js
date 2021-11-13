@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -18,8 +17,7 @@ import {
 } from "@coreui/react";
 
 import { useHistory } from "react-router-dom";
-import axios from "axios";
-import { baseUrl } from "src/constant/api";
+import { categorybyIdUrl } from "src/constant/api";
 import Swal from "sweetalert2";
 import {
   responseEditKategori_failed,
@@ -27,12 +25,9 @@ import {
   responseGetKategori_failed,
   titleEditKategori,
 } from "./constan";
+import fetchData from "src/helpers/fetch";
 const EditCategory = ({ match }) => {
   const history = useHistory();
-
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
-
   const [load, setLoad] = useState(false);
 
   const [data, setData] = useState({
@@ -52,80 +47,61 @@ const EditCategory = ({ match }) => {
     enableReinitialize: true,
     onSubmit: async (values, { resetForm }) => {
       await setLoad(true);
-      try {
-        const config = {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${userInfo.token}`,
-          },
-        };
-        const { data } = await axios.patch(
-          baseUrl + `/api/v1/category/id/${match.params.id}`,
-          {
-            category_title: values.category_title,
-            slug: values.slug,
-            category_desc: values.category_desc,
-          },
-          config
-        );
-        if (data) {
+      fetchData({
+        url: categorybyIdUrl(match.params.id),
+        method: "PATCH",
+        data: {
+          category_title: values.category_title,
+          slug: values.slug,
+          category_desc: values.category_desc,
+        },
+      })
+        .then(async (res) => {
+          await history.push(`/category/list`);
+
           await Swal.fire({
             icon: "success",
             title: "Success!",
             text: responseEditKategori_success,
           });
-        } else {
+          await setLoad(false);
+        })
+        .catch(async (e) => {
+          console.log("e", e.response);
           await Swal.fire({
             icon: "error",
             title: "Ooops...!",
             text: responseEditKategori_failed,
           });
-        }
-        await setLoad(false);
-      } catch (error) {
-        console.error("error", error);
-        await setLoad(false);
-      }
+          await setLoad(false);
+        });
       await setLoad(false);
     },
   });
   const getDataByID = async (id) => {
     await setLoad(true);
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      };
-      const { data } = await axios.get(
-        baseUrl + `/api/v1/category/id/${id}`,
-        config
-      );
-
-      if (data) {
+    fetchData({
+      url: categorybyIdUrl(match.params.id),
+      method: "GET",
+    })
+      .then(async (res) => {
         await setData({
-          category_title: data.category_title,
-          slug: data.slug,
-          category_desc: data.category_desc,
+          category_title: res.category_title,
+          slug: res.slug,
+          category_desc: res.category_desc,
         });
-      } else {
+        await setLoad(false);
+      })
+      .catch(async (e) => {
+        console.log("e", e.response);
         await Swal.fire({
           icon: "error",
           title: "Ooops...!",
           text: responseGetKategori_failed,
         });
-      }
-      await setLoad(false);
-    } catch (error) {
-      await Swal.fire({
-        icon: "error",
-        title: "Ooops...!",
-        text: responseGetKategori_failed,
+        await setLoad(false);
       });
-      console.log("getDataByID error", error);
-      await setLoad(false);
-    }
+    await setLoad(false);
   };
   useEffect(() => {
     getDataByID(match.params.id);

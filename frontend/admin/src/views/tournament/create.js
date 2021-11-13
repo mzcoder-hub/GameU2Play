@@ -21,13 +21,11 @@ import {
   responseAddTournament_success,
   titleAddTournament,
 } from "./constan";
-import { userInfoFromStorage } from "../category/constan";
 import { tournamentUrl } from "src/constant/api";
 import Swal from "sweetalert2";
-import axios from "axios";
+import fetchData from "src/helpers/fetch";
 const AddTurnament = () => {
   const history = useHistory();
-  const userLogin = userInfoFromStorage;
   const [load, setLoad] = useState(false);
   let initialValues = {
     title: "",
@@ -71,43 +69,30 @@ const AddTurnament = () => {
     enableReinitialize: true,
     onSubmit: async (values, { resetForm }) => {
       await setLoad(true);
-      console.log(values)
-      try {
-        const config = {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${userLogin.token}`,
-          },
-        };
-        const { data } = await axios.post(
-          tournamentUrl,
-          values,
-          config
-        );
-        if (data) {
+      fetchData({
+        url: tournamentUrl,
+        method: "POST",
+        data: values
+      })
+        .then(async (res) => {
           await history.push(`/tournament/list`);
           await Swal.fire({
             icon: "success",
             title: "Success!",
             text: responseAddTournament_success,
           });
-        } else {
+          await setLoad(false);
+        })
+        .catch(async (error) => {
+          console.error("error", error);
           await Swal.fire({
             icon: "error",
             title: "Ooops...!",
             text: responseAddTournament_failed,
           });
-        }
-        await setLoad(false);
-      } catch (error) {
-        console.error("error", error);
-        await Swal.fire({
-          icon: "error",
-          title: "Ooops...!",
-          text: responseAddTournament_failed,
+          await setLoad(false);
         });
-        await setLoad(false);
-      }
+      await setLoad(false);
     },
   });
 

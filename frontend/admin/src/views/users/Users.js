@@ -16,6 +16,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { listUsers } from "src/redux/actions/userActions";
 import {
   button_title_addUsers,
+  button_title_deleteUsers,
+  button_title_editUsers,
   cancelButtonText,
   confirmButtonColor,
   confirmButtonText,
@@ -60,7 +62,7 @@ const Users = () => {
   const [page, setPage] = useState(currentPage);
 
   const pageChange = (newPage) => {
-    currentPage !== newPage && history.push(`/post/list?page=${newPage}`);
+    currentPage !== newPage && history.push(`/users/list?page=${newPage}`);
   };
 
   const userList = useSelector((state) => state.userList);
@@ -161,7 +163,7 @@ const Users = () => {
                             history.push(`/users/edit/${item.uid}`);
                           }}
                         >
-                          Edit
+                          {button_title_editUsers}
                         </CButton>
                         |
                         <CButton
@@ -185,7 +187,7 @@ const Users = () => {
                             });
                           }}
                         >
-                          Delete
+                          {button_title_deleteUsers}
                         </CButton>
                       </td>
                     ),

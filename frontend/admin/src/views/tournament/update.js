@@ -28,6 +28,7 @@ import {
   titleEditTournament,
 } from "./constan";
 import Swal from "sweetalert2";
+import fetchData from "src/helpers/fetch";
 const EditTournament = ({ match }) => {
   const history = useHistory();
 
@@ -83,67 +84,63 @@ const EditTournament = ({ match }) => {
     enableReinitialize: true,
     onSubmit: async (values, { resetForm }) => {
       await setLoad(true);
-      console.log("values", values);
-      delete values.tournament_id;
-      delete values.create_date;
-      delete values.featured_image;
-      try {
-        const { data } = await axios.patch(
-          edittournamentUrl(match.params.id),
-          values,
-          config
-        );
-        if (data) {
+      const data = {
+        title: values.title,
+        description: values.description,
+        venue: values.venue,
+        prizepool: values.prizepool,
+        rule_link: values.rule_link,
+        contact_person: values.contact_person,
+        registration_start: values.registration_start,
+        registration_end: values.registration_end,
+        start: values.start,
+        end: values.end,
+        difficult: values.difficult,
+      };
+      fetchData({
+        url: edittournamentUrl(match.params.id),
+        method: "PATCH",
+        data,
+      })
+        .then(async (res) => {
           await history.push(`/tournament/list`);
           await Swal.fire({
             icon: "success",
             title: "Success!",
             text: responseEditTournament_success,
           });
-        } else {
+        })
+        .catch(async (error) => {
+          console.error("error", error);
           await Swal.fire({
             icon: "error",
             title: "Ooops...!",
             text: responseEditTournament_failed,
           });
-        }
-        await setLoad(false);
-      } catch (error) {
-        console.error("error", error);
-        await Swal.fire({
-          icon: "error",
-          title: "Ooops...!",
-          text: responseEditTournament_failed,
+          await setLoad(false);
         });
-        await setLoad(false);
-      }
+      await setLoad(false);
     },
   });
   const getDataByID = async (id) => {
     await setLoad(true);
-    try {
-      const { data } = await axios.get(listtournamentUrl + `/${id}`, config);
-
-      if (data) {
-        const dataDetail = data.data;
-        if (dataDetail) formik.setValues(dataDetail);
-      } else {
+    fetchData({
+      url: listtournamentUrl + `/${id}`,
+      method: "GET",
+    })
+      .then(async (res) => {
+        formik.setValues(res.data);
+      })
+      .catch(async (error) => {
+        console.error("error", error);
         await Swal.fire({
           icon: "error",
           title: "Ooops...!",
           text: responseGetTournament_failed,
         });
-      }
-      await setLoad(false);
-    } catch (error) {
-      await Swal.fire({
-        icon: "error",
-        title: "Ooops...!",
-        text: responseGetTournament_failed,
+        await setLoad(false);
       });
-      console.log("getDataByID error", error);
-      await setLoad(false);
-    }
+    await setLoad(false);
   };
   useEffect(() => {
     getDataByID(match.params.id);

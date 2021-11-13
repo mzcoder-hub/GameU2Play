@@ -8,7 +8,10 @@ const fetchData = ({
   isForm = false,
   ...other
 }) => {
-  const userToken = userInfoFromStorage.token;
+  const userToken =
+    userInfoFromStorage && userInfoFromStorage.token
+      ? userInfoFromStorage.token
+      : null;
   // console.log(userToken)
   return new Promise((resolve, reject) => {
     axios(url, {
@@ -31,12 +34,15 @@ const fetchData = ({
         reject(res);
       })
       .catch((e) => {
-        if (e.response) {
-          console.log(e.response)
-          if (e.response.status === 401) {
-            localStorage.removeItem("userInfo");
-            window.location.href = "/login";
-          }
+        const resp = e.response;
+        console.log(resp);
+        if (resp && resp.data.status === 401) {
+          localStorage.removeItem("userInfo");
+          window.location.href = "/login";
+        }
+        if (resp && resp.status === 401) {
+          localStorage.removeItem("userInfo");
+          window.location.href = "/login";
         }
         reject(e);
       });

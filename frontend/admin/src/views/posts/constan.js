@@ -18,6 +18,8 @@ export const responseAddPost_failed = "Tambah post gagal";
 export const placeholderSelectKategori = "Pilih Kategori";
 export const buttonSavedAdd = "Publish";
 
+export const uploadImagefailed = "Upload images gagal";
+
 
 
 

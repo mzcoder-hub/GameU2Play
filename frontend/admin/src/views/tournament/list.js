@@ -28,9 +28,8 @@ import {
   title_listTournament,
 } from "./constan";
 import Swal from "sweetalert2";
-import axios from "axios";
 import { tournamentUrl } from "src/constant/api";
-import { userInfoFromStorage } from "../category/constan";
+import fetchData from "src/helpers/fetch";
 
 const getBadge = (status) => {
   switch (status) {
@@ -62,42 +61,30 @@ const TournamentList = () => {
   const tournamentList = useSelector((state) => state.tournamentList);
   const { loading, tournaments } = tournamentList;
 
-  const userLogin = userInfoFromStorage;
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${userLogin.token}`,
-    },
-  };
   const actionDelete = async (id) => {
     await setLoad(true);
-    try {
-      const deleteData = await axios.delete(tournamentUrl + `/${id}`, config);
-
-      if (deleteData) {
+    fetchData({
+      url: tournamentUrl + `/${id}`,
+      method: "DELETE",
+    })
+      .then(async (res) => {
         await dispatch(listTournaments());
         await Swal.fire({
           icon: "success",
           title: "Success!",
           text: responseDeleteTournament_success,
         });
-      } else {
+        await setLoad(false);
+      })
+      .catch(async (e) => {
         await Swal.fire({
           icon: "error",
           title: "Ooops...!",
           text: responseDeleteTournament_failed,
         });
-      }
-      await setLoad(false);
-    } catch (error) {
-      await Swal.fire({
-        icon: "error",
-        title: "Ooops...!",
-        text: responseDeleteTournament_failed,
+        await setLoad(false);
       });
-      console.log("getDataByID error", error);
-      await setLoad(false);
-    }
+    await setLoad(false);
   };
   useEffect(() => {
     currentPage !== page && setPage(currentPage);
