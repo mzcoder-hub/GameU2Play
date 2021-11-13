@@ -3,6 +3,7 @@ export const baseUrl = "https://u2play.pondoksoftware.com";
 
 export const PostUrl = baseUrl + "/api/v1/posts";
 export const getPostByIdUrl = (id) => PostUrl + `/id/${id}`;
+export const getPostByIdUrl2 = (id) => PostUrl + `/post_id/${id}`;
 
 export const tournamentUrl = baseUrl + "/api/v1/tournament";
 export const listtournamentALLUrl = baseUrl + "/api/v1/tournament/details";

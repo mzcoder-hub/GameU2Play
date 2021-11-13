@@ -14,6 +14,7 @@ import {
   CInput,
   CLabel,
   CRow,
+  CSelect,
   CSpinner,
 } from "@coreui/react";
 
@@ -25,6 +26,7 @@ import {
   responseEditPost_success,
   responseGetPost_failed,
   titleEditPost,
+  uploadImagefailed,
 } from "./constan";
 import { userInfoFromStorage } from "src/constant/local";
 import { listCategorys } from "src/redux/actions/categoryActions";
@@ -32,10 +34,14 @@ import { listCategorys } from "src/redux/actions/categoryActions";
 import Select from "react-select";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
-import { getPostByIdUrl, PostUrl, uploadImageSingle } from "src/constant/api";
+import {
+  getPostByIdUrl,
+  getPostByIdUrl2,
+  uploadImageSingle,
+} from "src/constant/api";
 import Swal from "sweetalert2";
 import { useHistory } from "react-router-dom";
+import fetchData from "src/helpers/fetch";
 const PostList = ({ match }) => {
   const history = useHistory();
   var toolbarOptions = {
@@ -72,6 +78,7 @@ const PostList = ({ match }) => {
     cat_id: "",
     // primary_image: "",
     slug: "",
+    status: "",
     value_cat_id: null,
   };
   const FormSchema = Yup.object().shape({
@@ -80,6 +87,7 @@ const PostList = ({ match }) => {
     cat_id: Yup.string().required("cat_id tidak boleh kosong"),
     // primary_image: Yup.string().required("primary_image tidak boleh kosong"),
     slug: Yup.string().required("slug tidak boleh kosong"),
+    status: Yup.string().required("status tidak boleh kosong"),
   });
 
   const [image, setImage] = useState("");
@@ -90,76 +98,74 @@ const PostList = ({ match }) => {
     enableReinitialize: true,
     onSubmit: async (values, { resetForm }) => {
       await setLoad(true);
-      values.uid = userLogin.uid;
-      values.primary_image = image ? image : "";
-      delete values.value_cat_id;
-      console.log("values", values);
-      // post data
-      try {
-        const config = {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${userLogin.token}`,
-          },
-        };
-        const { data } = await axios.post(PostUrl, values, config);
-        if (data) {
+      let categories_id = "";
+      const Arr_cat_id = values.Arr_cat_id;
+      // console.log("Arr_cat_id", Arr_cat_id);
+      Arr_cat_id.map((data, idx) => {
+        if (idx === 0) categories_id = data.cat_id;
+        else categories_id = categories_id + "," + data.cat_id;
+        return data;
+      });
+      const dataItem = {
+        post_title: values.post_title,
+        post_content: values.post_content,
+        uid: userLogin.uid,
+        categories_id: categories_id,
+        primary_image: image ? image : values.primary_image,
+        slug: values.slug,
+        status: values.status,
+      };
+      console.log("data", dataItem);
+      fetchData({
+        url: getPostByIdUrl(match.params.id),
+        method: "PATCH",
+        data: dataItem,
+      })
+        .then(async (res) => {
+          await history.push(`/post/list`);
           await Swal.fire({
             icon: "success",
             title: "Success!",
             text: responseEditPost_success,
           });
-        } else {
+          await setLoad(false);
+        })
+        .catch(async (e) => {
+          console.log("e", e.response);
           await Swal.fire({
             icon: "error",
             title: "Ooops...!",
             text: responseEditPost_failed,
           });
-        }
-        await setLoad(false);
-      } catch (error) {
-        console.error("error", error);
-        await Swal.fire({
-          icon: "error",
-          title: "Ooops...!",
-          text: responseEditPost_failed,
+          await setLoad(false);
         });
-        await setLoad(false);
-      }
       await setLoad(false);
     },
   });
   const uploadFileHandler = async (e) => {
     console.log("uploadFileHandler", e);
     const formData = new FormData();
-    const reader = new FileReader();
-
+    formData.append("image", e.target.files[0]);
     if (e.target.files[0]) {
-      reader.readAsDataURL(e.target.files[0]);
-    }
-    reader.onload = (readerEvent) => {
-      formData.append("image", readerEvent.target.result);
-    };
-
-    console.log("e.target", e.target.files[0]);
-    console.log("e.target reader", reader);
-    console.log(formData);
-    setUploading(true);
-
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
-
-      const { data } = await axios.post(uploadImageSingle, formData, config);
-      console.log("upload data", data);
-      setImage(data);
-      setUploading(false);
-    } catch (error) {
-      console.error(error);
-      setUploading(false);
+      await setUploading(true);
+      try {
+        const upload = await fetchData({
+          url: uploadImageSingle,
+          method: "POST",
+          isForm: true,
+          data: formData,
+        });
+        await setImage(upload);
+        await setUploading(false);
+      } catch (error) {
+        console.error(error);
+        await Swal.fire({
+          icon: "error",
+          title: "Ooops...!",
+          text: uploadImagefailed,
+        });
+        await setUploading(false);
+      }
     }
   };
   const allCategoryList = useSelector((state) => state.allCategoryList);
@@ -167,47 +173,30 @@ const PostList = ({ match }) => {
 
   const getDataByID = async (id) => {
     await setLoad(true);
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userLogin.token}`,
-        },
-      };
-      const { data } = await axios.get(getPostByIdUrl(id), config);
-
-      if (data) {
-        console.log("data", data);
-        // response data
-        // created_at: "2021-10-26T14:53:46.000Z"
-        // post_id: 20
-        // uid: 1
-        // status: "draft"
-        // cat_id: 1
-        // post_content: 
-        // post_title: 
-        // primary_image: ""
-        // slug: "this-is-the-seconds-post"
-
-        // jika data relasi aktegori ada save di values value_cat_id agar otomatis terselect kategorinya
-        formik.setValues(data);
-      } else {
+    fetchData({
+      url: getPostByIdUrl2(match.params.id),
+      method: "GET",
+    })
+      .then(async (res) => {
+        formik.setValues(res);
+        await history.push(`/post/list`);
+        await Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: responseEditPost_success,
+        });
+        await setLoad(false);
+      })
+      .catch(async (e) => {
+        console.log("e", e.response);
         await Swal.fire({
           icon: "error",
           title: "Ooops...!",
           text: responseGetPost_failed,
         });
-      }
-      await setLoad(false);
-    } catch (error) {
-      await Swal.fire({
-        icon: "error",
-        title: "Ooops...!",
-        text: responseGetPost_failed,
+        await setLoad(false);
       });
-      console.log("getDataByID error", error);
-      await setLoad(false);
-    }
+    await setLoad(false);
   };
   useEffect(() => {
     if (match.params.id) {
@@ -293,6 +282,7 @@ const PostList = ({ match }) => {
                       accept="*"
                       type="file"
                       id="images"
+                      loading={uploading || load}
                       placeholder="Choose Featured Images"
                       // value={image}
                       onChange={uploadFileHandler}
@@ -352,7 +342,7 @@ const PostList = ({ match }) => {
                           value={formik.values.value_cat_id}
                           onChange={(val) => {
                             formik.setFieldValue("value_cat_id", val);
-                            formik.setFieldValue("cat_id", val.cat_id);
+                            formik.setFieldValue("cat_id", JSON.stringify(val));
                           }}
                         />
                         {formik.errors.cat_id && formik.touched.cat_id && (
@@ -363,6 +353,37 @@ const PostList = ({ match }) => {
                       </CFormGroup>
                     </CCol>
                   </CRow>
+                  <CFormGroup>
+                    <CLabel
+                      htmlFor="status"
+                      style={{ fontWeight: "bold", fontSize: 15 }}
+                    >
+                      status
+                    </CLabel>
+                    <CSelect
+                      name="status"
+                      onChange={formik.handleChange}
+                      value={formik.values.status}
+                    >
+                      <option key="0" value="">
+                        Pilih status
+                      </option>
+                      <option key="1" value="draft">
+                        Draft
+                      </option>
+                      <option key="2" value="published">
+                        Published
+                      </option>
+                      <option key="3" value="deleted">
+                        Deleted
+                      </option>
+                    </CSelect>
+                    {formik.errors.status && formik.touched.status && (
+                      <small className="form-text text-danger login-error">
+                        {formik.errors.status}
+                      </small>
+                    )}
+                  </CFormGroup>
                   <div className="text-right">
                     <CButton
                       color="danger"
