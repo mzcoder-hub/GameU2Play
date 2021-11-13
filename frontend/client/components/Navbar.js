@@ -2,6 +2,8 @@ import { useState } from "react";
 import {
   Alert,
   Col,
+  Dropdown,
+  DropdownButton,
   Form,
   InputGroup,
   Modal,
@@ -21,6 +23,7 @@ import Image from "next/image";
 import componentCss from "../styles/component.module.css";
 
 import jsCookies from "js-cookie";
+import { deleteAuth } from "../helpers/cookies";
 
 const Header = () => {
   const useStyles = createUseStyles({
@@ -62,8 +65,8 @@ const Header = () => {
     show: false,
     errorMessage: "",
   });
-  const userLogin = jsCookies.get("userLogin");
-  // console.log(userLogin);
+  const userLogin = jsCookies.get("userLogin") ? JSON.parse(jsCookies.get("userLogin")) : null;
+  console.log("userLogin", userLogin);
   const [NamaDepan, setFormNamaDepan] = useState("");
   const [NamaBelakang, setFormNamaBelakang] = useState("");
   const [Email, setFormEmail] = useState("");
@@ -152,7 +155,10 @@ const Header = () => {
       }
     }
   };
-
+  const handleLogout = async () => {
+    deleteAuth();
+    window.location.reload();
+  }
   const [formErrorLogin, setFormErrorLogin] = useState({
     show: false,
     errorMessage: "",
@@ -223,7 +229,7 @@ const Header = () => {
         expand="lg"
         bg="dark"
         variant="dark"
-        style={{ backgroundColor: "#1A1A1A !important" }}
+        style={{ background: "#1A1A1A !important" }}
       >
         <Navbar.Brand href="#" onClick={() => router.push("/")}>
           <Image src="/webgame.svg" alt="logo" height="50" width="199" />
@@ -231,6 +237,7 @@ const Header = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Navigation />
+
           <Nav className="mr-auto"></Nav>
           {!userLogin ? (
             <Nav
@@ -264,8 +271,21 @@ const Header = () => {
               style={{
                 alignItems: "center",
               }}
+              style={{ backgroundColor: "#1A1A1A !important" }}
             >
-              <img src="/avatar.jpg" style={{ borderRadius: "50%" }} />
+              <DropdownButton
+                variant="none"
+                // style={{ backgroundColor: "#1A1A1A !important" }}
+                title={
+                  <img src="/avatar.jpg" style={{ borderRadius: "50%" }} alt={userLogin.first_name} />
+                }
+                alignRight
+              >
+                <Dropdown.Item >{userLogin.first_name + " " + userLogin.last_name}</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item href="#">Profile</Dropdown.Item>
+                <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+              </DropdownButton>
             </Nav>
           )}
         </Navbar.Collapse>
@@ -504,7 +524,7 @@ const Header = () => {
           </Modal.Footer>
         </Form>
       </Modal>
-    </Col>
+    </Col >
   );
 };
 export default Header;

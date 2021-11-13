@@ -1,5 +1,6 @@
 import axios from "axios";
 import jsCookies from "js-cookie";
+import { deleteAuth } from "./cookies";
 const fetchData = ({
   url = "",
   method = "GET",
@@ -37,16 +38,17 @@ const fetchData = ({
         console.log("respone error fetch", e.response.data)
         // const resp = e.response;
         // if (resp) { 
-        //   if (resp.data.status === 401) { 
-        //     // Object.keys(jsCookies.get()).forEach(function (cookieName) {
-        //     //   var neededAttributes = {
-        //     //     // Here you pass the same attributes that were used when the cookie was created
-        //     //     // and are required when removing the cookie
-        //     //   };
-        //     //   jsCookies.remove(cookieName, neededAttributes);
-        //     // }); 
-        //   }
-        // }
+        if (resp.data.status === 401) {
+          deleteAuth();
+          //     // Object.keys(jsCookies.get()).forEach(function (cookieName) {
+          //     //   var neededAttributes = {
+          //     //     // Here you pass the same attributes that were used when the cookie was created
+          //     //     // and are required when removing the cookie
+          //     //   };
+          //     //   jsCookies.remove(cookieName, neededAttributes);
+          //     // }); 
+          //   }
+        }
         reject(e);
       });
   });

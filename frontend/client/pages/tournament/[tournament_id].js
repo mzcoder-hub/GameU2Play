@@ -11,6 +11,7 @@ import dayjs from "dayjs";
 import { listtournamentUrl } from "../../helpers/api";
 import fetchData from "../../helpers/fetch";
 import { formatPrice } from "../../helpers/currency";
+import { deleteAuth } from "../../helpers/cookies";
 const tournament = ({ tournamentDetailId }) => {
   const [key, setKey] = useState("detail");
   // featured_image: "/images/sample/post1.png"  
@@ -156,6 +157,16 @@ export const getServerSideProps = async (ctx) => {
         detailTournament = res.data;
       })
       .catch((e) => {
+        const errorrep = e && e.response;
+        if (errorrep.data.status === 401) {
+          deleteAuth();
+          return {
+            redirect: {
+              permanent: false,
+              destination: "/tournament"
+            }
+          }
+        }
         console.log("errror turnament id", e.response.data);
       });
     return {
